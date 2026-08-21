@@ -1005,18 +1005,18 @@
             </div>
         </section>
 
-        <section class="section" id="speakers">
-            <div class="reveal">
-                <p class="section-label">Speakers</p>
-                <h2>Featured Voices</h2>
-                <span class="soon-tag">Soon</span>
-            </div>
-        </section>
-
         <section class="section" id="register">
             <div class="reveal">
                 <p class="section-label">Register</p>
                 <h2>Join the Fest</h2>
+                <span class="soon-tag">Soon</span>
+            </div>
+        </section>
+
+        <section class="section" id="speakers">
+            <div class="reveal">
+                <p class="section-label">Speakers</p>
+                <h2>Featured Voices</h2>
                 <span class="soon-tag">Soon</span>
             </div>
         </section>
@@ -1374,9 +1374,14 @@
             moveIndicator(link, animate);
         };
 
+        // Sections without their own nav link borrow another link's highlight
+        const navAlias = { register: 'home' };
         const activeObserver = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
-                if (entry.isIntersecting) setActive(linkFor(entry.target.id));
+                if (entry.isIntersecting) {
+                    const id = navAlias[entry.target.id] || entry.target.id;
+                    setActive(linkFor(id));
+                }
             });
         }, { threshold: 0.5 });
         document.querySelectorAll('.section').forEach((s) => activeObserver.observe(s));
