@@ -13,6 +13,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Qiskit Fall Fest GDL 2026</title>
+    <meta name="description" content="Qiskit Fall Fest Guadalajara 2026 — a free, community-run quantum computing festival with talks, workshops, and hands-on sessions. Coming soon.">
+    <meta name="author" content="Quantum Guild GDL">
+    <meta name="keywords" content="Qiskit, Fall Fest, Guadalajara, quantum computing, IBM Quantum, México, hackathon, workshops">
+    <meta name="theme-color" content="#241548">
+    <link rel="canonical" href="https://quantum-guild-gdl.github.io/qiskit_fall_fest_gdl/">
+
+    <!-- Open Graph (Facebook, LinkedIn, WhatsApp, Discord, iMessage) -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Qiskit Fall Fest GDL 2026">
+    <meta property="og:title" content="Qiskit Fall Fest GDL 2026">
+    <meta property="og:description" content="A free, community-run quantum computing festival in Guadalajara — talks, workshops, and hands-on sessions. Coming soon.">
+    <meta property="og:url" content="https://quantum-guild-gdl.github.io/qiskit_fall_fest_gdl/">
+    <meta property="og:image" content="https://quantum-guild-gdl.github.io/qiskit_fall_fest_gdl/assets/og-image.png">
+    <meta property="og:image:secure_url" content="https://quantum-guild-gdl.github.io/qiskit_fall_fest_gdl/assets/og-image.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="1200">
+    <meta property="og:image:alt" content="Qiskit Fall Fest GDL 2026 — Coming Soon, Guadalajara, México">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="es_MX">
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Qiskit Fall Fest GDL 2026">
+    <meta name="twitter:description" content="A free, community-run quantum computing festival in Guadalajara — talks, workshops, and hands-on sessions. Coming soon.">
+    <meta name="twitter:image" content="https://quantum-guild-gdl.github.io/qiskit_fall_fest_gdl/assets/og-image.png">
+    <meta name="twitter:image:alt" content="Qiskit Fall Fest GDL 2026 — Coming Soon, Guadalajara, México">
+
     <link rel="icon" type="image/svg+xml" href="assets/qiskit_white.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,156 +51,1021 @@
             padding: 0;
             box-sizing: border-box;
         }
-        
+
+        :root {
+            --purple: #6929c4;
+            --blue: #1192e8;
+            --nav-h: 64px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
+            background: linear-gradient(135deg, #0a0a0a 0%, #241548 50%, #0a0a0a 100%);
             background-size: 400% 400%;
-            animation: gradientShift 15s ease infinite;
+            animation: gradientShift 12s ease infinite;
             color: #ffffff;
             font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            text-align: center;
-            padding: 2rem;
             position: relative;
-            overflow: hidden;
+            overflow-x: hidden;
         }
-        
+
+        /* Rotating ambient glow behind everything */
         body::before {
             content: '';
-            position: absolute;
+            position: fixed;
             top: -100%;
             left: -100%;
             width: 300%;
             height: 300%;
-            background: radial-gradient(circle, rgba(105, 41, 196, 0.1) 0%, transparent 70%);
-            animation: rotate 20s linear infinite;
+            background:
+                radial-gradient(circle at 35% 40%, rgba(105, 41, 196, 0.28) 0%, transparent 45%),
+                radial-gradient(circle at 65% 60%, rgba(17, 146, 232, 0.18) 0%, transparent 45%);
+            animation: rotate 16s linear infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ---------- Floating pill navbar ---------- */
+        .floating-nav {
+            position: fixed;
+            top: 1.25rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            width: min(920px, calc(100% - 2rem));
+            transition: top 0.4s ease, transform 0.4s ease;
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0.6rem;
+            background: rgba(15, 15, 25, 0.55);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 999px;
+            backdrop-filter: blur(16px) saturate(140%);
+            -webkit-backdrop-filter: blur(16px) saturate(140%);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
+            transition: box-shadow 0.4s ease, background 0.4s ease;
+        }
+
+        /* Subtle lift once the page is scrolled */
+        .floating-nav.scrolled .nav-inner {
+            background: rgba(15, 15, 25, 0.78);
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.6);
+        }
+
+        .nav-logo {
+            flex-shrink: 0;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: transparent;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-logo:hover {
+            transform: rotate(-12deg) scale(1.05);
+        }
+
+        .nav-logo img {
+            width: 26px;
+            height: 26px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            list-style: none;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .nav-links a {
+            display: inline-block;
+            position: relative;
+            z-index: 1;
+            color: rgba(255, 255, 255, 0.72);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            padding: 0.5rem 0.9rem;
+            border-radius: 999px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #fff;
+        }
+
+        .nav-links a.active {
+            color: #fff;
+        }
+
+        /* Sliding pill that glides to sit behind the active link */
+        .nav-indicator {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            width: 0;
+            height: 0;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.1);
+            opacity: 0;
+            pointer-events: none;
+            transform: translate(0, 0);
+            transition: transform 0.55s cubic-bezier(0.34, 1.3, 0.5, 1),
+                        width 0.55s cubic-bezier(0.34, 1.3, 0.5, 1),
+                        height 0.55s cubic-bezier(0.34, 1.3, 0.5, 1),
+                        opacity 0.3s ease;
+        }
+
+        .nav-cta {
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+            color: #0a0a0a;
+            background: #ffffff;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            padding: 0.6rem 1.3rem;
+            border-radius: 999px;
+            transition: transform 0.3s ease;
+            animation: ctaPulse 3s ease-in-out infinite;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-1px);
+        }
+
+        /* Light streak that sweeps across the button on click */
+        .nav-cta::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -20%;
+            width: 40%;
+            height: 200%;
+            background: linear-gradient(90deg, transparent,
+                        rgba(17, 146, 232, 0.4) 40%,
+                        rgba(105, 41, 196, 0.4) 60%, transparent);
+            transform: translateX(-260%) skewX(-18deg);
+            opacity: 0;
             pointer-events: none;
         }
-        
-        @keyframes gradientShift {
-            0% {
-                background-position: 0% 50%;
+
+        /* Soft, discreet glow that breathes around the Register button */
+        @keyframes ctaPulse {
+            0%, 100% {
+                box-shadow: 0 0 8px 1px rgba(105, 41, 196, 0.45),
+                            0 0 0 1px rgba(255, 255, 255, 0.18);
             }
             50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
+                box-shadow: 0 0 28px 6px rgba(17, 146, 232, 0.75),
+                            0 0 0 1px rgba(255, 255, 255, 0.4);
             }
         }
-        
-        @keyframes rotate {
+
+        /* ---- Satisfying "lootbox" burst when Register is clicked ---- */
+        .nav-cta.burst {
+            animation: ctaPop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+                       ctaBurst 0.6s ease-out;
+        }
+
+        .nav-cta.burst::before {
+            animation: ctaShine 0.6s ease-out;
+        }
+
+        @keyframes ctaPop {
+            0%   { transform: scale(1); }
+            22%  { transform: scale(0.9); }
+            55%  { transform: scale(1.09); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes ctaBurst {
             0% {
-                transform: rotate(0deg);
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.85),
+                            0 0 24px 6px rgba(17, 146, 232, 0.9),
+                            0 0 40px 10px rgba(105, 41, 196, 0.7);
+            }
+            55% {
+                box-shadow: 0 0 0 12px rgba(255, 255, 255, 0),
+                            0 0 55px 20px rgba(17, 146, 232, 0.55),
+                            0 0 70px 26px rgba(105, 41, 196, 0.35);
             }
             100% {
-                transform: rotate(360deg);
+                box-shadow: 0 0 0 22px rgba(255, 255, 255, 0),
+                            0 0 8px 1px rgba(105, 41, 196, 0.45),
+                            0 0 0 1px rgba(255, 255, 255, 0.18);
             }
         }
-        
-        .container {
-            flex: 1;
+
+        @keyframes ctaShine {
+            0%   { transform: translateX(-260%) skewX(-18deg); opacity: 0; }
+            15%  { opacity: 1; }
+            85%  { opacity: 1; }
+            100% { transform: translateX(320%) skewX(-18deg); opacity: 0; }
+        }
+
+        /* Hamburger toggle — hidden on desktop, shown on mobile */
+        .nav-toggle {
+            display: none;
+            flex-shrink: 0;
+            width: 42px;
+            height: 42px;
+            padding: 0;
+            border: none;
+            background: transparent;
+            border-radius: 50%;
+            cursor: pointer;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-toggle span {
+            display: block;
+            width: 20px;
+            height: 2px;
+            border-radius: 2px;
+            background: #fff;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .nav-toggle[aria-expanded="true"] span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .nav-toggle[aria-expanded="true"] span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .nav-toggle[aria-expanded="true"] span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        /* ---------- Sections ---------- */
+        main {
+            position: relative;
+            z-index: 1;
+        }
+
+        .section {
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            position: relative;
-            z-index: 1;
+            text-align: center;
+            padding: calc(var(--nav-h) + 3rem) 2rem 3rem;
+            scroll-margin-top: var(--nav-h);
         }
-        
+
         h1 {
-            font-size: 4rem;
+            font-size: clamp(3.5rem, 13vw, 16rem);
             font-weight: 700;
-            margin-bottom: 2rem;
-            background: linear-gradient(45deg, #6929c4, #1192e8);
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, var(--purple), var(--blue));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            line-height: 0.95;
+            letter-spacing: -0.02em;
         }
-        
+
         .coming-soon {
-            font-size: 2rem;
+            font-size: clamp(1.4rem, 2.6vw, 3rem);
             font-weight: 300;
-            letter-spacing: 0.3rem;
+            letter-spacing: 0.35rem;
             text-transform: uppercase;
             opacity: 0.8;
         }
-        
+
+        .section-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.25rem;
+            text-transform: uppercase;
+            color: var(--blue);
+            margin-bottom: 1rem;
+        }
+
+        .section h2 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .soon-tag {
+            display: inline-block;
+            font-size: 1.1rem;
+            font-weight: 300;
+            letter-spacing: 0.3rem;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 999px;
+            padding: 0.6rem 1.6rem;
+        }
+
+        /* ---------- Organizers grid ---------- */
+        #organizers .reveal,
+        #resources .reveal { width: 100%; }
+
+        .organizers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+            width: 100%;
+            max-width: 900px;
+            margin: 2.5rem auto 0;
+        }
+
+        .organizer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            text-decoration: none;
+            color: inherit;
+            padding: 1.75rem 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.02);
+            transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+        }
+
+        .organizer:hover {
+            transform: translateY(-4px);
+            border-color: rgba(17, 146, 232, 0.5);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .avatar {
+            position: relative;
+            width: 88px;
+            height: 88px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--purple), var(--blue));
+            color: #fff;
+            font-size: 1.4rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+        }
+
+        .avatar img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .org-name {
+            font-size: 1.05rem;
+            font-weight: 600;
+        }
+
+        /* ---------- Resources (IBM SkillsBuild credentials) ---------- */
+        .resources-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1.75rem;
+            width: 100%;
+            max-width: 920px;
+            margin: 2.5rem auto 0;
+        }
+
+        .resource-card {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            gap: 2rem;
+            align-items: center;
+            text-align: left;
+            padding: 1.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.02);
+            transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s ease;
+        }
+
+        .resource-card:hover {
+            border-color: rgba(17, 146, 232, 0.4);
+            background: rgba(255, 255, 255, 0.04);
+            transform: translateY(-3px);
+        }
+
+        .resource-badge {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            border-radius: 16px;
+        }
+
+        .resource-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 1.1rem;
+        }
+
+        .resource-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 0.55rem;
+            margin-bottom: 1.25rem;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .resource-meta div {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
+        }
+
+        .resource-meta svg {
+            flex-shrink: 0;
+            width: 18px;
+            height: 18px;
+            margin-top: 2px;
+            color: var(--blue);
+        }
+
+        .resource-meta strong {
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .resource-desc {
+            font-size: 0.95rem;
+            font-weight: 300;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.75);
+            margin-bottom: 1.5rem;
+        }
+
+        .resource-footer {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .start-learning {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 999px;
+            background: #ffffff;
+            color: #0a0a0a;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .start-learning:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.25);
+        }
+
+        .start-learning svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Link cards (YouTube / IBM Quantum) — two horizontal cards */
+        .resource-links {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.75rem;
+            width: 100%;
+            max-width: 920px;
+            margin: 1.75rem auto 0;
+        }
+
+        .link-card {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
+            text-decoration: none;
+            color: inherit;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.02);
+            transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s ease;
+        }
+
+        .link-card:hover {
+            border-color: rgba(17, 146, 232, 0.4);
+            background: rgba(255, 255, 255, 0.04);
+            transform: translateY(-3px);
+        }
+
+        .link-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            display: grid;
+            place-items: center;
+            margin-bottom: 1.25rem;
+            background: linear-gradient(135deg, var(--purple), var(--blue));
+        }
+
+        .link-icon svg {
+            width: 30px;
+            height: 30px;
+            color: #fff;
+        }
+
+        .link-card h3 {
+            font-size: 1.35rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+        }
+
+        .link-card p {
+            font-size: 0.95rem;
+            font-weight: 300;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 1.5rem;
+        }
+
+        .link-card .start-learning {
+            margin-top: auto;
+        }
+
+        @media (max-width: 768px) {
+            .resource-card {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                padding: 1.5rem;
+            }
+            .resource-badge {
+                max-width: 200px;
+                margin: 0 auto;
+            }
+            .resource-title { font-size: 1.4rem; }
+            .resource-links { grid-template-columns: 1fr; }
+        }
+
+        /* ---------- Delicate reveal-on-scroll ---------- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(32px);
+            transition: opacity 0.9s ease, transform 0.9s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            body, body::before, .nav-cta { animation: none; }
+            .nav-cta.burst, .nav-cta.burst::before { animation: none; }
+            .reveal { opacity: 1; transform: none; transition: none; }
+            .nav-indicator { transition: opacity 0.3s ease; }
+        }
+
+        /* ---------- Footer logos ---------- */
+        .site-footer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 3rem 1rem 2.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-disclaimer {
+            max-width: 640px;
+            text-align: center;
+            font-size: 0.6rem;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 0.01em;
+        }
+
+        .footer-card {
+            width: min(1160px, calc(100% - 2rem));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            padding: 1.1rem 2.5rem;
+            background: rgba(15, 15, 25, 0.55);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 999px;
+            backdrop-filter: blur(16px) saturate(140%);
+            -webkit-backdrop-filter: blur(16px) saturate(140%);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
+        }
+
         .logos {
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 3rem;
-            margin-top: auto;
-            padding: 2rem 0;
             flex-wrap: wrap;
-            position: relative;
-            z-index: 1;
         }
-        
+
         .logos img {
-            height: 60px;
+            height: 44px;
             width: auto;
             object-fit: contain;
-            transition: transform 0.3s ease;
+            opacity: 0.85;
+            transition: transform 0.3s ease, opacity 0.3s ease;
         }
-        
+
         .logos img:hover {
-            transform: scale(1.1);
+            transform: scale(1.08);
+            opacity: 1;
         }
-        
+
+        /* ---------- Responsive ---------- */
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5rem;
+            /* Show the hamburger; keep Register pinned to the right */
+            .nav-toggle { display: flex; }
+            .nav-cta { margin-left: auto; }
+
+            /* Links collapse into a dropdown below the pill */
+            .nav-links {
+                position: absolute;
+                top: calc(100% + 0.6rem);
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.25rem;
+                margin: 0;
+                padding: 0.5rem;
+                background: rgba(15, 15, 25, 0.92);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                border-radius: 22px;
+                backdrop-filter: blur(16px) saturate(140%);
+                -webkit-backdrop-filter: blur(16px) saturate(140%);
+                box-shadow: 0 12px 48px rgba(0, 0, 0, 0.6);
+                opacity: 0;
+                transform: translateY(-8px);
+                pointer-events: none;
+                transition: opacity 0.3s ease, transform 0.3s ease;
             }
-            
-            .coming-soon {
-                font-size: 1.5rem;
-                letter-spacing: 0.2rem;
+            .nav-links.open {
+                opacity: 1;
+                transform: none;
+                pointer-events: auto;
             }
-            
-            .logos {
-                gap: 2rem;
+            .nav-links a {
+                display: block;
+                width: 100%;
+                font-size: 1rem;
+                padding: 0.75rem 1rem;
             }
-            
-            .logos img {
-                height: 45px;
-            }
+            /* The sliding pill doesn't apply to the vertical dropdown */
+            .nav-indicator { display: none; }
+            .nav-links a.active { background: rgba(255, 255, 255, 0.1); }
+
+            .coming-soon { font-size: 1.5rem; letter-spacing: 0.2rem; }
+            .section h2 { font-size: 2.2rem; }
+            .footer-card { padding: 1rem 1.5rem; gap: 2rem; }
+            .logos { gap: 2rem; }
+            .logos img { height: 38px; }
         }
-        
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 2rem;
-            }
-            
-            .coming-soon {
-                font-size: 1.2rem;
-                letter-spacing: 0.15rem;
-            }
-            
-            .logos {
-                gap: 1.5rem;
-            }
-            
-            .logos img {
-                height: 35px;
-            }
+
+        @media (max-width: 560px) {
+            .nav-inner { padding: 0.4rem 0.5rem; }
+            .nav-logo { width: 36px; height: 36px; }
+            .nav-logo img { width: 22px; height: 22px; }
+            .nav-toggle { width: 36px; height: 36px; }
+            .nav-cta { font-size: 0.85rem; padding: 0.5rem 1rem; }
+            .coming-soon { font-size: 1.2rem; letter-spacing: 0.15rem; }
+            .section h2 { font-size: 1.8rem; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Qiskit Fall Fest GDL 2026</h1>
-        <p class="coming-soon">Coming Soon</p>
-    </div>
-    
-    <div class="logos">
-        <img src="assets/IBM_Quantum_logotype_rev_RGB.png" alt="IBM Quantum">
-        <img src="assets/qiskit_white.svg" alt="Qiskit">
-    </div>
+    <nav class="floating-nav" id="nav">
+        <div class="nav-inner">
+            <a href="#home" class="nav-logo" aria-label="Home">
+                <img src="assets/qiskit_white.svg" alt="Qiskit">
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#resources">Resources</a></li>
+                <li><a href="#sessions">Sessions</a></li>
+                <li><a href="#speakers">Speakers</a></li>
+                <li><a href="#organizers">Organizers</a></li>
+            </ul>
+            <a href="#register" class="nav-cta">Register</a>
+            <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main>
+        <section class="section" id="home">
+            <div class="reveal">
+                <h1>Qiskit Fall Fest GDL 2026</h1>
+                <p class="coming-soon">Coming Soon</p>
+            </div>
+        </section>
+
+        <section class="section" id="register">
+            <div class="reveal">
+                <p class="section-label">Register</p>
+                <h2>Join the Fest</h2>
+                <span class="soon-tag">Soon</span>
+            </div>
+        </section>
+
+        <section class="section" id="resources">
+            <div class="reveal">
+                <p class="section-label">Resources</p>
+                <h2>Learn &amp; Build</h2>
+                <div class="resources-grid">
+
+                    <article class="resource-card">
+                        <img class="resource-badge" src="assets/resources/quantum-enigmas.png" alt="Quantum Enigmas — IBM SkillsBuild credential">
+                        <div class="resource-body">
+                            <h3 class="resource-title">Quantum Enigmas</h3>
+                            <div class="resource-meta">
+                                <div>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1 2.5 3 6 3s6-2 6-3v-5"/></svg>
+                                    <span><strong>Audience:</strong> All learners</span>
+                                </div>
+                                <div>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18Z"/></svg>
+                                    <span><strong>Languages:</strong> English, French</span>
+                                </div>
+                                <div>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                                    <span><strong>Duration:</strong> 8 hours</span>
+                                </div>
+                            </div>
+                            <p class="resource-desc">This credential earner has a foundational understanding of quantum computing, including principles such as quantum superposition, entanglement, and measurement. The individual has considered challenges using the IBM Quantum Composer to map problems onto quantum circuits and explored quantum logic gates. The earner can differentiate between classical and quantum computing, explain quantum state measurement, and apply concepts through interactive problem-solving exercises.</p>
+                            <div class="resource-footer">
+                                <a class="start-learning" href="https://ibm.biz/BdGeCX" target="_blank" rel="noopener noreferrer">
+                                    Start learning
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="resource-card">
+                        <img class="resource-badge" src="assets/resources/explore-emerging-tech.png" alt="Explore Emerging Tech — IBM SkillsBuild credential">
+                        <div class="resource-body">
+                            <h3 class="resource-title">Explore Emerging Tech</h3>
+                            <div class="resource-meta">
+                                <div>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1 2.5 3 6 3s6-2 6-3v-5"/></svg>
+                                    <span><strong>Audience:</strong> All learners</span>
+                                </div>
+                                <div>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18Z"/></svg>
+                                    <span><strong>Languages:</strong> English, German, French, Spanish, Brazilian Portuguese, Korean, Polish, Italian, Turkish, Traditional Chinese, Arabic, Hindi, Japanese</span>
+                                </div>
+                                <div>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                                    <span><strong>Duration:</strong> 7+ hours</span>
+                                </div>
+                            </div>
+                            <p class="resource-desc">This credential earner has knowledge of emerging technologies that power today's jobs: data, artificial intelligence (AI), cloud computing, cybersecurity, and quantum computing. The individual knows foundational concepts, terminology, and how technologies are applied to solve problems in organizations and business. The earner can use this knowledge to explore careers in tech.</p>
+                            <div class="resource-footer">
+                                <a class="start-learning" href="https://ibm.biz/BdGkad" target="_blank" rel="noopener noreferrer">
+                                    Start learning
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+
+                <div class="resource-links">
+                    <a class="link-card" href="https://www.youtube.com/@qiskit" target="_blank" rel="noopener noreferrer">
+                        <div class="link-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.9-.5-5.8a3 3 0 0 0-2.1-2.1C18.5 3.6 12 3.6 12 3.6s-6.5 0-8.4.5A3 3 0 0 0 1.5 6.2C1 8.1 1 12 1 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 8.4.5 8.4.5s6.5 0 8.4-.5a3 3 0 0 0 2.1-2.1C23 15.9 23 12 23 12ZM9.8 15.5v-7l6 3.5-6 3.5Z"/></svg>
+                        </div>
+                        <h3>Qiskit on YouTube</h3>
+                        <p>Tutorials, talks, and community content on quantum computing and programming with Qiskit.</p>
+                        <span class="start-learning">
+                            Visit channel
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>
+                        </span>
+                    </a>
+
+                    <a class="link-card" href="https://www.ibm.com/quantum" target="_blank" rel="noopener noreferrer">
+                        <div class="link-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="2.2" fill="currentColor" stroke="none"/><ellipse cx="12" cy="12" rx="10" ry="4.5"/><ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(120 12 12)"/></svg>
+                        </div>
+                        <h3>IBM Quantum</h3>
+                        <p>Explore IBM's quantum computers, software, and roadmap for the future of computing.</p>
+                        <span class="start-learning">
+                            Explore
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="sessions">
+            <div class="reveal">
+                <p class="section-label">Sessions</p>
+                <h2>Talks &amp; Workshops</h2>
+                <span class="soon-tag">Soon</span>
+            </div>
+        </section>
+
+        <section class="section" id="speakers">
+            <div class="reveal">
+                <p class="section-label">Speakers</p>
+                <h2>Featured Voices</h2>
+                <span class="soon-tag">Soon</span>
+            </div>
+        </section>
+
+        <section class="section" id="organizers">
+            <div class="reveal">
+                <p class="section-label">Organizers</p>
+                <h2>The Team</h2>
+                <div class="organizers-grid">
+                    <a class="organizer" href="https://www.linkedin.com/in/andres-alejandre-889a0923/" target="_blank" rel="noopener noreferrer">
+                        <div class="avatar">AA<img src="assets/organizers/andres-alejandre.jpeg" alt="Andrés Alejandre" onerror="this.remove()"></div>
+                        <div class="org-name">Andrés Alejandre</div>                    </a>
+                    <a class="organizer" href="https://www.linkedin.com/in/bjbaenaz/" target="_blank" rel="noopener noreferrer">
+                        <div class="avatar">BB<img src="assets/organizers/barbra-baena.jpeg" alt="Barbra Baena" onerror="this.remove()"></div>
+                        <div class="org-name">Barbra Baena</div>                    </a>
+                    <a class="organizer" href="https://www.linkedin.com/in/bruney/" target="_blank" rel="noopener noreferrer">
+                        <div class="avatar">EB<img src="assets/organizers/edgar-bruney.jpeg" alt="Edgar Bruney Castañeda" onerror="this.remove()"></div>
+                        <div class="org-name">Edgar Bruney Castañeda</div>                    </a>
+                    <a class="organizer" href="https://www.linkedin.com/in/eva-nayeli-hernandez-pulido-39a07b103/" target="_blank" rel="noopener noreferrer">
+                        <div class="avatar">EH<img src="assets/organizers/eva-hernandez.jpeg" alt="Eva Nayeli Hernández Pulido" onerror="this.remove()"></div>
+                        <div class="org-name">Eva Nayeli Hernández Pulido</div>                    </a>
+                    <a class="organizer" href="https://www.linkedin.com/in/jesusrolon/" target="_blank" rel="noopener noreferrer">
+                        <div class="avatar">JR<img src="assets/organizers/jesus-rolon.jpeg" alt="Jesús Rolón" onerror="this.remove()"></div>
+                        <div class="org-name">Jesús Rolón</div>                    </a>
+                    <a class="organizer" href="https://www.linkedin.com/in/juanmiguelavilasanchez/" target="_blank" rel="noopener noreferrer">
+                        <div class="avatar">JA<img src="assets/organizers/juan-avila.png" alt="Juan Miguel Ávila Sánchez" onerror="this.remove()"></div>
+                        <div class="org-name">Juan Miguel Ávila Sánchez</div>                    </a>
+                    <a class="organizer" href="https://www.linkedin.com/in/kassandradelfin/" target="_blank" rel="noopener noreferrer">
+                        <div class="avatar">KD<img src="assets/organizers/kassandra-delfin.png" alt="Kassandra Delfín" onerror="this.remove()"></div>
+                        <div class="org-name">Kassandra Delfín</div>                    </a>
+                    <a class="organizer" href="https://www.linkedin.com/in/tanya-franco/" target="_blank" rel="noopener noreferrer">
+                        <div class="avatar">TF<img src="assets/organizers/tanya-franco.jpeg" alt="Tanya Franco" onerror="this.remove()"></div>
+                        <div class="org-name">Tanya Franco</div>                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-card">
+            <div class="logos">
+                <img src="assets/IBM_Quantum_logotype_rev_RGB.png" alt="IBM Quantum">
+                <img src="assets/qiskit_white.svg" alt="Qiskit">
+            </div>
+        </div>
+        <p class="footer-disclaimer">
+            Qiskit Fall Fest Guadalajara 2026 is a completely free, community-run event.
+            Registration carries no cost, and the sale, resale, or transfer of registrations
+            or tickets is strictly prohibited. If anyone asks you to pay for a spot, please
+            disregard the request and report it to the organizers.
+        </p>
+    </footer>
+
+    <script>
+        // Lift the nav slightly once the user scrolls
+        const nav = document.getElementById('nav');
+        const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 20);
+        onScroll();
+        window.addEventListener('scroll', onScroll, { passive: true });
+
+        // Mobile hamburger menu
+        const toggle = document.getElementById('navToggle');
+        const navLinks = document.getElementById('navLinks');
+        const setMenu = (open) => {
+            navLinks.classList.toggle('open', open);
+            toggle.setAttribute('aria-expanded', String(open));
+        };
+        toggle.addEventListener('click', () => setMenu(!navLinks.classList.contains('open')));
+        // Close after choosing a link, or when tapping outside the nav
+        navLinks.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
+        document.addEventListener('click', (e) => {
+            if (!nav.contains(e.target)) setMenu(false);
+        });
+
+        // Satisfying "lootbox" light burst when Register is clicked
+        const cta = document.querySelector('.nav-cta');
+        if (cta) {
+            cta.addEventListener('click', () => {
+                cta.classList.remove('burst');
+                void cta.offsetWidth; // reflow so the animation can replay
+                cta.classList.add('burst');
+            });
+            cta.addEventListener('animationend', (e) => {
+                if (e.animationName === 'ctaBurst') cta.classList.remove('burst');
+            });
+        }
+
+        // Delicate reveal-on-scroll for section content
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2 });
+        document.querySelectorAll('.reveal').forEach((el) => revealObserver.observe(el));
+
+        // Highlight the active nav link as sections scroll into view
+        const links = document.querySelectorAll('.nav-links a');
+        const linkFor = (id) => document.querySelector('.nav-links a[href="#' + id + '"]');
+
+        // Liquid-glass pill that glides to sit behind the active link
+        const indicator = document.createElement('span');
+        indicator.className = 'nav-indicator';
+        indicator.setAttribute('aria-hidden', 'true');
+        navLinks.prepend(indicator);
+
+        let activeLink = null;
+        const moveIndicator = (link, animate = true) => {
+            if (!link) return;
+            // The sliding pill only makes sense in the horizontal desktop layout
+            if (window.matchMedia('(max-width: 768px)').matches) {
+                indicator.style.opacity = '0';
+                return;
+            }
+            if (!animate) indicator.style.transition = 'none';
+            indicator.style.width = link.offsetWidth + 'px';
+            indicator.style.height = link.offsetHeight + 'px';
+            indicator.style.transform = 'translate(' + link.offsetLeft + 'px, ' + link.offsetTop + 'px)';
+            indicator.style.opacity = '1';
+            if (!animate) {
+                void indicator.offsetWidth; // flush so the reset doesn't animate
+                indicator.style.transition = '';
+            }
+        };
+
+        const setActive = (link, animate = true) => {
+            if (!link) return;
+            links.forEach((l) => l.classList.remove('active'));
+            link.classList.add('active');
+            activeLink = link;
+            moveIndicator(link, animate);
+        };
+
+        const activeObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) setActive(linkFor(entry.target.id));
+            });
+        }, { threshold: 0.5 });
+        document.querySelectorAll('.section').forEach((s) => activeObserver.observe(s));
+
+        // Snap instantly to the current active link on load and on resize
+        const placeIndicator = () => moveIndicator(activeLink || links[0], false);
+        window.addEventListener('load', placeIndicator);
+        window.addEventListener('resize', placeIndicator);
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(placeIndicator);
+        placeIndicator();
+    </script>
 </body>
 </html>
