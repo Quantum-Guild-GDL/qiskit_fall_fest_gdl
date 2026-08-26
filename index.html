@@ -1407,15 +1407,19 @@
 
         // Sections without their own nav link borrow another link's highlight
         const navAlias = { register: 'home' };
-        const activeObserver = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    const id = navAlias[entry.target.id] || entry.target.id;
-                    setActive(linkFor(id));
-                }
-            });
-        }, { threshold: 0.5 });
-        document.querySelectorAll('.section').forEach((s) => activeObserver.observe(s));
+        const sections = Array.from(document.querySelectorAll('.section'));
+        const updateActiveSection = () => {
+            const navH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 80;
+            const trigger = window.scrollY + navH + 8;
+            let current = sections[0];
+            for (const s of sections) {
+                if (s.offsetTop <= trigger) current = s;
+            }
+            const id = navAlias[current.id] || current.id;
+            setActive(linkFor(id));
+        };
+        window.addEventListener('scroll', updateActiveSection, { passive: true });
+        updateActiveSection();
 
         // Snap instantly to the current active link on load and on resize
         const placeIndicator = () => moveIndicator(activeLink || links[0], false);
