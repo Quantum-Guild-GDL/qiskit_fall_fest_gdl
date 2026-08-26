@@ -840,6 +840,25 @@
             .timeline-now { animation: none; transition: opacity 0.3s ease; }
         }
 
+        /* ---------- Scroll progress bar ---------- */
+        .scroll-progress {
+            position: fixed;
+            right: 0;
+            top: 0;
+            width: 3px;
+            height: 100vh;
+            z-index: 200;
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .scroll-progress-fill {
+            width: 100%;
+            height: 0%;
+            background: linear-gradient(180deg, var(--purple), var(--blue));
+            border-radius: 0 0 3px 3px;
+            transition: height 0.08s linear;
+        }
+
         /* ---------- Footer logos ---------- */
         .site-footer {
             display: flex;
@@ -977,6 +996,9 @@
     </style>
 </head>
 <body>
+    <div class="scroll-progress" aria-hidden="true">
+        <div class="scroll-progress-fill" id="scrollFill"></div>
+    </div>
     <nav class="floating-nav" id="nav">
         <div class="nav-inner">
             <a href="#home" class="nav-logo" aria-label="Home">
@@ -1293,6 +1315,15 @@
     </footer>
 
     <script>
+        // Scroll progress bar
+        const scrollFill = document.getElementById('scrollFill');
+        const updateScroll = () => {
+            const max = document.documentElement.scrollHeight - window.innerHeight;
+            scrollFill.style.height = (max > 0 ? (window.scrollY / max) * 100 : 0) + '%';
+        };
+        window.addEventListener('scroll', updateScroll, { passive: true });
+        updateScroll();
+
         // Lift the nav slightly once the user scrolls
         const nav = document.getElementById('nav');
         const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 20);
