@@ -134,7 +134,7 @@
             flex-shrink: 0;
             width: 42px;
             height: 42px;
-            border-radius: 8px;
+            border-radius: 50%;
             display: grid;
             place-items: center;
             background: transparent;
@@ -142,13 +142,12 @@
         }
 
         .nav-logo:hover {
-            transform: rotate(-6deg) scale(1.08);
+            transform: rotate(-12deg) scale(1.05);
         }
 
         .nav-logo img {
-            width: 38px;
-            height: 38px;
-            border-radius: 6px;
+            width: 26px;
+            height: 26px;
         }
 
         .nav-links {
@@ -570,8 +569,9 @@
             font-weight: 600;
             letter-spacing: 0.12rem;
             text-transform: uppercase;
-            color: #fff;
-            background: linear-gradient(90deg, var(--purple), var(--blue));
+            color: rgba(255, 255, 255, 0.9);
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.25);
             border-radius: 999px;
             padding: 0.3rem 0.85rem;
             margin-bottom: 1.5rem;
@@ -1270,7 +1270,7 @@
         @media (max-width: 560px) {
             .nav-inner { padding: 0.4rem 0.5rem; }
             .nav-logo { width: 36px; height: 36px; }
-            .nav-logo img { width: 34px; height: 34px; }
+            .nav-logo img { width: 22px; height: 22px; }
             .nav-toggle { width: 36px; height: 36px; }
             .nav-cta { font-size: 0.85rem; padding: 0.5rem 1rem; }
             .coming-soon { font-size: 1.2rem; letter-spacing: 0.15rem; }
@@ -1285,7 +1285,7 @@
     <nav class="floating-nav" id="nav">
         <div class="nav-inner">
             <a href="#home" class="nav-logo" aria-label="Home">
-                <img src="assets/qff-gdl-logo.png" alt="Qiskit Fall Fest GDL 2026">
+                <img src="assets/qiskit_white.svg" alt="Qiskit">
             </a>
             <ul class="nav-links" id="navLinks">
                 <li><a href="#home">Home</a></li>
@@ -1309,7 +1309,7 @@
                 <p class="event-date">October 28 – 30, 2026 &nbsp;·&nbsp; Guadalajara, México</p>
                 <p class="hero-intro">
                     <strong>Qiskit Fall Fest</strong> is a global series of quantum computing events
-                    organized by student communities around the world in partnership with IBM Quantum.
+                    organized by communities around the world in partnership with IBM Quantum.
                     The Guadalajara edition brings together students, developers, and quantum enthusiasts
                     for three days of talks, hands-on workshops, and a quantum hackathon —
                     right here in Mexico's tech capital.
