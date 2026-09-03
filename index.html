@@ -355,6 +355,24 @@
             letter-spacing: -0.02em;
         }
 
+        .hero-intro {
+            max-width: 680px;
+            margin: 1.5rem auto 2.5rem;
+            font-size: clamp(1rem, 1.4vw, 1.15rem);
+            font-weight: 300;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.75);
+            text-align: center;
+        }
+
+        .hero-intro strong {
+            font-weight: 600;
+            background: linear-gradient(90deg, var(--purple), var(--blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
         .coming-soon {
             font-size: clamp(1.4rem, 2.6vw, 3rem);
             font-weight: 300;
@@ -406,12 +424,23 @@
             background: rgba(255, 255, 255, 0.04);
         }
 
-        .venue-map {
-            width: 100%;
-            height: 100%;
+        .venue-map-wrap {
+            position: relative;
+            flex: 1;
+            overflow: hidden;
             min-height: 260px;
+            border-radius: 12px 0 0 12px;
+        }
+
+        .venue-map {
+            position: absolute;
+            top: -175px;
+            left: 0;
+            width: 100%;
+            height: calc(100% + 175px);
             border: none;
             display: block;
+            filter: invert(1) hue-rotate(200deg) saturate(0.6) brightness(0.85);
         }
 
         .venue-info {
@@ -1013,6 +1042,15 @@
             opacity: 1;
         }
 
+        .logos img[alt="AstraZeneca"] {
+            height: 60px;
+        }
+
+        .logos img[alt="IBM Skills Build"] {
+            height: 24px;
+        }
+
+
         /* ---------- Responsive ---------- */
         @media (max-width: 768px) {
             /* Show the hamburger; keep Register pinned to the right */
@@ -1061,6 +1099,8 @@
             .footer-card { padding: 1rem 1.5rem; gap: 2rem; }
             .logos { gap: 2rem; }
             .logos img { height: 38px; }
+            .logos img[alt="AstraZeneca"] { height: 52px; }
+            .logos img[alt="IBM Skills Build"] { height: 20px; }
 
             /* Timeline collapses to a single left-aligned column */
             .timeline { max-width: 520px; }
@@ -1120,17 +1160,25 @@
         <section class="section" id="home">
             <div class="reveal">
                 <h1>Qiskit Fall Fest GDL 2026</h1>
-                <p class="coming-soon">Coming Soon</p>
                 <p class="event-date">October 28 – 30, 2026 &nbsp;·&nbsp; Guadalajara, México</p>
+                <p class="hero-intro">
+                    <strong>Qiskit Fall Fest</strong> is a global series of quantum computing events
+                    organized by student communities around the world in partnership with IBM Quantum.
+                    The Guadalajara edition brings together students, developers, and quantum enthusiasts
+                    for three days of talks, hands-on workshops, and a quantum hackathon —
+                    right here in Mexico's tech capital.
+                </p>
                 <div class="venue-card">
-                    <iframe
-                        class="venue-map"
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3732.5!2d-103.3924!3d20.6975!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3Aa8d440034e796be4!2sAstraZeneca+GITC+Guadalajara!5e0!3m2!1sen!2smx!4v1"
-                        allowfullscreen=""
-                        loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade"
-                        title="AstraZeneca GITC Guadalajara — venue map">
-                    </iframe>
+                    <div class="venue-map-wrap">
+                        <iframe
+                            class="venue-map"
+                            src="https://maps.google.com/maps?q=AstraZeneca+GITC+Guadalajara,+Blvd.+Puerta+de+Hierro+4965,+Zapopan,+Jalisco,+Mexico&output=embed&hl=en&z=16"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                            title="AstraZeneca GITC Guadalajara — venue map">
+                        </iframe>
+                    </div>
                     <div class="venue-info">
                         <div class="venue-name">AstraZeneca GITC Guadalajara</div>
                         <div class="venue-address">
@@ -1431,6 +1479,7 @@
                 <img src="assets/IBM_Quantum_logotype_rev_RGB.png" alt="IBM Quantum">
                 <img src="assets/qiskit_white.svg" alt="Qiskit">
                 <img src="assets/astrazeneca-white-logo.png" alt="AstraZeneca">
+                <img src="assets/ibm-skillsbuild-logo.png" alt="IBM Skills Build">
             </div>
         </div>
         <p class="footer-disclaimer">
