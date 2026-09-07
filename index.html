@@ -88,6 +88,33 @@
             z-index: 0;
         }
 
+        /* Quantum-circuit atmosphere. Canvas keeps the effect crisp at every size
+           while staying completely outside the page's interaction layer. */
+        .quantum-field {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.82;
+            mix-blend-mode: screen;
+            -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 82%, transparent 100%);
+            mask-image: linear-gradient(to bottom, #000 0%, #000 82%, transparent 100%);
+        }
+
+        .quantum-field--front {
+            z-index: 2;
+            opacity: 0.52;
+            -webkit-mask-image: radial-gradient(ellipse at center, #000 12%, rgba(0, 0, 0, 0.8) 62%, transparent 100%);
+            mask-image: radial-gradient(ellipse at center, #000 12%, rgba(0, 0, 0, 0.8) 62%, transparent 100%);
+        }
+
+        @media (max-width: 700px) {
+            .quantum-field { opacity: 0.62; }
+            .quantum-field--front { opacity: 0.38; }
+        }
+
         @keyframes gradientShift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
@@ -148,6 +175,11 @@
         .nav-logo img {
             width: 26px;
             height: 26px;
+        }
+
+        .nav-mobile-identity,
+        .nav-current {
+            display: none;
         }
 
         .nav-links {
@@ -343,26 +375,73 @@
             scroll-margin-top: var(--nav-h);
         }
 
+        #home {
+            padding-top: calc(var(--nav-h) + 3.75rem);
+        }
+
+        .hero-content {
+            width: min(1720px, 100%);
+            margin-inline: auto;
+        }
+
+        .hero-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.65rem;
+            margin-bottom: 1.25rem;
+            padding: 0.45rem 0.9rem;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 999px;
+            background: rgba(11, 10, 35, 0.34);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            color: rgba(255, 255, 255, 0.68);
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 0.13rem;
+            text-transform: uppercase;
+        }
+
+        .hero-kicker::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--blue);
+            box-shadow: 0 0 12px 3px rgba(17, 146, 232, 0.55);
+            animation: statusGlow 2.6s ease-in-out infinite;
+        }
+
+        @keyframes statusGlow {
+            50% { opacity: 0.45; box-shadow: 0 0 5px 1px rgba(17, 146, 232, 0.35); }
+        }
+
         h1 {
-            font-size: clamp(2.8rem, 9vw, 10rem);
+            font-size: clamp(3.4rem, 7.1vw, 8.6rem);
             font-weight: 700;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.35rem;
             background: linear-gradient(45deg, var(--purple), var(--blue));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            line-height: 0.95;
-            letter-spacing: -0.02em;
+            line-height: 0.9;
+            letter-spacing: -0.045em;
+            white-space: nowrap;
+            filter: drop-shadow(0 14px 36px rgba(27, 45, 150, 0.16));
         }
 
+        .hero-title-accent { white-space: nowrap; }
+
         .hero-intro {
-            max-width: 680px;
-            margin: 1.5rem auto 2.5rem;
-            font-size: clamp(1rem, 1.4vw, 1.15rem);
+            max-width: 760px;
+            margin: 1.6rem auto 2.25rem;
+            font-size: clamp(0.98rem, 1.25vw, 1.12rem);
             font-weight: 300;
-            line-height: 1.8;
-            color: rgba(255, 255, 255, 0.75);
+            line-height: 1.72;
+            color: rgba(255, 255, 255, 0.78);
             text-align: center;
+            text-wrap: balance;
+            text-shadow: 0 2px 18px rgba(5, 4, 25, 0.85);
         }
 
         .hero-intro strong {
@@ -397,11 +476,37 @@
         }
 
         .event-date {
-            font-size: clamp(1rem, 1.8vw, 1.5rem);
-            font-weight: 400;
-            letter-spacing: 0.15rem;
-            color: rgba(255, 255, 255, 0.6);
-            margin-top: 1.2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-top: 1.3rem;
+        }
+
+        .event-meta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.55rem;
+            color: rgba(255, 255, 255, 0.72);
+            font-size: clamp(0.82rem, 1.15vw, 0.98rem);
+            font-weight: 500;
+            letter-spacing: 0.08rem;
+        }
+
+        .event-meta + .event-meta::before {
+            content: '';
+            width: 3px;
+            height: 3px;
+            margin-right: 0.15rem;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.38);
+        }
+
+        .event-meta svg {
+            width: 16px;
+            height: 16px;
+            color: var(--blue);
         }
 
         /* ---------- Venue card ---------- */
@@ -410,12 +515,15 @@
             grid-template-columns: 1fr 1fr;
             gap: 0;
             width: 100%;
-            max-width: 920px;
-            margin: 2.5rem auto 0;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 24px;
+            max-width: 1000px;
+            margin: 2.25rem auto 0;
+            border: 1px solid rgba(255, 255, 255, 0.11);
+            border-radius: 26px;
             overflow: hidden;
-            background: rgba(255, 255, 255, 0.02);
+            background: rgba(18, 20, 65, 0.28);
+            backdrop-filter: blur(14px) saturate(120%);
+            -webkit-backdrop-filter: blur(14px) saturate(120%);
+            box-shadow: 0 28px 70px rgba(4, 4, 25, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.035);
             transition: border-color 0.3s ease, background 0.3s ease;
         }
 
@@ -447,7 +555,7 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            gap: 1rem;
+            gap: 0.8rem;
             padding: 2rem 2rem 2rem 2rem;
             text-align: left;
         }
@@ -456,6 +564,24 @@
             font-size: 1.35rem;
             font-weight: 700;
             color: #fff;
+        }
+
+        .venue-label {
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            color: var(--blue);
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.14rem;
+            text-transform: uppercase;
+        }
+
+        .venue-label::before {
+            content: '';
+            width: 18px;
+            height: 1px;
+            background: linear-gradient(90deg, var(--purple), var(--blue));
         }
 
         .venue-address {
@@ -1138,6 +1264,8 @@
         @media (prefers-reduced-motion: reduce) {
             html { scroll-behavior: auto; }
             body, body::before, .nav-cta { animation: none; }
+            .hero-kicker::before { animation: none; }
+            .quantum-field { opacity: 0.6; }
             .nav-cta.burst, .nav-cta.burst::before { animation: none; }
             .reveal { opacity: 1; transform: none; transition: none; }
             .nav-indicator { transition: opacity 0.3s ease; }
@@ -1234,6 +1362,53 @@
             /* Show the hamburger; keep Register pinned to the right */
             .nav-toggle { display: flex; }
             .nav-cta { margin-left: auto; }
+            .nav-mobile-identity {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: flex-start;
+                min-width: 0;
+                max-width: 8rem;
+                line-height: 1;
+            }
+            .nav-brand-name {
+                max-width: 100%;
+                overflow: hidden;
+                color: rgba(255, 255, 255, 0.92);
+                font-size: 0.66rem;
+                font-weight: 600;
+                letter-spacing: 0.025rem;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+            .nav-current {
+                display: flex;
+                align-items: center;
+                gap: 0.45rem;
+                min-width: 0;
+                max-width: 8rem;
+                overflow: hidden;
+                color: rgba(255, 255, 255, 0.78);
+                margin-top: 0.25rem;
+                font-size: 0.62rem;
+                font-weight: 500;
+                letter-spacing: 0.03rem;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                transition: opacity 0.2s ease, transform 0.2s ease;
+            }
+            .nav-current::before {
+                content: '';
+                flex: 0 0 auto;
+                width: 4px;
+                height: 4px;
+                border-radius: 50%;
+                background: var(--blue);
+                box-shadow: 0 0 8px 2px rgba(17, 146, 232, 0.45);
+            }
+            .nav-current-text {
+                display: inline-block;
+            }
 
             /* Links collapse into a dropdown below the pill */
             .nav-links {
@@ -1280,6 +1455,21 @@
             .logos img[alt="AstraZeneca"] { height: 52px; }
             .logos img[alt="IBM Skills Build"] { height: 20px; }
 
+            #home { padding: calc(var(--nav-h) + 2.25rem) 1.25rem 2.5rem; }
+            .hero-kicker { margin-bottom: 1rem; font-size: 0.62rem; letter-spacing: 0.09rem; }
+            h1 {
+                font-size: clamp(2.85rem, 13.2vw, 5rem);
+                line-height: 0.92;
+                white-space: normal;
+                margin-bottom: 1.2rem;
+            }
+            .hero-title-main,
+            .hero-title-accent { display: block; }
+            .event-date { gap: 0.55rem; margin-top: 1rem; }
+            .event-meta { font-size: 0.75rem; letter-spacing: 0.045rem; }
+            .hero-intro { margin: 1.35rem auto 1.9rem; line-height: 1.68; }
+            .venue-card { margin-top: 1.75rem; }
+
             /* Timeline collapses to a single left-aligned column */
             .timeline { max-width: 520px; }
             .timeline::before { left: 20px; }
@@ -1307,10 +1497,21 @@
             .nav-cta { font-size: 0.85rem; padding: 0.5rem 1rem; }
             .coming-soon { font-size: 1.2rem; letter-spacing: 0.15rem; }
             .section h2 { font-size: 1.8rem; }
+            .event-meta + .event-meta::before { display: none; }
+            .nav-mobile-identity { max-width: 5.9rem; }
+            .nav-brand-name { font-size: 0.58rem; }
+            .nav-current { max-width: 5.6rem; font-size: 0.56rem; }
+        }
+
+        @media (max-width: 360px) {
+            h1 { font-size: 2.35rem; }
+            .hero-kicker { padding-inline: 0.7rem; font-size: 0.56rem; }
         }
     </style>
 </head>
 <body>
+    <canvas class="quantum-field" id="quantumField" aria-hidden="true"></canvas>
+    <canvas class="quantum-field quantum-field--front" id="quantumHighlights" aria-hidden="true"></canvas>
     <div class="scroll-progress" aria-hidden="true">
         <div class="scroll-progress-fill" id="scrollFill"></div>
     </div>
@@ -1319,6 +1520,12 @@
             <a href="#home" class="nav-logo" aria-label="Home">
                 <img src="assets/qiskit_white.svg" alt="Qiskit">
             </a>
+            <span class="nav-mobile-identity">
+                <span class="nav-brand-name">Qiskit Fall Fest</span>
+                <span class="nav-current" id="navCurrent" aria-live="polite">
+                    <span class="nav-current-text" id="navCurrentText">Home</span>
+                </span>
+            </span>
             <ul class="nav-links" id="navLinks">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#speakers">Speakers</a></li>
@@ -1336,9 +1543,19 @@
 
     <main>
         <section class="section" id="home">
-            <div class="reveal">
-                <h1>Qiskit Fall Fest GDL 2026</h1>
-                <p class="event-date">October 28 – 30, 2026 &nbsp;·&nbsp; Guadalajara, México</p>
+            <div class="reveal hero-content">
+                <p class="hero-kicker">A global quantum computing celebration</p>
+                <h1><span class="hero-title-main">Qiskit Fall Fest</span> <span class="hero-title-accent">GDL 2026</span></h1>
+                <div class="event-date" aria-label="October 28 to 30, 2026, Guadalajara, México">
+                    <span class="event-meta">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
+                        October 28 – 30, 2026
+                    </span>
+                    <span class="event-meta">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                        Guadalajara, México
+                    </span>
+                </div>
                 <p class="hero-intro">
                     <strong>Qiskit Fall Fest</strong> is a global series of quantum computing events
                     organized by communities around the world in partnership with IBM Quantum.
@@ -1358,6 +1575,7 @@
                         </iframe>
                     </div>
                     <div class="venue-info">
+                        <div class="venue-label">Event venue · Oct 28</div>
                         <div class="venue-name">AstraZeneca GITC Guadalajara</div>
                         <div class="venue-address">
                             Av. Patria 910, Torre Acuario<br>
@@ -1733,6 +1951,249 @@
     </footer>
 
     <script>
+        // ---------- Immersive quantum-circuit background ----------
+        // A lightweight, dependency-free canvas scene inspired by Qiskit circuits:
+        // qubit rails, familiar gates, entanglement links and travelling state pulses.
+        (() => {
+            const canvas = document.getElementById('quantumField');
+            const ctx = canvas.getContext('2d');
+            const highlightCanvas = document.getElementById('quantumHighlights');
+            const glowCtx = highlightCanvas.getContext('2d');
+            const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+            const pointer = { x: 0.5, y: 0.42, tx: 0.5, ty: 0.42 };
+            let width = 0;
+            let height = 0;
+            let dpr = 1;
+            let rails = [];
+            let raf = 0;
+            let lastFrame = 0;
+
+            const railRatios = [0.16, 0.29, 0.43, 0.58, 0.73, 0.87];
+            const gateLabels = ['H', 'X', 'Z', 'RY', 'CX'];
+
+            const buildScene = () => {
+                dpr = Math.min(window.devicePixelRatio || 1, 2);
+                width = window.innerWidth;
+                height = window.innerHeight;
+                canvas.width = Math.round(width * dpr);
+                canvas.height = Math.round(height * dpr);
+                canvas.style.width = width + 'px';
+                canvas.style.height = height + 'px';
+                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+                highlightCanvas.width = Math.round(width * dpr);
+                highlightCanvas.height = Math.round(height * dpr);
+                highlightCanvas.style.width = width + 'px';
+                highlightCanvas.style.height = height + 'px';
+                glowCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+                const gatePositions = width < 700 ? [0.055, 0.945] : [0.08, 0.22, 0.78, 0.92];
+                rails = railRatios.map((ratio, row) => ({
+                    y: height * ratio,
+                    phase: row * 1.37,
+                    speed: 0.032 + row * 0.004,
+                    gates: gatePositions.map((x, i) => ({
+                        x: width * (x + (((row * 7 + i * 3) % 5) - 2) * 0.012),
+                        label: gateLabels[(row + i * 2) % gateLabels.length]
+                    }))
+                }));
+            };
+
+            const roundedRect = (x, y, size, glow, label) => {
+                ctx.save();
+                ctx.shadowColor = glow;
+                ctx.shadowBlur = 13;
+                ctx.fillStyle = 'rgba(18, 14, 48, 0.76)';
+                ctx.strokeStyle = glow;
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.roundRect(x - size / 2, y - size / 2, size, size, 6);
+                ctx.fill();
+                ctx.stroke();
+                ctx.shadowBlur = 0;
+                ctx.fillStyle = 'rgba(225, 232, 255, 0.72)';
+                ctx.font = `500 ${label.length > 1 ? 8 : 10}px "IBM Plex Sans", sans-serif`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(label, x, y + 0.5);
+                ctx.restore();
+            };
+
+            const drawBlochSphere = (x, y, radius, time, color) => {
+                ctx.save();
+                ctx.translate(x, y);
+                ctx.rotate(Math.sin(time * 0.00018) * 0.12);
+                ctx.strokeStyle = color;
+                ctx.lineWidth = 0.7;
+                ctx.shadowColor = color;
+                ctx.shadowBlur = 12;
+                [1, 0.52].forEach((scale, i) => {
+                    ctx.beginPath();
+                    ctx.ellipse(0, 0, radius, radius * scale, i ? Math.PI / 2 : 0, 0, Math.PI * 2);
+                    ctx.stroke();
+                });
+                const angle = time * 0.00022;
+                const px = Math.cos(angle) * radius * 0.72;
+                const py = Math.sin(angle) * radius * 0.42;
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.lineTo(px, py);
+                ctx.stroke();
+                ctx.fillStyle = color;
+                ctx.beginPath();
+                ctx.arc(px, py, 2.8, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            };
+
+            const draw = (time = 0) => {
+                const isReduced = reduceMotion.matches;
+                const sceneTime = isReduced ? 4200 : time;
+                ctx.clearRect(0, 0, width, height);
+                glowCtx.clearRect(0, 0, width, height);
+
+                pointer.x += (pointer.tx - pointer.x) * 0.025;
+                pointer.y += (pointer.ty - pointer.y) * 0.025;
+                const px = (pointer.x - 0.5) * 18;
+                const py = (pointer.y - 0.5) * 12;
+
+                // Sparse dot matrix, evocative of a circuit editor without becoming noisy.
+                ctx.fillStyle = 'rgba(150, 163, 255, 0.09)';
+                const spacing = width < 700 ? 48 : 42;
+                for (let x = (px % spacing); x < width; x += spacing) {
+                    for (let y = (py % spacing); y < height; y += spacing) {
+                        ctx.fillRect(x, y, 0.8, 0.8);
+                    }
+                }
+
+                rails.forEach((rail, row) => {
+                    const y = rail.y + py * (0.18 + row * 0.025);
+                    const color = row % 2
+                        ? 'rgba(17, 146, 232, 0.22)'
+                        : 'rgba(138, 63, 252, 0.24)';
+                    ctx.strokeStyle = color;
+                    ctx.lineWidth = 0.75;
+                    ctx.setLineDash([3, 9]);
+                    ctx.lineDashOffset = isReduced ? 0 : -sceneTime * 0.006 - row * 13;
+                    ctx.beginPath();
+                    ctx.moveTo(-20, y);
+                    ctx.lineTo(width + 20, y);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+
+                    rail.gates.forEach((gate, gateIndex) => {
+                        const edgeFade = Math.abs(gate.x / width - 0.5) * 2;
+                        ctx.globalAlpha = 0.36 + edgeFade * 0.48;
+                        roundedRect(gate.x + px * (gateIndex % 2 ? -0.18 : 0.18), y, 25,
+                            row % 2 ? 'rgba(17, 146, 232, 0.7)' : 'rgba(138, 63, 252, 0.72)', gate.label);
+                        ctx.globalAlpha = 1;
+                    });
+
+                    // A probability pulse travelling through each qubit rail.
+                    const progress = (sceneTime * rail.speed * 0.001 + rail.phase) % 1;
+                    const pulseX = progress * (width + 120) - 60;
+                    const gradient = ctx.createRadialGradient(pulseX, y, 0, pulseX, y, 24);
+                    gradient.addColorStop(0, row % 2 ? 'rgba(61, 184, 255, 0.9)' : 'rgba(174, 92, 255, 0.88)');
+                    gradient.addColorStop(1, 'rgba(30, 120, 255, 0)');
+                    ctx.fillStyle = gradient;
+                    ctx.beginPath();
+                    ctx.arc(pulseX, y, 24, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.fillStyle = '#dfe9ff';
+                    ctx.beginPath();
+                    ctx.arc(pulseX, y, 1.7, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    // Selected pulses cross in front of the interface. A long, soft
+                    // probability trail makes the scene feel layered rather than flat.
+                    if (row % 2 === 0) {
+                        const beamColor = row % 4
+                            ? '82, 196, 255'
+                            : '184, 108, 255';
+                        const trail = glowCtx.createLinearGradient(pulseX - 125, y, pulseX + 18, y);
+                        trail.addColorStop(0, `rgba(${beamColor}, 0)`);
+                        trail.addColorStop(0.72, `rgba(${beamColor}, 0.12)`);
+                        trail.addColorStop(1, `rgba(${beamColor}, 0.72)`);
+                        glowCtx.save();
+                        glowCtx.globalCompositeOperation = 'lighter';
+                        glowCtx.fillStyle = trail;
+                        glowCtx.shadowColor = `rgba(${beamColor}, 0.8)`;
+                        glowCtx.shadowBlur = 10;
+                        glowCtx.fillRect(pulseX - 125, y - 0.65, 143, 1.3);
+
+                        const halo = glowCtx.createRadialGradient(pulseX, y, 0, pulseX, y, 19);
+                        halo.addColorStop(0, 'rgba(255, 255, 255, 0.92)');
+                        halo.addColorStop(0.16, `rgba(${beamColor}, 0.7)`);
+                        halo.addColorStop(1, `rgba(${beamColor}, 0)`);
+                        glowCtx.fillStyle = halo;
+                        glowCtx.beginPath();
+                        glowCtx.arc(pulseX, y, 19, 0, Math.PI * 2);
+                        glowCtx.fill();
+                        glowCtx.restore();
+                    }
+                });
+
+                // Controlled gates connect two rails: a restrained entanglement motif.
+                [[0, 1, 0.13], [2, 3, 0.87], [4, 5, 0.17]].forEach(([a, b, ratio], i) => {
+                    const x = width * ratio + px * 0.24;
+                    const y1 = rails[a].y + py * (0.18 + a * 0.025);
+                    const y2 = rails[b].y + py * (0.18 + b * 0.025);
+                    const c = i % 2 ? 'rgba(17, 146, 232, 0.30)' : 'rgba(138, 63, 252, 0.32)';
+                    ctx.strokeStyle = c;
+                    ctx.lineWidth = 0.8;
+                    ctx.beginPath();
+                    ctx.moveTo(x, y1);
+                    ctx.lineTo(x, y2);
+                    ctx.stroke();
+                    ctx.fillStyle = c;
+                    ctx.beginPath();
+                    ctx.arc(x, y1, 3.2, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.beginPath();
+                    ctx.arc(x, y2, 8, 0, Math.PI * 2);
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.moveTo(x - 5, y2); ctx.lineTo(x + 5, y2);
+                    ctx.moveTo(x, y2 - 5); ctx.lineTo(x, y2 + 5);
+                    ctx.stroke();
+                });
+
+                if (width > 760) {
+                    drawBlochSphere(68 + px * 0.42, height * 0.51 + py * 0.3, 31, sceneTime,
+                        'rgba(133, 87, 255, 0.27)');
+                    drawBlochSphere(width - 72 + px * 0.42, height * 0.38 + py * 0.3, 25, -sceneTime,
+                        'rgba(29, 164, 238, 0.25)');
+
+                    ctx.font = '400 10px "IBM Plex Mono", monospace';
+                    ctx.fillStyle = 'rgba(161, 176, 224, 0.18)';
+                    ctx.textAlign = 'left';
+                    ctx.fillText('qc.h(0)', 28 + px * 0.28, height - 78);
+                    ctx.fillText('qc.cx(0, 1)', 28 + px * 0.28, height - 61);
+                    ctx.textAlign = 'right';
+                    ctx.fillText('Statevector(qc)', width - 28 + px * 0.28, height - 52);
+                }
+
+                if (!isReduced) raf = requestAnimationFrame(draw);
+            };
+
+            const restart = () => {
+                cancelAnimationFrame(raf);
+                buildScene();
+                draw(performance.now());
+            };
+
+            window.addEventListener('resize', restart, { passive: true });
+            window.addEventListener('pointermove', (event) => {
+                pointer.tx = event.clientX / Math.max(width, 1);
+                pointer.ty = event.clientY / Math.max(height, 1);
+            }, { passive: true });
+            document.addEventListener('visibilitychange', () => {
+                cancelAnimationFrame(raf);
+                if (!document.hidden) draw(performance.now());
+            });
+            reduceMotion.addEventListener?.('change', restart);
+            restart();
+        })();
+
         // Scroll progress bar
         const scrollFill = document.getElementById('scrollFill');
         const updateScroll = () => {
@@ -1826,6 +2287,24 @@
         // Sections without their own nav link borrow another link's highlight
         const navAlias = { register: 'home' };
         const sections = Array.from(document.querySelectorAll('.section'));
+        const currentLabel = document.getElementById('navCurrentText');
+        const sectionNames = {
+            home: 'Home',
+            register: 'Register',
+            speakers: 'Speakers',
+            resources: 'Resources',
+            schedule: 'Schedule',
+            hackathon: 'Labs',
+            organizers: 'Organizers'
+        };
+        let currentSectionId = null;
+
+        const updateCurrentLabel = (nextId) => {
+            if (!currentLabel || nextId === currentSectionId) return;
+            currentSectionId = nextId;
+            currentLabel.textContent = sectionNames[nextId] || nextId;
+        };
+
         const updateActiveSection = () => {
             const navH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 80;
             const trigger = window.scrollY + navH + 8;
@@ -1834,6 +2313,7 @@
                 if (s.offsetTop <= trigger) current = s;
             }
             const id = navAlias[current.id] || current.id;
+            updateCurrentLabel(current.id);
             setActive(linkFor(id));
         };
         window.addEventListener('scroll', updateActiveSection, { passive: true });
