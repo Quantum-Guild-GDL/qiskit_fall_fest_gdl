@@ -998,8 +998,16 @@
             transition: color 0.4s ease;
         }
         .timeline-item.is-now .tl-speaker { color: rgba(255, 255, 255, 0.6); }
+        .tl-talk-title {
+            font-size: 0.95rem;
+            font-weight: 400;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 0.25rem;
+        }
 
         /* ---------- Organizers grid ---------- */
+        #speakers .reveal,
         #organizers .reveal,
         #resources .reveal { width: 100%; }
 
@@ -1059,6 +1067,13 @@
         .org-name {
             font-size: 1.05rem;
             font-weight: 600;
+        }
+
+        .speaker-role {
+            font-size: 0.85rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.55);
+            margin-top: 0.3rem;
         }
 
         /* ---------- Resources (IBM SkillsBuild credentials) ---------- */
@@ -1645,7 +1660,13 @@
             <div class="reveal">
                 <p class="section-label">Speakers</p>
                 <h2>Featured Voices</h2>
-                <span class="soon-tag">Soon</span>
+                <div class="organizers-grid">
+                    <a class="organizer" href="https://www.linkedin.com/in/clauziuz/" target="_blank" rel="noopener noreferrer">
+                        <div class="avatar">CZ<img src="assets/organizers/claudia-zendejas.jpeg" alt="Claudia Zendejas Morales" onerror="this.remove()"></div>
+                        <div class="org-name">Claudia Zendejas Morales</div>
+                        <div class="speaker-role">Investigadora · CINVESTAV</div>
+                    </a>
+                </div>
             </div>
         </section>
 
@@ -1878,6 +1899,7 @@
                             <div class="tl-card">
                                 <div class="tl-time">12:00 – 13:00</div>
                                 <div class="tl-title">Speaker Session: <span>Claudia Zendejas Morales</span></div>
+                                <div class="tl-talk-title">Más allá del entrelazamiento: juegos no locales y los límites de las correlaciones clásicas</div>
                                 <div class="tl-tags">
                                     <span class="tl-tag tl-inperson">In person</span>
                                     <span class="tl-tag tl-online">Live</span>
