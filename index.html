@@ -1007,6 +1007,7 @@
         }
 
         /* ---------- Organizers grid ---------- */
+        #speakers .reveal,
         #organizers .reveal,
         #resources .reveal { width: 100%; }
 
@@ -1066,6 +1067,13 @@
         .org-name {
             font-size: 1.05rem;
             font-weight: 600;
+        }
+
+        .speaker-role {
+            font-size: 0.85rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.55);
+            margin-top: 0.3rem;
         }
 
         /* ---------- Resources (IBM SkillsBuild credentials) ---------- */
@@ -1652,7 +1660,13 @@
             <div class="reveal">
                 <p class="section-label">Speakers</p>
                 <h2>Featured Voices</h2>
-                <span class="soon-tag">Soon</span>
+                <div class="organizers-grid">
+                    <a class="organizer" href="https://www.linkedin.com/in/clauziuz/" target="_blank" rel="noopener noreferrer">
+                        <div class="avatar">CZ<img src="assets/organizers/claudia-zendejas.jpeg" alt="Claudia Zendejas Morales" onerror="this.remove()"></div>
+                        <div class="org-name">Claudia Zendejas Morales</div>
+                        <div class="speaker-role">Investigadora · CINVESTAV</div>
+                    </a>
+                </div>
             </div>
         </section>
 
