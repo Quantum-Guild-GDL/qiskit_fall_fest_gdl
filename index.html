@@ -647,7 +647,84 @@
             font-size: 1.05rem;
             font-weight: 300;
             color: rgba(255, 255, 255, 0.6);
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .reg-countdown-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin: 0 auto 3rem;
+            padding: 1.5rem 2rem;
+            max-width: 600px;
+            background: rgba(18, 20, 65, 0.35);
+            border: 1px solid rgba(17, 146, 232, 0.25);
+            border-radius: 20px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+        }
+
+        .reg-notice {
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.9);
+            letter-spacing: 0.02em;
+            text-align: center;
+        }
+
+        .reg-notice strong {
+            color: #fff;
+            background: linear-gradient(90deg, var(--purple), var(--blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .reg-countdown {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.85rem;
+            flex-wrap: wrap;
+        }
+
+        .reg-cd-unit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 64px;
+            padding: 0.6rem 0.8rem;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+        }
+
+        .reg-cd-val {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .reg-cd-lbl {
+            font-size: 0.68rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 0.35rem;
+        }
+
+        .reg-cd-sep {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--blue);
+            opacity: 0.7;
+            margin-top: -0.8rem;
         }
 
         .reg-cards {
@@ -1614,6 +1691,33 @@
                 <h2>Join the Fest</h2>
                 <p class="reg-subtitle">Both tracks are completely free. Choose the experience that fits you best.</p>
 
+                <div class="reg-countdown-wrap">
+                    <div class="reg-notice">
+                        📢 Las inscripciones se abren el <strong>viernes 25 de septiembre</strong>
+                    </div>
+                    <div class="reg-countdown" id="regCountdown">
+                        <div class="reg-cd-unit">
+                            <span class="reg-cd-val" id="cdDays">--</span>
+                            <span class="reg-cd-lbl">Días</span>
+                        </div>
+                        <span class="reg-cd-sep">:</span>
+                        <div class="reg-cd-unit">
+                            <span class="reg-cd-val" id="cdHours">--</span>
+                            <span class="reg-cd-lbl">Horas</span>
+                        </div>
+                        <span class="reg-cd-sep">:</span>
+                        <div class="reg-cd-unit">
+                            <span class="reg-cd-val" id="cdMins">--</span>
+                            <span class="reg-cd-lbl">Min</span>
+                        </div>
+                        <span class="reg-cd-sep">:</span>
+                        <div class="reg-cd-unit">
+                            <span class="reg-cd-val" id="cdSecs">--</span>
+                            <span class="reg-cd-lbl">Seg</span>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="reg-cards">
 
                     <!-- In-Person + Online -->
@@ -1831,7 +1935,7 @@
                             <div class="tl-card">
                                 <div class="tl-time">11:00 – 11:20</div>
                                 <div class="tl-title"><span>IBM Quantum Platform</span></div>
-                                <div class="tl-speaker">Speaker: <span>TBA</span></div>
+                                <div class="tl-speaker">Speakers: <span>Yra Cano, Cuauhtemoc Salvador Gonzalez Mejia</span></div>
                                 <div class="tl-tags">
                                     <span class="tl-tag tl-inperson">In person</span>
                                     <span class="tl-tag tl-online">Live</span>
@@ -1844,7 +1948,7 @@
                             <div class="tl-card">
                                 <div class="tl-time">11:25 – 11:50</div>
                                 <div class="tl-title"><span>Qiskit / Workshop</span></div>
-                                <div class="tl-speaker">Speaker: <span>TBA</span></div>
+                                <div class="tl-speaker">Speaker: <span>Jose Ramon Diaz Lara</span></div>
                                 <div class="tl-tags">
                                     <span class="tl-tag tl-inperson">In person</span>
                                     <span class="tl-tag tl-online">Live</span>
@@ -1857,7 +1961,7 @@
                             <div class="tl-card">
                                 <div class="tl-time">11:55 – 12:25</div>
                                 <div class="tl-title"><span>Algorithms</span></div>
-                                <div class="tl-speaker">Speaker: <span>Eva Nayeli Hernández Pulido</span></div>
+                                <div class="tl-speaker">Speakers: <span>Eva Nayeli Hernandez Pulido, Adolfo Reynoso, Jorge Saul Salas Villalobos</span></div>
                                 <div class="tl-tags">
                                     <span class="tl-tag tl-inperson">In person</span>
                                     <span class="tl-tag tl-online">Live</span>
@@ -1870,7 +1974,7 @@
                             <div class="tl-card">
                                 <div class="tl-time">12:25 – 12:55</div>
                                 <div class="tl-title"><span>Algorithms Workshop</span></div>
-                                <div class="tl-speaker">Speaker: <span>TBA</span></div>
+                                <div class="tl-speaker">Speakers: <span>Eva Nayeli Hernandez Pulido, Adolfo Reynoso, Jorge Saul Salas Villalobos</span></div>
                                 <div class="tl-tags">
                                     <span class="tl-tag tl-inperson">In person</span>
                                     <span class="tl-tag tl-online">Live</span>
@@ -1890,7 +1994,8 @@
                             <span class="tl-node"></span>
                             <div class="tl-card">
                                 <div class="tl-time">09:00 – 10:00</div>
-                                <div class="tl-title">Speaker Session: <span>Jesús</span></div>
+                                <div class="tl-title">Transpilación, mitigación de errores, optimización de circuitos</div>
+                                <div class="tl-speaker">Speaker: <span>Jesús Rolón</span></div>
                                 <div class="tl-tags">
                                     <span class="tl-tag tl-inperson">In person</span>
                                     <span class="tl-tag tl-online">Live</span>
@@ -2455,6 +2560,45 @@
         window.addEventListener('load', updateAllSchedules);
         if (document.fonts && document.fonts.ready) document.fonts.ready.then(updateAllSchedules);
         setInterval(updateAllSchedules, 30000);
+
+        // ---------- Registration Countdown (Sept 25, 2026 00:00 CST / America/Mexico_City) ----------
+        const initRegCountdown = () => {
+            const targetDate = new Date('2026-09-25T00:00:00-06:00').getTime();
+            const daysEl = document.getElementById('cdDays');
+            const hoursEl = document.getElementById('cdHours');
+            const minsEl = document.getElementById('cdMins');
+            const secsEl = document.getElementById('cdSecs');
+            const countdownContainer = document.getElementById('regCountdown');
+
+            if (!daysEl || !hoursEl || !minsEl || !secsEl) return;
+
+            const updateCountdown = () => {
+                const now = new Date().getTime();
+                const diff = targetDate - now;
+
+                if (diff <= 0) {
+                    if (countdownContainer) {
+                        countdownContainer.innerHTML = '<span style="color: var(--blue); font-weight: 600; font-size: 1.1rem;">¡Inscripciones abiertas!</span>';
+                    }
+                    return;
+                }
+
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+                daysEl.textContent = String(days).padStart(2, '0');
+                hoursEl.textContent = String(hours).padStart(2, '0');
+                minsEl.textContent = String(mins).padStart(2, '0');
+                secsEl.textContent = String(secs).padStart(2, '0');
+            };
+
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        };
+
+        initRegCountdown();
     </script>
 </body>
 </html>
