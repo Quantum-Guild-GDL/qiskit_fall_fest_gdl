@@ -1160,80 +1160,132 @@
             margin: 2.5rem auto 0;
         }
 
-        .resource-card {
-            display: grid;
-            grid-template-columns: 220px 1fr;
-            gap: 2rem;
-            align-items: center;
+        .learning-plan-card {
+            display: flex;
+            flex-direction: column;
             text-align: left;
-            padding: 1.75rem;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 2.25rem;
+            border: 1px solid rgba(17, 146, 232, 0.3);
             border-radius: 24px;
-            background: rgba(255, 255, 255, 0.02);
+            background: linear-gradient(135deg, rgba(138, 63, 252, 0.08), rgba(17, 146, 232, 0.08));
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 16px 48px rgba(4, 4, 25, 0.25);
             transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s ease;
         }
 
-        .resource-card:hover {
-            border-color: rgba(17, 146, 232, 0.4);
-            background: rgba(255, 255, 255, 0.04);
+        .learning-plan-card:hover {
+            border-color: rgba(17, 146, 232, 0.6);
             transform: translateY(-3px);
         }
 
-        .resource-badge {
-            width: 100%;
-            aspect-ratio: 1 / 1;
-            object-fit: cover;
-            border-radius: 16px;
-        }
-
-        .resource-title {
-            font-size: 1.6rem;
-            font-weight: 600;
-            margin-bottom: 1.1rem;
-        }
-
-        .resource-meta {
-            display: flex;
-            flex-direction: column;
-            gap: 0.55rem;
-            margin-bottom: 1.25rem;
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .resource-meta div {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.6rem;
-        }
-
-        .resource-meta svg {
-            flex-shrink: 0;
-            width: 18px;
-            height: 18px;
-            margin-top: 2px;
+        .learning-plan-badge-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            align-self: flex-start;
+            padding: 0.35rem 0.85rem;
+            border-radius: 999px;
+            background: rgba(17, 146, 232, 0.15);
+            border: 1px solid rgba(17, 146, 232, 0.35);
             color: var(--blue);
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.08rem;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
         }
 
-        .resource-meta strong {
-            color: #fff;
-            font-weight: 500;
+        .learning-plan-header {
+            margin-bottom: 1.25rem;
         }
 
-        .resource-desc {
-            font-size: 0.95rem;
+        .learning-plan-title {
+            font-size: 1.85rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            background: linear-gradient(45deg, #ffffff, rgba(255, 255, 255, 0.85));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .learning-plan-desc {
+            font-size: 1rem;
             font-weight: 300;
-            line-height: 1.6;
-            color: rgba(255, 255, 255, 0.75);
-            margin-bottom: 1.5rem;
+            line-height: 1.65;
+            color: rgba(255, 255, 255, 0.82);
+            margin-bottom: 1.75rem;
         }
 
-        .resource-footer {
+        .learning-plan-badges-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .badge-preview-card {
             display: flex;
             align-items: center;
-            justify-content: flex-end;
+            gap: 1.25rem;
+            padding: 1.25rem;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+
+        .badge-preview-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.18);
+        }
+
+        .badge-preview-img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 12px;
+            flex-shrink: 0;
+        }
+
+        .badge-preview-info h4 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.35rem;
+            color: #fff;
+        }
+
+        .badge-preview-info p {
+            font-size: 0.84rem;
+            font-weight: 300;
+            line-height: 1.45;
+            color: rgba(255, 255, 255, 0.65);
+        }
+
+        .learning-plan-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             flex-wrap: wrap;
-            gap: 1rem;
+            gap: 1.25rem;
+            padding-top: 1.25rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .learning-plan-note {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .learning-plan-note svg {
+            width: 18px;
+            height: 18px;
+            color: var(--blue);
+            flex-shrink: 0;
         }
 
         .start-learning {
@@ -1325,16 +1377,23 @@
         }
 
         @media (max-width: 768px) {
-            .resource-card {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
+            .learning-plan-card {
                 padding: 1.5rem;
             }
-            .resource-badge {
-                max-width: 200px;
-                margin: 0 auto;
+            .learning-plan-title {
+                font-size: 1.45rem;
             }
-            .resource-title { font-size: 1.4rem; }
+            .learning-plan-badges-showcase {
+                grid-template-columns: 1fr;
+            }
+            .learning-plan-footer {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .learning-plan-footer .start-learning {
+                width: 100%;
+                justify-content: center;
+            }
             .resource-links { grid-template-columns: 1fr; }
         }
 
@@ -1791,59 +1850,40 @@
                 <h2>Learn &amp; Build</h2>
                 <div class="resources-grid">
 
-                    <article class="resource-card">
-                        <img class="resource-badge" src="assets/resources/quantum-enigmas.png" alt="Quantum Enigmas — IBM SkillsBuild credential">
-                        <div class="resource-body">
-                            <h3 class="resource-title">Quantum Enigmas</h3>
-                            <div class="resource-meta">
-                                <div>
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1 2.5 3 6 3s6-2 6-3v-5"/></svg>
-                                    <span><strong>Audience:</strong> All learners</span>
-                                </div>
-                                <div>
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18Z"/></svg>
-                                    <span><strong>Languages:</strong> English, French</span>
-                                </div>
-                                <div>
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-                                    <span><strong>Duration:</strong> 8 hours</span>
+                    <article class="learning-plan-card">
+                        <span class="learning-plan-badge-tag">IBM SkillsBuild &bull; Quantum Learning Plan</span>
+                        <div class="learning-plan-header">
+                            <h3 class="learning-plan-title">Quantum Computing Learning Plan</h3>
+                            <p class="learning-plan-desc">Plan de aprendizaje oficial de <strong>IBM SkillsBuild en Quantum Computing</strong>. Es altamente recomendado tomarlo previamente para adquirir los fundamentos te&oacute;ricos y pr&aacute;cticos antes del evento. Al completar la ruta, obtendr&aacute;s las siguientes 2 credenciales oficiales:</p>
+                        </div>
+
+                        <div class="learning-plan-badges-showcase">
+                            <div class="badge-preview-card">
+                                <img class="badge-preview-img" src="assets/resources/quantum-enigmas.png" alt="Quantum Enigmas — IBM SkillsBuild credential">
+                                <div class="badge-preview-info">
+                                    <h4>Quantum Enigmas</h4>
+                                    <p>Fundamentos de computaci&oacute;n cu&aacute;ntica, superposici&oacute;n, entrelazamiento, IBM Quantum Composer y compuertas l&oacute;gicas cu&aacute;nticas.</p>
                                 </div>
                             </div>
-                            <p class="resource-desc">This credential earner has a foundational understanding of quantum computing, including principles such as quantum superposition, entanglement, and measurement. The individual has considered challenges using the IBM Quantum Composer to map problems onto quantum circuits and explored quantum logic gates. The earner can differentiate between classical and quantum computing, explain quantum state measurement, and apply concepts through interactive problem-solving exercises.</p>
-                            <div class="resource-footer">
-                                <a class="start-learning" href="https://ibm.biz/BdGeCX" target="_blank" rel="noopener noreferrer">
-                                    Start learning
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>
-                                </a>
+
+                            <div class="badge-preview-card">
+                                <img class="badge-preview-img" src="assets/resources/explore-emerging-tech.png" alt="Explore Emerging Tech — IBM SkillsBuild credential">
+                                <div class="badge-preview-info">
+                                    <h4>Explore Emerging Tech</h4>
+                                    <p>Visi&oacute;n integral de tecnolog&iacute;as emergentes que impulsan la industria: computaci&oacute;n cu&aacute;ntica, IA, nube y ciberseguridad.</p>
+                                </div>
                             </div>
                         </div>
-                    </article>
 
-                    <article class="resource-card">
-                        <img class="resource-badge" src="assets/resources/explore-emerging-tech.png" alt="Explore Emerging Tech — IBM SkillsBuild credential">
-                        <div class="resource-body">
-                            <h3 class="resource-title">Explore Emerging Tech</h3>
-                            <div class="resource-meta">
-                                <div>
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1 2.5 3 6 3s6-2 6-3v-5"/></svg>
-                                    <span><strong>Audience:</strong> All learners</span>
-                                </div>
-                                <div>
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18Z"/></svg>
-                                    <span><strong>Languages:</strong> English, German, French, Spanish, Brazilian Portuguese, Korean, Polish, Italian, Turkish, Traditional Chinese, Arabic, Hindi, Japanese</span>
-                                </div>
-                                <div>
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-                                    <span><strong>Duration:</strong> 7+ hours</span>
-                                </div>
-                            </div>
-                            <p class="resource-desc">This credential earner has knowledge of emerging technologies that power today's jobs: data, artificial intelligence (AI), cloud computing, cybersecurity, and quantum computing. The individual knows foundational concepts, terminology, and how technologies are applied to solve problems in organizations and business. The earner can use this knowledge to explore careers in tech.</p>
-                            <div class="resource-footer">
-                                <a class="start-learning" href="https://ibm.biz/BdGkad" target="_blank" rel="noopener noreferrer">
-                                    Start learning
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>
-                                </a>
-                            </div>
+                        <div class="learning-plan-footer">
+                            <span class="learning-plan-note">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                                <span>Recomendado completar antes del hackathon y talleres</span>
+                            </span>
+                            <a class="start-learning" href="https://skills.yourlearning.ibm.com/activity/PLAN-3793AAC77C46" target="_blank" rel="noopener noreferrer">
+                                Iniciar Learning Plan
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>
+                            </a>
                         </div>
                     </article>
 
