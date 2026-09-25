@@ -630,6 +630,70 @@
             .venue-map { min-height: 220px; }
         }
 
+        /* ---------- Hero video embed ---------- */
+        .hero-video-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            width: 100%;
+            max-width: 1000px;
+            margin: 1.5rem auto 0;
+            align-items: center;
+        }
+
+        .hero-video-text {
+            text-align: left;
+        }
+
+        .hero-video-text .section-label {
+            margin-bottom: 0.6rem;
+        }
+
+        .hero-video-text h3 {
+            font-size: 1.45rem;
+            font-weight: 700;
+            line-height: 1.25;
+            margin-bottom: 0.75rem;
+            color: #fff;
+        }
+
+        .hero-video-text p {
+            font-size: 0.95rem;
+            font-weight: 300;
+            line-height: 1.65;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .hero-video-wrap {
+            position: relative;
+            width: 100%;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+            background: #000;
+            aspect-ratio: 16 / 9;
+        }
+
+        .hero-video-wrap iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .hero-video-row {
+                grid-template-columns: 1fr;
+            }
+            .hero-video-text {
+                text-align: center;
+            }
+        }
+
         .soon-tag {
             display: inline-block;
             font-size: 1.1rem;
@@ -1741,6 +1805,25 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Promo video -->
+                <div class="hero-video-row">
+                    <div class="hero-video-text">
+                        <p class="section-label">Watch</p>
+                        <h3>What is Qiskit Fall Fest?</h3>
+                        <p>Get a glimpse of the global quantum community — talks, workshops, and hands-on hackathons happening at universities and tech hubs around the world.</p>
+                    </div>
+                    <div class="hero-video-wrap">
+                        <iframe
+                            src="https://www.youtube.com/embed/dtis9E1-4vY"
+                            title="Qiskit Fall Fest"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen
+                            loading="lazy">
+                        </iframe>
+                    </div>
+                </div>
+
             </div>
         </section>
 
