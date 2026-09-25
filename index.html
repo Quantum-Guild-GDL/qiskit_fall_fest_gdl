@@ -365,6 +365,8 @@
         }
 
         .section {
+            position: relative;
+            isolation: isolate;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -373,6 +375,65 @@
             text-align: center;
             padding: calc(var(--nav-h) + 3rem) 2rem 3rem;
             scroll-margin-top: var(--nav-h);
+        }
+
+        .section > .reveal {
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-mascot {
+            position: absolute;
+            z-index: 0;
+            height: auto;
+            opacity: 0.18;
+            filter: saturate(0.68) brightness(0.74) contrast(0.94)
+                    drop-shadow(0 18px 34px rgba(18, 7, 55, 0.28));
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .mascot--register {
+            top: 12%;
+            right: -4rem;
+            width: clamp(190px, 22vw, 340px);
+            transform: rotate(-5deg);
+        }
+
+        .mascot--speakers {
+            left: -4rem;
+            bottom: 3%;
+            width: clamp(220px, 25vw, 370px);
+            transform: rotate(8deg);
+        }
+
+        .mascot--resources {
+            top: 5%;
+            right: 1rem;
+            width: clamp(180px, 18vw, 280px);
+            transform: rotate(4deg);
+        }
+
+        .mascot--schedule {
+            top: 34%;
+            left: -5rem;
+            width: clamp(220px, 24vw, 360px);
+            transform: rotate(-9deg);
+        }
+
+        .mascot--hackathon {
+            right: 4%;
+            bottom: 5%;
+            width: clamp(260px, 31vw, 460px);
+            opacity: 0.24;
+            transform: rotate(-3deg);
+        }
+
+        .mascot--organizers {
+            top: 8%;
+            left: 0;
+            width: clamp(190px, 20vw, 300px);
+            transform: rotate(6deg);
         }
 
         #home {
@@ -1548,6 +1609,7 @@
             .reveal { opacity: 1; transform: none; transition: none; }
             .nav-indicator { transition: opacity 0.3s ease; }
             .timeline-now { animation: none; transition: opacity 0.3s ease; }
+            .footer-cat { transition: none; }
         }
 
         /* ---------- Scroll progress bar ---------- */
@@ -1578,6 +1640,29 @@
             padding: 3rem 1rem 2.5rem;
             position: relative;
             z-index: 1;
+        }
+
+        .footer-cat {
+            position: fixed;
+            right: clamp(0.6rem, 2vw, 2rem);
+            bottom: 0;
+            z-index: 90;
+            width: clamp(125px, 12vw, 185px);
+            height: auto;
+            opacity: 0;
+            filter: saturate(0.74) brightness(0.88)
+                    drop-shadow(0 -8px 24px rgba(101, 46, 196, 0.3));
+            transform: translateY(112%);
+            transition: transform 0.85s cubic-bezier(0.22, 1.15, 0.36, 1),
+                        opacity 0.45s ease;
+            pointer-events: none;
+            user-select: none;
+            will-change: transform, opacity;
+        }
+
+        .footer-cat.is-visible {
+            opacity: 0.9;
+            transform: translateY(47%);
         }
 
         .footer-disclaimer {
@@ -1750,6 +1835,26 @@
             .event-meta { font-size: 0.75rem; letter-spacing: 0.045rem; }
             .hero-intro { margin: 1.35rem auto 1.9rem; line-height: 1.68; }
             .venue-card { margin-top: 1.75rem; }
+            .section-mascot {
+                width: min(38vw, 150px);
+                opacity: 0.11;
+                filter: saturate(0.55) brightness(0.68) contrast(0.9);
+            }
+            .mascot--register { top: 5%; right: -2rem; }
+            .mascot--speakers { left: -2.5rem; bottom: 1%; }
+            .mascot--resources { top: 2%; right: -2rem; }
+            .mascot--schedule { top: 14%; left: -3rem; }
+            .mascot--hackathon {
+                right: -3rem;
+                bottom: 17%;
+                width: min(58vw, 220px);
+                opacity: 0.16;
+            }
+            .mascot--organizers { top: 3%; left: -2rem; }
+            .footer-cat {
+                right: 0.45rem;
+                width: 120px;
+            }
 
             /* Timeline collapses to a single left-aligned column */
             .timeline { max-width: 520px; }
@@ -1828,7 +1933,6 @@
                 <div class="hero-main-row">
                     <!-- Event overview -->
                     <div class="hero-main-left">
-                        <p class="hero-kicker">A global quantum computing celebration</p>
                         <div class="hero-title-wrap">
                             <img class="hero-title-mascot" src="assets/qcat-hero.png" alt="" aria-hidden="true">
                             <h1><span class="hero-title-main">Qiskit Fall Fest</span> <span class="hero-title-accent">GDL 2026</span></h1>
@@ -1898,6 +2002,7 @@
         </section>
 
         <section class="section" id="register">
+            <img class="section-mascot mascot--register" src="assets/qcat-vampire.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
             <div class="reveal">
                 <p class="section-label">Register</p>
                 <h2>Join the Fest</h2>
@@ -1969,6 +2074,7 @@
         </section>
 
         <section class="section" id="speakers">
+            <img class="section-mascot mascot--speakers" src="assets/qcat-bat.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
             <div class="reveal">
                 <p class="section-label">Speakers</p>
                 <h2>Featured Voices</h2>
@@ -2003,6 +2109,7 @@
         </section>
 
         <section class="section" id="resources">
+            <img class="section-mascot mascot--resources" src="assets/qcat-catrin.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
             <div class="reveal">
                 <p class="section-label">Resources</p>
                 <h2>Learn &amp; Build</h2>
@@ -2036,7 +2143,7 @@
                         <div class="learning-plan-footer">
                             <span class="learning-plan-note">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-                                <span>Recommended to complete before the hackathon and workshops</span>
+                                <span>Recommended to complete before the labs and workshops</span>
                             </span>
                             <a class="start-learning" href="https://skills.yourlearning.ibm.com/activity/PLAN-3793AAC77C46" target="_blank" rel="noopener noreferrer">
                                 Start Learning Plan
@@ -2076,6 +2183,7 @@
         </section>
 
         <section class="section" id="schedule">
+            <img class="section-mascot mascot--schedule" src="assets/qcat-witch.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
             <div class="reveal">
                 <p class="section-label">Schedule</p>
                 <h2>Event Day Timeline</h2>
@@ -2233,6 +2341,7 @@
         </section>
 
         <section class="section" id="hackathon">
+            <img class="section-mascot mascot--hackathon" src="assets/qcat-hero.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
             <div class="reveal">
                 <p class="section-label">Labs</p>
                 <h2>Quantum Labs</h2>
@@ -2241,6 +2350,7 @@
         </section>
 
         <section class="section" id="organizers">
+            <img class="section-mascot mascot--organizers" src="assets/qcat-vampire.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
             <div class="reveal">
                 <p class="section-label">Organizers</p>
                 <h2>The Team</h2>
@@ -2274,7 +2384,7 @@
         </section>
     </main>
 
-    <footer class="site-footer">
+    <footer class="site-footer" id="siteFooter">
         <div class="footer-card">
             <div class="logos">
                 <img src="assets/IBM_Quantum_logotype_rev_RGB.png" alt="IBM Quantum">
@@ -2290,6 +2400,7 @@
             disregard the request and report it to the organizers.
         </p>
     </footer>
+    <img class="footer-cat" id="footerCat" src="assets/qcat-peek.png" alt="" aria-hidden="true" decoding="async">
 
     <script>
         // ---------- Immersive quantum-circuit background ----------
@@ -2587,6 +2698,18 @@
             });
         }, { threshold: 0.2 });
         document.querySelectorAll('.reveal').forEach((el) => revealObserver.observe(el));
+
+        // Small mascot that peeks up only while the footer is in view.
+        const siteFooter = document.getElementById('siteFooter');
+        const footerCat = document.getElementById('footerCat');
+        if (siteFooter && footerCat) {
+            const footerCatObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    footerCat.classList.toggle('is-visible', entry.isIntersecting);
+                });
+            }, { threshold: 0.2 });
+            footerCatObserver.observe(siteFooter);
+        }
 
         // Highlight the active nav link as sections scroll into view
         const links = document.querySelectorAll('.nav-links a');
