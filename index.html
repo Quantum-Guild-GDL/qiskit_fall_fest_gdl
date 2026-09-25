@@ -643,6 +643,7 @@
             display: flex;
             flex-direction: column;
             text-align: left;
+            min-width: 0;
         }
 
         .hero-main-left .hero-intro {
@@ -655,6 +656,15 @@
             justify-content: flex-start;
         }
 
+        /* ---------- Hero video column ---------- */
+        .hero-video-col {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            align-self: center;
+            min-width: 0;
+        }
+
         /* ---------- Hero video embed ---------- */
         .hero-video-wrap {
             position: relative;
@@ -665,7 +675,6 @@
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
             background: #000;
             aspect-ratio: 16 / 9;
-            align-self: center;
         }
 
         .hero-video-wrap iframe {
@@ -685,6 +694,14 @@
             .hero-main-left {
                 text-align: center;
                 align-items: center;
+            }
+            .hero-main-left .hero-intro {
+                text-align: center;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .hero-main-left .event-date {
+                justify-content: center;
             }
         }
 
@@ -1804,14 +1821,16 @@
                         </div>
                     </div>
                     <!-- Right column: video only -->
-                    <div class="hero-video-wrap">
-                        <iframe
-                            src="https://www.youtube.com/embed/dtis9E1-4vY"
-                            title="Qiskit Fall Fest"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen
-                            loading="lazy">
-                        </iframe>
+                    <div class="hero-video-col">
+                        <div class="hero-video-wrap">
+                            <iframe
+                                src="https://www.youtube.com/embed/dtis9E1-4vY"
+                                title="Qiskit Fall Fest"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen
+                                loading="lazy">
+                            </iframe>
+                        </div>
                     </div>
                 </div>
             </div>
