@@ -376,11 +376,12 @@
         }
 
         #home {
-            padding-top: calc(var(--nav-h) + 3.75rem);
+            justify-content: flex-start;
+            padding-top: calc(var(--nav-h) + 2.75rem);
         }
 
         .hero-content {
-            width: min(1720px, 100%);
+            width: min(1460px, 100%);
             margin-inline: auto;
         }
 
@@ -417,20 +418,51 @@
         }
 
         h1 {
-            font-size: clamp(2.6rem, 6vw, 8.6rem);
+            font-size: clamp(3.5rem, 5.2vw, 6.5rem);
             font-weight: 700;
             margin-bottom: 1.35rem;
             background: linear-gradient(45deg, var(--purple), var(--blue));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            line-height: 1;
+            line-height: 0.94;
             letter-spacing: -0.045em;
             white-space: normal;
             filter: drop-shadow(0 14px 36px rgba(27, 45, 150, 0.16));
         }
 
+        .hero-title-main,
+        .hero-title-accent {
+            display: block;
+        }
+
         .hero-title-accent { white-space: nowrap; }
+
+        .hero-title-wrap {
+            position: relative;
+            width: 100%;
+            isolation: isolate;
+        }
+
+        .hero-title-wrap h1 {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-title-mascot {
+            position: absolute;
+            z-index: 0;
+            top: 46%;
+            right: -3rem;
+            width: clamp(230px, 25vw, 380px);
+            height: auto;
+            opacity: 0.28;
+            filter: saturate(0.62) brightness(0.78) contrast(0.94);
+            transform: translateY(-50%) rotate(-2deg);
+            transform-origin: center;
+            pointer-events: none;
+            user-select: none;
+        }
 
         .hero-intro {
             max-width: 760px;
@@ -515,8 +547,8 @@
             grid-template-columns: 1fr 1fr;
             gap: 0;
             width: 100%;
-            max-width: 1000px;
-            margin: 3.5rem auto 0;
+            max-width: 1120px;
+            margin: clamp(2.25rem, 4vw, 3.75rem) auto 0;
             border: 1px solid rgba(255, 255, 255, 0.11);
             border-radius: 26px;
             overflow: hidden;
@@ -630,13 +662,13 @@
             .venue-map { min-height: 220px; }
         }
 
-        /* ---------- Hero two-column layout (video left, text+venue right) ---------- */
+        /* ---------- Hero two-column layout ---------- */
         .hero-main-row {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
+            grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+            gap: clamp(2.5rem, 4.5vw, 5rem);
             width: 100%;
-            align-items: start;
+            align-items: center;
         }
 
         .hero-main-left {
@@ -646,10 +678,15 @@
             min-width: 0;
         }
 
+        .hero-main-left .hero-kicker {
+            align-self: flex-start;
+        }
+
         .hero-main-left .hero-intro {
             text-align: left;
             margin-left: 0;
             margin-right: 0;
+            margin-bottom: 0;
         }
 
         .hero-main-left .event-date {
@@ -661,7 +698,7 @@
             display: flex;
             align-items: flex-start;
             justify-content: center;
-            align-self: start;
+            align-self: center;
             min-width: 0;
             order: -1;
         }
@@ -688,13 +725,26 @@
             display: block;
         }
 
-        @media (max-width: 900px) {
+        @media (max-width: 980px) {
             .hero-main-row {
                 grid-template-columns: 1fr;
+                gap: 2.25rem;
+                max-width: 820px;
+                margin-inline: auto;
             }
             .hero-main-left {
                 text-align: center;
                 align-items: center;
+            }
+            .hero-main-left .hero-kicker {
+                align-self: center;
+            }
+            .hero-title-mascot {
+                top: 50%;
+                right: 50%;
+                width: min(68vw, 350px);
+                opacity: 0.2;
+                transform: translate(50%, -50%) rotate(-2deg);
             }
             .hero-main-left .hero-intro {
                 text-align: center;
@@ -703,6 +753,10 @@
             }
             .hero-main-left .event-date {
                 justify-content: center;
+            }
+            .hero-video-col {
+                order: initial;
+                width: 100%;
             }
         }
 
@@ -1687,8 +1741,11 @@
                 white-space: normal;
                 margin-bottom: 1.2rem;
             }
-            .hero-title-main,
-            .hero-title-accent { display: block; }
+            .hero-title-mascot {
+                width: min(84vw, 320px);
+                opacity: 0.16;
+                filter: saturate(0.5) brightness(0.72) contrast(0.9);
+            }
             .event-date { gap: 0.55rem; margin-top: 1rem; }
             .event-meta { font-size: 0.75rem; letter-spacing: 0.045rem; }
             .hero-intro { margin: 1.35rem auto 1.9rem; line-height: 1.68; }
@@ -1769,10 +1826,13 @@
         <section class="section" id="home">
             <div class="reveal hero-content">
                 <div class="hero-main-row">
-                    <!-- Left column: text + venue -->
+                    <!-- Event overview -->
                     <div class="hero-main-left">
                         <p class="hero-kicker">A global quantum computing celebration</p>
-                        <h1><span class="hero-title-main">Qiskit Fall Fest</span> <span class="hero-title-accent">GDL 2026</span></h1>
+                        <div class="hero-title-wrap">
+                            <img class="hero-title-mascot" src="assets/qcat-hero.png" alt="" aria-hidden="true">
+                            <h1><span class="hero-title-main">Qiskit Fall Fest</span> <span class="hero-title-accent">GDL 2026</span></h1>
+                        </div>
                         <div class="event-date" aria-label="October 28 to 30, 2026, Guadalajara, México">
                             <span class="event-meta">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
@@ -1790,38 +1850,8 @@
                             for three days of talks, hands-on workshops, and a quantum hackathon —
                             right here in Mexico's tech capital.
                         </p>
-                        <div class="venue-card">
-                            <div class="venue-map-wrap">
-                                <iframe
-                                    class="venue-map"
-                                    src="https://maps.google.com/maps?q=AstraZeneca+GITC+Guadalajara,+Blvd.+Puerta+de+Hierro+4965,+Zapopan,+Jalisco,+Mexico&output=embed&hl=en&z=16"
-                                    allowfullscreen=""
-                                    loading="lazy"
-                                    referrerpolicy="no-referrer-when-downgrade"
-                                    title="AstraZeneca GITC Guadalajara — venue map">
-                                </iframe>
-                            </div>
-                            <div class="venue-info">
-                                <div class="venue-label">Event venue · Oct 28</div>
-                                <div class="venue-name">AstraZeneca GITC Guadalajara</div>
-                                <div class="venue-address">
-                                    Blvd. Puerta de Hierro 4965<br>
-                                    Zapopan, Jalisco, México
-                                </div>
-                                <a class="venue-directions"
-                                   href="https://www.google.com/maps/search/Blvd.+Puerta+de+Hierro+4965,+Zapopan,+Jalisco,+Mexico"
-                                   target="_blank" rel="noopener noreferrer">
-                                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-                                    Get directions
-                                </a>
-                                <div class="venue-disclaimer">
-                                    <strong>📅 Oct 28 — In person</strong> at AstraZeneca GITC Guadalajara.<br>
-                                    <strong>💻 Oct 29 &amp; 30 — Online only.</strong> All sessions will be streamed virtually; no physical venue required.
-                                </div>
-                            </div>
-                        </div>
                     </div>
-                    <!-- Right column: video only -->
+                    <!-- Promo video -->
                     <div class="hero-video-col">
                         <div class="hero-video-wrap">
                             <iframe
@@ -1831,6 +1861,36 @@
                                 allowfullscreen
                                 loading="lazy">
                             </iframe>
+                        </div>
+                    </div>
+                </div>
+                <div class="venue-card">
+                    <div class="venue-map-wrap">
+                        <iframe
+                            class="venue-map"
+                            src="https://maps.google.com/maps?q=AstraZeneca+GITC+Guadalajara,+Blvd.+Puerta+de+Hierro+4965,+Zapopan,+Jalisco,+Mexico&output=embed&hl=en&z=16"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                            title="AstraZeneca GITC Guadalajara — venue map">
+                        </iframe>
+                    </div>
+                    <div class="venue-info">
+                        <div class="venue-label">Event venue · Oct 28</div>
+                        <div class="venue-name">AstraZeneca GITC Guadalajara</div>
+                        <div class="venue-address">
+                            Blvd. Puerta de Hierro 4965<br>
+                            Zapopan, Jalisco, México
+                        </div>
+                        <a class="venue-directions"
+                           href="https://www.google.com/maps/search/Blvd.+Puerta+de+Hierro+4965,+Zapopan,+Jalisco,+Mexico"
+                           target="_blank" rel="noopener noreferrer">
+                            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                            Get directions
+                        </a>
+                        <div class="venue-disclaimer">
+                            <strong>📅 Oct 28 — In person</strong> at AstraZeneca GITC Guadalajara.<br>
+                            <strong>💻 Oct 29 &amp; 30 — Online only.</strong> All sessions will be streamed virtually; no physical venue required.
                         </div>
                     </div>
                 </div>
