@@ -417,16 +417,16 @@
         }
 
         h1 {
-            font-size: clamp(3.4rem, 7.1vw, 8.6rem);
+            font-size: clamp(2.6rem, 6vw, 8.6rem);
             font-weight: 700;
             margin-bottom: 1.35rem;
             background: linear-gradient(45deg, var(--purple), var(--blue));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            line-height: 0.9;
+            line-height: 1;
             letter-spacing: -0.045em;
-            white-space: nowrap;
+            white-space: normal;
             filter: drop-shadow(0 14px 36px rgba(27, 45, 150, 0.16));
         }
 
@@ -516,7 +516,7 @@
             gap: 0;
             width: 100%;
             max-width: 1000px;
-            margin: 2.25rem auto 0;
+            margin: 3.5rem auto 0;
             border: 1px solid rgba(255, 255, 255, 0.11);
             border-radius: 26px;
             overflow: hidden;
@@ -630,7 +630,7 @@
             .venue-map { min-height: 220px; }
         }
 
-        /* ---------- Hero two-column layout (text+venue left, video right) ---------- */
+        /* ---------- Hero two-column layout (video left, text+venue right) ---------- */
         .hero-main-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -659,10 +659,11 @@
         /* ---------- Hero video column ---------- */
         .hero-video-col {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
-            align-self: center;
+            align-self: start;
             min-width: 0;
+            order: -1;
         }
 
         /* ---------- Hero video embed ---------- */
