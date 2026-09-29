@@ -231,6 +231,32 @@
                         opacity 0.3s ease;
         }
 
+        .nav-discord {
+            position: relative;
+            flex-shrink: 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            color: rgba(255, 255, 255, 0.78);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 0.5rem 0.9rem;
+            border-radius: 999px;
+            transition: color 0.3s ease, background 0.3s ease;
+        }
+
+        .nav-discord:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .nav-discord img {
+            width: 18px;
+            height: 18px;
+            object-fit: contain;
+        }
+
         .nav-cta {
             position: relative;
             overflow: hidden;
@@ -1920,6 +1946,10 @@
                 <li><a href="#hackathon">Labs</a></li>
                 <li><a href="#organizers">Organizers</a></li>
             </ul>
+            <a href="https://discord.gg/Urrt5njrA" class="nav-discord" target="_blank" rel="noopener noreferrer">
+                <img src="assets/discord-icon.svg" alt="Discord">
+                Discord
+            </a>
             <a href="#register" class="nav-cta">Register</a>
             <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
                 <span></span><span></span><span></span>
@@ -1937,10 +1967,10 @@
                             <img class="hero-title-mascot" src="assets/qcat-hero.png" alt="" aria-hidden="true">
                             <h1><span class="hero-title-main">Qiskit Fall Fest</span> <span class="hero-title-accent">GDL 2026</span></h1>
                         </div>
-                        <div class="event-date" aria-label="October 28 to 30, 2026, Guadalajara, México">
+                        <div class="event-date" aria-label="October 28 to 29, 2026, Guadalajara, México">
                             <span class="event-meta">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
-                                October 28 – 30, 2026
+                                October 28 – 29, 2026
                             </span>
                             <span class="event-meta">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>
@@ -1951,7 +1981,7 @@
                             <strong>Qiskit Fall Fest</strong> is a global series of quantum computing events
                             organized by communities around the world in partnership with IBM Quantum.
                             The Guadalajara edition brings together students, developers, and quantum enthusiasts
-                            for three days of talks, hands-on workshops, and a quantum hackathon —
+                            for two days of talks, hands-on workshops, and quantum labs —
                             right here in Mexico's tech capital.
                         </p>
                     </div>
@@ -1980,7 +2010,7 @@
                         </iframe>
                     </div>
                     <div class="venue-info">
-                        <div class="venue-label">Event venue · Oct 28</div>
+                        <div class="venue-label">Event venue · Oct 28 &amp; 29</div>
                         <div class="venue-name">AstraZeneca GITC Guadalajara</div>
                         <div class="venue-address">
                             Blvd. Puerta de Hierro 4965<br>
@@ -1994,7 +2024,7 @@
                         </a>
                         <div class="venue-disclaimer">
                             <strong>📅 Oct 28 — In person</strong> at AstraZeneca GITC Guadalajara.<br>
-                            <strong>💻 Oct 29 &amp; 30 — Online only.</strong> All sessions will be streamed virtually; no physical venue required.
+                            <strong>💻 Oct 29 — Online only.</strong> All sessions will be streamed virtually; no physical venue required.
                         </div>
                     </div>
                 </div>
@@ -2007,6 +2037,7 @@
                 <p class="section-label">Register</p>
                 <h2>Join the Fest</h2>
                 <p class="reg-subtitle">Both tracks are completely free. Choose the experience that fits you best.</p>
+
 
                 <div class="reg-countdown-wrap">
                     <div class="reg-notice">
@@ -2042,14 +2073,15 @@
                         <span class="reg-badge">Limited · 150 spots</span>
                         <p class="reg-type">Tier 1</p>
                         <h3>In-Person + Online</h3>
-                        <p class="reg-tagline">The full experience — be there on Oct 28 and join virtually for the rest.</p>
+                        <p class="reg-tagline">The full experience — be there on Oct 28 and join virtually on Oct 29.</p>
                         <ul class="reg-perks">
-                            <li>Live talks &amp; workshops on-site (Oct 28, 11 AM – 1 PM)</li>
+                            <li>Live talks &amp; workshops on-site (Oct 28)</li>
                             <li>Exclusive swag pack</li>
                             <li>Networking sessions with speakers &amp; peers</li>
-                            <li>Scavenger hunts &amp; on-site activities</li>
+                            <li>Fun dynamics to win an exclusive swag pack</li>
+                            <li>Quantum Labs (Oct 28 &amp; 29)</li>
                             <li>IBM SkillsBuild Certification</li>
-                            <li>Access to all streamed sessions (Oct 29 &amp; 30)</li>
+                            <li>Access to all streamed sessions (Oct 29)</li>
                         </ul>
                         <a
                           href="https://luma.com/event/evt-AJuVWFO3OupmXLV"
@@ -2068,7 +2100,8 @@
                         <h3>Online Only</h3>
                         <p class="reg-tagline">Attend from anywhere — all sessions streamed live and available on demand.</p>
                         <ul class="reg-perks">
-                            <li>Live-streamed talks &amp; workshops (Oct 28–30)</li>
+                            <li>Live-streamed talks &amp; workshops (Oct 28 &amp; 29)</li>
+                            <li>Quantum Labs (Oct 28 &amp; 29)</li>
                             <li>IBM SkillsBuild Certification</li>
                             <li>Access to all recorded sessions</li>
                         </ul>
@@ -2206,7 +2239,7 @@
             <div class="reveal">
                 <p class="section-label">Schedule</p>
                 <h2>Event Day Timeline</h2>
-                <p class="schedule-note">October 28 – 30, 2026 &nbsp;·&nbsp; Mexico City time (CST)</p>
+                <p class="schedule-note">October 28 – 29, 2026 &nbsp;·&nbsp; Mexico City time (CST)</p>
 
                 <!-- Day selector tabs -->
                 <div class="day-tabs">
@@ -2319,7 +2352,7 @@
                             <span class="tl-node"></span>
                             <div class="tl-card">
                                 <div class="tl-time">09:00 – 10:00</div>
-                                <div class="tl-title">Transpilación, mitigación de errores, optimización de circuitos</div>
+                                <div class="tl-title">Transpilation, Error Mitigation &amp; Circuit Optimization</div>
                                 <div class="tl-speaker">Speaker: <span>Jesús Rolón</span></div>
                                 <div class="tl-tags">
                                     <span class="tl-tag tl-inperson">In person</span>
@@ -2344,7 +2377,7 @@
                             <span class="tl-node"></span>
                             <div class="tl-card">
                                 <div class="tl-time">12:00 – 13:00</div>
-                                <div class="tl-title">Más allá del entrelazamiento: juegos no locales y los límites de las correlaciones clásicas</div>
+                                <div class="tl-title">Beyond Entanglement: Non-local Games and the Limits of Classical Correlations</div>
                                 <div class="tl-speaker">Speaker: <span>Claudia Zendejas Morales</span></div>
                                 <div class="tl-tags">
                                     <span class="tl-tag tl-inperson">In person</span>
@@ -2930,7 +2963,7 @@
                         btn.style.removeProperty('cursor');
                         btn.removeAttribute('tabindex');
                         btn.removeAttribute('aria-disabled');
-                        btn.textContent = 'Inscribirse al evento';
+                        btn.textContent = 'Register now';
                     });
                     return;
                 }
