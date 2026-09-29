@@ -1220,6 +1220,40 @@
                         transform 0.4s ease, background 0.4s ease;
         }
 
+        /* Parallel dual-track items (side-by-side on desktop) */
+        .timeline-row--parallel {
+            display: flex;
+            position: relative;
+            padding-bottom: 2.5rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .timeline-row--parallel:last-child { padding-bottom: 0; }
+        .timeline-row--parallel .tl-parallel-left,
+        .timeline-row--parallel .tl-parallel-right {
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+            padding-bottom: 0;
+            left: 0 !important;
+        }
+        .timeline-row--parallel .tl-parallel-left {
+            padding-right: 2.75rem;
+            text-align: right;
+        }
+        .timeline-row--parallel .tl-parallel-right {
+            padding-left: 2.75rem;
+            text-align: left;
+        }
+        .timeline-row--parallel .tl-parallel-left .tl-node {
+            right: -7px;
+            left: auto;
+        }
+        .timeline-row--parallel .tl-parallel-right .tl-node {
+            left: -7px;
+            right: auto;
+        }
+
         /* Active session highlight */
         .timeline-item.is-now .tl-card {
             border-color: rgba(17, 146, 232, 0.6);
@@ -1893,16 +1927,25 @@
             .timeline::before { left: 20px; }
             .timeline-now { left: 20px; }
             .timeline-item:nth-of-type(odd),
-            .timeline-item:nth-of-type(even) {
-                left: 0;
-                width: 100%;
-                padding: 0 0 2rem 3rem;
-                text-align: left;
+            .timeline-item:nth-of-type(even),
+            .timeline-row--parallel .tl-parallel-left,
+            .timeline-row--parallel .tl-parallel-right {
+                left: 0 !important;
+                width: 100% !important;
+                padding: 0 0 2rem 3rem !important;
+                text-align: left !important;
+            }
+            .timeline-row--parallel {
+                display: flex;
+                flex-direction: column;
+                padding-bottom: 0;
             }
             .timeline-item:nth-of-type(odd) .tl-node,
-            .timeline-item:nth-of-type(even) .tl-node {
-                left: 13px;
-                right: auto;
+            .timeline-item:nth-of-type(even) .tl-node,
+            .timeline-row--parallel .tl-parallel-left .tl-node,
+            .timeline-row--parallel .tl-parallel-right .tl-node {
+                left: 13px !important;
+                right: auto !important;
             }
             .tl-card { width: 100%; }
         }
@@ -2286,26 +2329,28 @@
                             </div>
                         </div>
 
-                        <div class="timeline-item" data-start="10:20" data-end="11:50">
-                            <span class="tl-node"></span>
-                            <div class="tl-card">
-                                <div class="tl-time">10:20 – 11:50</div>
-                                <div class="tl-title"><span>Round Table</span></div>
-                                <div class="tl-tags">
-                                    <span class="tl-tag tl-dm">Decision Makers</span>
+                        <div class="timeline-row--parallel">
+                            <div class="timeline-item tl-parallel-left" data-start="10:20" data-end="11:50">
+                                <span class="tl-node"></span>
+                                <div class="tl-card">
+                                    <div class="tl-time">10:20 – 11:50</div>
+                                    <div class="tl-title"><span>Round Table</span></div>
+                                    <div class="tl-tags">
+                                        <span class="tl-tag tl-dm">Decision Makers</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="timeline-item" data-start="11:00" data-end="11:20">
-                            <span class="tl-node"></span>
-                            <div class="tl-card">
-                                <div class="tl-time">11:00 – 11:20</div>
-                                <div class="tl-title"><span>IBM Quantum Platform</span></div>
-                                <div class="tl-speaker">Speakers: <span>Yra Cano, Cuauhtemoc Salvador Gonzalez Mejia</span></div>
-                                <div class="tl-tags">
-                                    <span class="tl-tag tl-inperson">In person</span>
-                                    <span class="tl-tag tl-online">Live</span>
+                            <div class="timeline-item tl-parallel-right" data-start="11:00" data-end="11:20">
+                                <span class="tl-node"></span>
+                                <div class="tl-card">
+                                    <div class="tl-time">11:00 – 11:20</div>
+                                    <div class="tl-title"><span>IBM Quantum Platform</span></div>
+                                    <div class="tl-speaker">Speakers: <span>Yra Cano, Cuauhtemoc Salvador Gonzalez Mejia</span></div>
+                                    <div class="tl-tags">
+                                        <span class="tl-tag tl-inperson">In person</span>
+                                        <span class="tl-tag tl-online">Live</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
