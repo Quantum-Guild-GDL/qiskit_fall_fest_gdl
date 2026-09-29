@@ -2920,6 +2920,15 @@
                     if (countdownContainer) {
                         countdownContainer.innerHTML = '<span style="color: var(--blue); font-weight: 600; font-size: 1.1rem;">Registration is now open!</span>';
                     }
+                    // Unlock registration buttons
+                    document.querySelectorAll('.luma-checkout--button.reg-btn').forEach(btn => {
+                        btn.style.removeProperty('pointer-events');
+                        btn.style.removeProperty('opacity');
+                        btn.style.removeProperty('cursor');
+                        btn.removeAttribute('tabindex');
+                        btn.removeAttribute('aria-disabled');
+                        btn.textContent = 'Inscribirse al evento';
+                    });
                     return;
                 }
 
