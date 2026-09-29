@@ -1222,7 +1222,9 @@
 
         /* Parallel dual-track items (side-by-side on desktop) */
         .timeline-row--parallel {
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            row-gap: 1.25rem;
             position: relative;
             padding-bottom: 2.5rem;
             width: 100%;
@@ -1230,9 +1232,9 @@
         }
         .timeline-row--parallel:last-child { padding-bottom: 0; }
         .timeline-row--parallel .tl-parallel-left,
-        .timeline-row--parallel .tl-parallel-stack {
+        .timeline-row--parallel .tl-parallel-right {
             position: relative;
-            width: 50%;
+            width: 100%;
             box-sizing: border-box;
             padding-bottom: 0;
             left: 0 !important;
@@ -1241,27 +1243,17 @@
             padding-right: 2.75rem;
             text-align: right;
         }
-        .timeline-row--parallel .tl-parallel-stack {
+        .timeline-row--parallel .tl-parallel-right {
             padding-left: 2.75rem;
             text-align: left;
-            display: flex;
-            flex-direction: column;
-            gap: 1.25rem;
             margin-top: 5rem;
-        }
-        .timeline-row--parallel .tl-parallel-right {
-            position: relative;
-            left: 0 !important;
-            width: 100%;
-            padding: 0;
-            text-align: left;
         }
         .timeline-row--parallel .tl-parallel-left .tl-node {
             right: -7px;
             left: auto;
         }
         .timeline-row--parallel .tl-parallel-right .tl-node {
-            left: calc(-2.75rem - 7px);
+            left: -7px;
             right: auto;
         }
 
@@ -1951,10 +1943,7 @@
                 flex-direction: column;
                 padding-bottom: 0;
             }
-            .timeline-row--parallel .tl-parallel-stack {
-                width: 100%;
-                padding: 0;
-                gap: 0;
+            .timeline-row--parallel .tl-parallel-right {
                 margin-top: 0;
             }
             .timeline-item:nth-of-type(odd) .tl-node,
@@ -2358,30 +2347,28 @@
                                 </div>
                             </div>
 
-                            <div class="tl-parallel-stack">
-                                <div class="timeline-item tl-parallel-right" data-start="11:00" data-end="11:20">
-                                    <span class="tl-node"></span>
-                                    <div class="tl-card">
-                                        <div class="tl-time">11:00 – 11:20</div>
-                                        <div class="tl-title"><span>IBM Quantum Platform</span></div>
-                                        <div class="tl-speaker">Speakers: <span>Yra Cano, Cuauhtemoc Salvador Gonzalez Mejia</span></div>
-                                        <div class="tl-tags">
-                                            <span class="tl-tag tl-inperson">In person</span>
-                                            <span class="tl-tag tl-online">Live</span>
-                                        </div>
+                            <div class="timeline-item tl-parallel-right" data-start="11:00" data-end="11:20">
+                                <span class="tl-node"></span>
+                                <div class="tl-card">
+                                    <div class="tl-time">11:00 – 11:20</div>
+                                    <div class="tl-title"><span>IBM Quantum Platform</span></div>
+                                    <div class="tl-speaker">Speakers: <span>Yra Cano, Cuauhtemoc Salvador Gonzalez Mejia</span></div>
+                                    <div class="tl-tags">
+                                        <span class="tl-tag tl-inperson">In person</span>
+                                        <span class="tl-tag tl-online">Live</span>
                                     </div>
                                 </div>
+                            </div>
 
-                                <div class="timeline-item tl-parallel-right" data-start="11:25" data-end="11:50">
-                                    <span class="tl-node"></span>
-                                    <div class="tl-card">
-                                        <div class="tl-time">11:25 – 11:50</div>
-                                        <div class="tl-title"><span>Qiskit / Workshop</span></div>
-                                        <div class="tl-speaker">Speaker: <span>Jose Ramon Diaz Lara</span></div>
-                                        <div class="tl-tags">
-                                            <span class="tl-tag tl-inperson">In person</span>
-                                            <span class="tl-tag tl-online">Live</span>
-                                        </div>
+                            <div class="timeline-item tl-parallel-left" data-start="11:25" data-end="11:50">
+                                <span class="tl-node"></span>
+                                <div class="tl-card">
+                                    <div class="tl-time">11:25 – 11:50</div>
+                                    <div class="tl-title"><span>Qiskit / Workshop</span></div>
+                                    <div class="tl-speaker">Speaker: <span>Jose Ramon Diaz Lara</span></div>
+                                    <div class="tl-tags">
+                                        <span class="tl-tag tl-inperson">In person</span>
+                                        <span class="tl-tag tl-online">Live</span>
                                     </div>
                                 </div>
                             </div>
