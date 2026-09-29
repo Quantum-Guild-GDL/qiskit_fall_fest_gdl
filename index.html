@@ -1750,7 +1750,8 @@
         @media (max-width: 768px) {
             /* Show the hamburger; keep Register pinned to the right */
             .nav-toggle { display: flex; }
-            .nav-cta { margin-left: auto; }
+            .nav-discord { margin-left: auto; }
+            .nav-cta { margin-left: 0; }
             .nav-mobile-identity {
                 display: flex;
                 flex-direction: column;
@@ -1913,6 +1914,9 @@
             .nav-mobile-identity { max-width: 5.9rem; }
             .nav-brand-name { font-size: 0.58rem; }
             .nav-current { max-width: 5.6rem; font-size: 0.56rem; }
+            /* Discord: icon-only on small screens */
+            .nav-discord { padding: 0.4rem; gap: 0; }
+            .nav-discord-label { display: none; }
         }
 
         @media (max-width: 360px) {
@@ -1948,7 +1952,7 @@
             </ul>
             <a href="https://discord.gg/Urrt5njrA" class="nav-discord" target="_blank" rel="noopener noreferrer">
                 <img src="assets/discord-icon.svg" alt="Discord">
-                Discord
+                <span class="nav-discord-label">Discord</span>
             </a>
             <a href="#register" class="nav-cta">Register</a>
             <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
