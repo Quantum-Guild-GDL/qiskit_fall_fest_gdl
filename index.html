@@ -2007,7 +2007,7 @@
                 <img src="assets/discord-icon.svg" alt="Discord">
                 <span class="nav-discord-label">Discord</span>
             </a>
-            <a href="#register" class="nav-cta">Register</a>
+            <a href="#register" class="nav-cta">Get your ticket</a>
             <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
                 <span></span><span></span><span></span>
             </button>
@@ -2118,10 +2118,8 @@
                           class="luma-checkout--button reg-btn"
                           data-luma-action="checkout"
                           data-luma-event-id="evt-AJuVWFO3OupmXLV"
-                          style="pointer-events:none;opacity:0.6;cursor:not-allowed;display:block;text-align:center;text-decoration:none;"
-                          tabindex="-1"
-                          aria-disabled="true"
-                        >Registration opening soon</a>
+                          style="display:block;text-align:center;text-decoration:none;"
+                        >Get your ticket</a>
                     </div>
 
                     <!-- Online Only -->
@@ -2140,10 +2138,8 @@
                           class="luma-checkout--button reg-btn"
                           data-luma-action="checkout"
                           data-luma-event-id="evt-S8R5neso2zYaS7p"
-                          style="pointer-events:none;opacity:0.6;cursor:not-allowed;display:block;text-align:center;text-decoration:none;"
-                          tabindex="-1"
-                          aria-disabled="true"
-                        >Registration opening soon</a>
+                          style="display:block;text-align:center;text-decoration:none;"
+                        >Get your ticket</a>
                     </div>
 
                 </div>
@@ -2827,7 +2823,7 @@
         const currentLabel = document.getElementById('navCurrentText');
         const sectionNames = {
             home: 'Home',
-            register: 'Register',
+            register: 'Get your ticket',
             speakers: 'Speakers',
             resources: 'Resources',
             schedule: 'Schedule',
@@ -2984,7 +2980,7 @@
                         btn.style.removeProperty('cursor');
                         btn.removeAttribute('tabindex');
                         btn.removeAttribute('aria-disabled');
-                        btn.textContent = 'Register now';
+                        btn.textContent = 'Get your ticket';
                     });
                     return;
                 }
