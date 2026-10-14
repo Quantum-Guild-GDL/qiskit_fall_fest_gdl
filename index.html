@@ -111,8 +111,21 @@
         }
 
         @media (max-width: 700px) {
-            .quantum-field { opacity: 0.62; }
-            .quantum-field--front { opacity: 0.38; }
+            /* Keep one lightweight animated layer on mobile. The oversized rotating
+               glow and second blended canvas are costly on tile-based mobile GPUs. */
+            body {
+                background-size: 100% 100%;
+                animation: none;
+            }
+            body::before {
+                animation: none;
+                transform: none;
+            }
+            .quantum-field {
+                opacity: 0.62;
+                mix-blend-mode: normal;
+            }
+            .quantum-field--front { display: none; }
         }
 
         @keyframes gradientShift {
@@ -2151,7 +2164,7 @@
                     <a class="organizer" href="#" target="_blank" rel="noopener noreferrer">
                         <div class="avatar">AR<img src="assets/organizers/adolfo-reynoso.jpeg" alt="Adolfo Reynoso" onerror="this.remove()"></div>
                         <div class="org-name">Adolfo Reynoso</div>
-                        <div class="speaker-role">Software &amp; Quantum enthusiast</div>
+                        <div class="speaker-role">Software Developer &amp; Quantum enthusiast</div>
                     </a>
                     <a class="organizer" href="https://www.linkedin.com/in/clauziuz/" target="_blank" rel="noopener noreferrer">
                         <div class="avatar">CZ<img src="assets/organizers/claudia-zendejas.jpeg" alt="Claudia Zendejas Morales" onerror="this.remove()"></div>
@@ -2295,7 +2308,8 @@
                                 <div class="tl-time">09:00 – 09:15</div>
                                 <div class="tl-title"><span>Kick off</span></div>
                                 <div class="tl-tags">
-                                    <span class="tl-tag tl-online">Live</span>
+                                    <span class="tl-tag tl-inperson">In person</span>
+                                    <span class="tl-tag tl-online">Online</span>
                                 </div>
                             </div>
                         </div>
@@ -2307,32 +2321,34 @@
                                 <div class="tl-title"><span>Intro Quantum Computing</span></div>
                                 <div class="tl-speaker">Speaker: <span>TBA</span></div>
                                 <div class="tl-tags">
-                                    <span class="tl-tag tl-online">Live</span>
+                                    <span class="tl-tag tl-inperson">In person</span>
+                                    <span class="tl-tag tl-online">Online</span>
                                 </div>
                             </div>
                         </div>
 
                         <div class="timeline-row--parallel">
-                            <div class="timeline-item tl-parallel-left" data-start="10:20" data-end="11:50">
+                            <div class="timeline-item tl-parallel-left" data-start="10:30" data-end="12:00">
                                 <span class="tl-node"></span>
                                 <div class="tl-card">
-                                    <div class="tl-time">10:20 – 11:50</div>
+                                    <div class="tl-time">10:30 – 12:00</div>
                                     <div class="tl-title"><span>Round Table</span></div>
                                     <div class="tl-speaker">Speaker: <span>Salvador E. Venegas-Andraca</span></div>
                                     <div class="tl-tags">
-                                        <span class="tl-tag tl-dm">Decision Makers</span>
+                                        <span class="tl-tag tl-inperson">In person</span>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="timeline-item tl-parallel-right" data-start="11:00" data-end="11:20">
+                            <div class="timeline-item tl-parallel-right" data-start="10:30" data-end="11:20">
                                 <span class="tl-node"></span>
                                 <div class="tl-card">
-                                    <div class="tl-time">11:00 – 11:20</div>
+                                    <div class="tl-time">10:30 – 11:20</div>
                                     <div class="tl-title"><span>IBM Quantum Platform</span></div>
                                     <div class="tl-speaker">Speakers: <span>Yra Cano, Cuauhtemoc Salvador Gonzalez Mejia</span></div>
                                     <div class="tl-tags">
-                                        <span class="tl-tag tl-online">Live</span>
+                                        <span class="tl-tag tl-inperson">In person</span>
+                                        <span class="tl-tag tl-online">Online</span>
                                     </div>
                                 </div>
                             </div>
@@ -2344,7 +2360,8 @@
                                     <div class="tl-title"><span>Qiskit / Workshop</span></div>
                                     <div class="tl-speaker">Speaker: <span>Jose Ramon Diaz Lara</span></div>
                                     <div class="tl-tags">
-                                        <span class="tl-tag tl-online">Live</span>
+                                        <span class="tl-tag tl-inperson">In person</span>
+                                        <span class="tl-tag tl-online">Online</span>
                                     </div>
                                 </div>
                             </div>
@@ -2357,7 +2374,8 @@
                                 <div class="tl-title"><span>Algorithms</span></div>
                                 <div class="tl-speaker">Speakers: <span>Eva Nayeli Hernandez Pulido, Adolfo Reynoso, Jorge Saul Salas Villalobos</span></div>
                                 <div class="tl-tags">
-                                    <span class="tl-tag tl-online">Live</span>
+                                    <span class="tl-tag tl-inperson">In person</span>
+                                    <span class="tl-tag tl-online">Online</span>
                                 </div>
                             </div>
                         </div>
@@ -2369,7 +2387,8 @@
                                 <div class="tl-title"><span>Algorithms Workshop</span></div>
                                 <div class="tl-speaker">Speakers: <span>Eva Nayeli Hernandez Pulido, Adolfo Reynoso, Jorge Saul Salas Villalobos</span></div>
                                 <div class="tl-tags">
-                                    <span class="tl-tag tl-online">Live</span>
+                                    <span class="tl-tag tl-inperson">In person</span>
+                                    <span class="tl-tag tl-online">Online</span>
                                 </div>
                             </div>
                         </div>
@@ -2389,8 +2408,7 @@
                                 <div class="tl-title">Transpilation, Error Mitigation &amp; Circuit Optimization</div>
                                 <div class="tl-speaker">Speaker: <span>Jesús Rolón</span></div>
                                 <div class="tl-tags">
-                                    <span class="tl-tag tl-inperson">In person</span>
-                                    <span class="tl-tag tl-online">Live</span>
+                                    <span class="tl-tag tl-online">Online</span>
                                 </div>
                             </div>
                         </div>
@@ -2402,8 +2420,7 @@
                                 <div class="tl-title">Beyond Entanglement: Non-local Games and the Limits of Classical Correlations</div>
                                 <div class="tl-speaker">Speaker: <span>Claudia Zendejas Morales</span></div>
                                 <div class="tl-tags">
-                                    <span class="tl-tag tl-inperson">In person</span>
-                                    <span class="tl-tag tl-online">Live</span>
+                                    <span class="tl-tag tl-online">Online</span>
                                 </div>
                             </div>
                         </div>
@@ -2476,31 +2493,40 @@
             const highlightCanvas = document.getElementById('quantumHighlights');
             const glowCtx = highlightCanvas.getContext('2d');
             const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+            const mobileView = window.matchMedia('(max-width: 700px)');
             const pointer = { x: 0.5, y: 0.42, tx: 0.5, ty: 0.42 };
             let width = 0;
             let height = 0;
             let dpr = 1;
+            let isMobile = mobileView.matches;
             let rails = [];
             let raf = 0;
-            let lastFrame = 0;
+            let resizeTimer = 0;
 
             const railRatios = [0.16, 0.29, 0.43, 0.58, 0.73, 0.87];
             const gateLabels = ['H', 'X', 'Z', 'RY', 'CX'];
 
             const buildScene = () => {
-                dpr = Math.min(window.devicePixelRatio || 1, 2);
+                isMobile = mobileView.matches;
+                dpr = Math.min(window.devicePixelRatio || 1, isMobile ? 1.25 : 2);
                 width = window.innerWidth;
                 height = window.innerHeight;
                 canvas.width = Math.round(width * dpr);
                 canvas.height = Math.round(height * dpr);
-                canvas.style.width = width + 'px';
-                canvas.style.height = height + 'px';
+                canvas.style.width = isMobile ? '100%' : width + 'px';
+                canvas.style.height = isMobile ? '100%' : height + 'px';
                 ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-                highlightCanvas.width = Math.round(width * dpr);
-                highlightCanvas.height = Math.round(height * dpr);
-                highlightCanvas.style.width = width + 'px';
-                highlightCanvas.style.height = height + 'px';
-                glowCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+                if (!isMobile) {
+                    highlightCanvas.width = Math.round(width * dpr);
+                    highlightCanvas.height = Math.round(height * dpr);
+                    highlightCanvas.style.width = width + 'px';
+                    highlightCanvas.style.height = height + 'px';
+                    glowCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+                } else {
+                    // Release the large backing buffer while the front canvas is hidden.
+                    highlightCanvas.width = 1;
+                    highlightCanvas.height = 1;
+                }
 
                 const gatePositions = width < 700 ? [0.055, 0.945] : [0.08, 0.22, 0.78, 0.92];
                 rails = railRatios.map((ratio, row) => ({
@@ -2517,7 +2543,7 @@
             const roundedRect = (x, y, size, glow, label) => {
                 ctx.save();
                 ctx.shadowColor = glow;
-                ctx.shadowBlur = 13;
+                ctx.shadowBlur = isMobile ? 5 : 13;
                 ctx.fillStyle = 'rgba(18, 14, 48, 0.76)';
                 ctx.strokeStyle = glow;
                 ctx.lineWidth = 1;
@@ -2565,7 +2591,7 @@
                 const isReduced = reduceMotion.matches;
                 const sceneTime = isReduced ? 4200 : time;
                 ctx.clearRect(0, 0, width, height);
-                glowCtx.clearRect(0, 0, width, height);
+                if (!isMobile) glowCtx.clearRect(0, 0, width, height);
 
                 pointer.x += (pointer.tx - pointer.x) * 0.025;
                 pointer.y += (pointer.ty - pointer.y) * 0.025;
@@ -2621,7 +2647,7 @@
 
                     // Selected pulses cross in front of the interface. A long, soft
                     // probability trail makes the scene feel layered rather than flat.
-                    if (row % 2 === 0) {
+                    if (!isMobile && row % 2 === 0) {
                         const beamColor = row % 4
                             ? '82, 196, 255'
                             : '184, 108, 255';
@@ -2697,7 +2723,16 @@
                 draw(performance.now());
             };
 
-            window.addEventListener('resize', restart, { passive: true });
+            const scheduleRestart = () => {
+                // Mobile browser chrome continuously changes innerHeight while the
+                // user scrolls. Let CSS stretch the canvas for that small change and
+                // only rebuild its backing buffer when its width actually changes.
+                if (isMobile && Math.abs(window.innerWidth - width) < 2) return;
+                window.clearTimeout(resizeTimer);
+                resizeTimer = window.setTimeout(restart, isMobile ? 180 : 60);
+            };
+
+            window.addEventListener('resize', scheduleRestart, { passive: true });
             window.addEventListener('pointermove', (event) => {
                 pointer.tx = event.clientX / Math.max(width, 1);
                 pointer.ty = event.clientY / Math.max(height, 1);
@@ -2707,6 +2742,7 @@
                 if (!document.hidden) draw(performance.now());
             });
             reduceMotion.addEventListener?.('change', restart);
+            mobileView.addEventListener?.('change', restart);
             restart();
         })();
 
