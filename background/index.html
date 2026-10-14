@@ -313,6 +313,66 @@
             filter: drop-shadow(0 35px 70px rgba(4, 2, 20, 0.52));
         }
 
+        .animation-only {
+            display: grid;
+            place-items: center;
+        }
+
+        .animation-visual {
+            position: relative;
+            display: grid;
+            place-items: center;
+            width: min(92vw, 1500px);
+            height: min(76vh, 820px);
+            margin: auto;
+        }
+
+        .animation-visual::before,
+        .animation-visual::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .animation-visual::before {
+            width: min(47vw, 760px);
+            aspect-ratio: 1;
+            border: 1px solid rgba(190, 149, 255, 0.2);
+            box-shadow: 0 0 90px rgba(105, 41, 196, 0.14);
+            animation: orbit 18s linear infinite;
+        }
+
+        .animation-visual::after {
+            width: min(39vw, 630px);
+            aspect-ratio: 1;
+            border: 1px dashed rgba(51, 177, 255, 0.16);
+            animation: orbit 14s linear infinite reverse;
+        }
+
+        .animation-visual .event-logo {
+            width: min(43vw, 700px);
+            max-height: 69vh;
+            animation: logoFloat 6s ease-in-out infinite alternate;
+        }
+
+        @keyframes logoFloat {
+            to { transform: translateY(-1.5%) scale(1.012); }
+        }
+
+        .animation-cat-a {
+            right: 8%;
+            bottom: -2%;
+            width: min(20vw, 340px);
+        }
+
+        .animation-cat-b {
+            left: 9%;
+            top: 8%;
+            width: min(13vw, 210px);
+            opacity: 0.72;
+        }
+
         .cat {
             position: absolute;
             z-index: 1;
@@ -619,6 +679,28 @@
             .next-cat { width: min(48vw, 450px); max-height: 36vh; }
             .qr-card { width: min(50vw, 420px); min-width: 250px; }
             .logo-row { justify-content: center; }
+            .animation-visual {
+                width: 100%;
+                height: min(72vh, 720px);
+            }
+            .animation-visual .event-logo {
+                width: min(76vw, 590px);
+                max-height: 62vh;
+            }
+            .animation-visual::before { width: min(80vw, 620px); }
+            .animation-visual::after { width: min(66vw, 510px); }
+            .animation-cat-a {
+                right: -2%;
+                bottom: 1%;
+                width: min(35vw, 270px);
+            }
+            .animation-cat-b {
+                left: 0;
+                top: 5%;
+                width: min(24vw, 185px);
+            }
+            .qr-layout h2 { font-size: clamp(2.5rem, 8vw, 4.5rem); }
+            .qr-layout .lead { margin-top: 1rem; font-size: 1rem; }
         }
 
         @media (max-width: 700px) {
@@ -661,54 +743,12 @@
     </header>
 
     <main class="scene-stage" aria-live="polite">
-        <section class="scene active" data-scene="welcome" aria-label="Bienvenida">
-            <div class="scene-grid">
-                <div class="scene-copy">
-                    <p class="eyebrow">Welcome · Bienvenidos</p>
-                    <h1><span class="gradient">Qiskit Fall Fest</span><br>GDL 2026</h1>
-                    <p class="lead">Dos días para aprender, conectar y construir el futuro de la computación cuántica.</p>
-                    <div class="logo-row">
-                        <span class="logo-card"><img src="../assets/IBM_Quantum_logotype_rev_RGB.png" alt="IBM Quantum"></span>
-                        <span class="logo-card skills"><img src="../assets/ibm-skillsbuild-logo.png" alt="IBM SkillsBuild"></span>
-                    </div>
-                </div>
-                <div class="visual">
-                    <img class="event-logo" src="../assets/qff-gdl-logo.png" alt="Qiskit Fall Fest GDL 2026">
-                    <img class="cat welcome-cat" src="../assets/qcat-peek.png" alt="" aria-hidden="true">
-                </div>
+        <section class="scene active animation-only" data-scene="welcome" aria-label="Animación del evento">
+            <div class="animation-visual">
+                <img class="event-logo" src="../assets/qff-gdl-neon-logo.png" alt="Qiskit Fall Fest Guadalajara 2026">
+                <img class="cat animation-cat-a" src="../assets/qcat-peek.png" alt="" aria-hidden="true">
+                <img class="cat animation-cat-b" src="../assets/qcat-bat.png" alt="" aria-hidden="true">
             </div>
-        </section>
-
-        <section class="scene" data-scene="next" aria-label="Siguiente sesión">
-            <div class="scene-grid">
-                <div class="scene-copy">
-                    <p class="eyebrow">Program continues</p>
-                    <h2><span class="gradient">Siguiente</span><br>sesión</h2>
-                    <p class="lead">Estamos preparando el escenario. Comenzamos en unos momentos.</p>
-                    <div class="session-card">
-                        <span>Up next</span>
-                        <strong id="next-title">Nueva sesión en breve</strong>
-                        <p class="lead" id="next-speaker">Gracias por acompañarnos</p>
-                    </div>
-                </div>
-                <div class="visual">
-                    <img class="cat next-cat" src="../assets/qcat-witch.png" alt="" aria-hidden="true">
-                </div>
-            </div>
-        </section>
-
-        <section class="scene center-scene" data-scene="break" aria-label="Receso">
-            <div class="scene-copy">
-                <p class="eyebrow">Break time</p>
-                <h2><span class="gradient">Regresamos</span><br>en breve</h2>
-                <p class="lead">Tómate un momento, conoce a la comunidad y prepárate para la siguiente sesión.</p>
-                <div class="logo-row break-logos">
-                    <span class="logo-card"><img src="../assets/IBM_Quantum_logotype_rev_RGB.png" alt="IBM Quantum"></span>
-                    <span class="logo-card skills"><img src="../assets/ibm-skillsbuild-logo.png" alt="IBM SkillsBuild"></span>
-                </div>
-            </div>
-            <img class="cat break-cat-a" src="../assets/qcat-vampire.png" alt="" aria-hidden="true">
-            <img class="cat break-cat-b" src="../assets/qcat-bat.png" alt="" aria-hidden="true">
         </section>
 
         <section class="scene" data-scene="discord" aria-label="Discord">
@@ -746,17 +786,15 @@
     </main>
 
     <div class="controls" aria-label="Controles de escenas">
-        <button type="button" data-go="0" title="Bienvenida">1</button>
-        <button type="button" data-go="1" title="Siguiente sesión">2</button>
-        <button type="button" data-go="2" title="Break">3</button>
-        <button type="button" data-go="3" title="Discord">4</button>
-        <button type="button" data-go="4" title="Check-in">5</button>
+        <button type="button" data-go="0" title="Animación">1</button>
+        <button type="button" data-go="1" title="Discord">2</button>
+        <button type="button" data-go="2" title="Check-in">3</button>
         <button type="button" id="pause" title="Pausar o continuar">Ⅱ</button>
     </div>
 
     <div class="progress-wrap" aria-hidden="true">
         <div class="progress-track"><div class="progress-bar" id="progress"></div></div>
-        <span class="scene-count" id="scene-count">01 / 05</span>
+        <span class="scene-count" id="scene-count">01 / 03</span>
     </div>
 
     <script>
@@ -819,15 +857,10 @@
                     event.preventDefault();
                     setPaused(!paused);
                 }
-                if (/^[1-5]$/.test(event.key)) show(Number(event.key) - 1);
+                if (/^[1-3]$/.test(event.key)) show(Number(event.key) - 1);
                 if (event.key.toLowerCase() === 'f') document.documentElement.requestFullscreen?.();
                 revealControls();
             });
-
-            const customTitle = params.get('title');
-            const customSpeaker = params.get('speaker');
-            if (customTitle) document.getElementById('next-title').textContent = customTitle;
-            if (customSpeaker) document.getElementById('next-speaker').textContent = customSpeaker;
 
             show(current);
             revealControls();
