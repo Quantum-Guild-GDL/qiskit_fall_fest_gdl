@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#090514">
+    <title>Event Background · Qiskit Fall Fest GDL 2026</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/qiskit_white.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --purple: #8a3ffc;
+            --purple-soft: #be95ff;
+            --blue: #33b1ff;
+            --cyan: #08bdba;
+            --ink: #090514;
+            --panel: rgba(18, 13, 44, 0.68);
+            --scene-duration: 30s;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: var(--ink);
+            color: #fff;
+            font-family: "IBM Plex Sans", system-ui, sans-serif;
+        }
+
+        body {
+            position: relative;
+            isolation: isolate;
+            background:
+                radial-gradient(circle at 16% 22%, rgba(105, 41, 196, 0.34), transparent 34%),
+                radial-gradient(circle at 84% 70%, rgba(17, 146, 232, 0.24), transparent 38%),
+                linear-gradient(135deg, #090514 0%, #17103d 48%, #071429 100%);
+        }
+
+        body::before,
+        body::after {
+            content: "";
+            position: fixed;
+            z-index: -3;
+            width: 58vw;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.2;
+            pointer-events: none;
+            animation: drift 18s ease-in-out infinite alternate;
+        }
+
+        body::before {
+            top: -30vw;
+            left: -15vw;
+            background: var(--purple);
+        }
+
+        body::after {
+            right: -24vw;
+            bottom: -34vw;
+            background: var(--blue);
+            animation-delay: -9s;
+        }
+
+        @keyframes drift {
+            to { transform: translate3d(8vw, 5vh, 0) scale(1.12); }
+        }
+
+        #quantum-field {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            width: 100%;
+            height: 100%;
+            opacity: 0.72;
+            pointer-events: none;
+        }
+
+        .noise {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.16;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.14'/%3E%3C/svg%3E");
+            mix-blend-mode: soft-light;
+        }
+
+        .topbar {
+            position: fixed;
+            z-index: 20;
+            top: clamp(20px, 3vw, 48px);
+            left: clamp(24px, 4vw, 72px);
+            right: clamp(24px, 4vw, 72px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            pointer-events: none;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            min-width: 0;
+        }
+
+        .brand-mark {
+            display: grid;
+            place-items: center;
+            width: clamp(44px, 4.3vw, 72px);
+            aspect-ratio: 1;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 50%;
+            background: rgba(8, 5, 23, 0.48);
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.28);
+            backdrop-filter: blur(14px);
+        }
+
+        .brand-mark img {
+            width: 58%;
+            height: 58%;
+        }
+
+        .brand-copy strong,
+        .brand-copy span {
+            display: block;
+        }
+
+        .brand-copy strong {
+            font-size: clamp(0.85rem, 1.2vw, 1.25rem);
+            letter-spacing: 0.035em;
+        }
+
+        .brand-copy span {
+            margin-top: 0.18rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-family: "IBM Plex Mono", monospace;
+            font-size: clamp(0.58rem, 0.78vw, 0.78rem);
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        .live-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.65rem;
+            padding: 0.68rem 1.05rem;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 999px;
+            background: rgba(8, 5, 23, 0.44);
+            color: rgba(255, 255, 255, 0.72);
+            font-family: "IBM Plex Mono", monospace;
+            font-size: clamp(0.58rem, 0.76vw, 0.76rem);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            backdrop-filter: blur(14px);
+        }
+
+        .live-pill::before {
+            content: "";
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--blue);
+            box-shadow: 0 0 14px 4px rgba(51, 177, 255, 0.62);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            50% { opacity: 0.4; transform: scale(0.72); }
+        }
+
+        .scene-stage {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .scene {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            align-items: center;
+            padding: clamp(92px, 9vw, 160px) clamp(38px, 7vw, 132px) clamp(70px, 7vw, 120px);
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(1.025);
+            transition: opacity 1.1s ease, transform 1.25s ease, visibility 1.1s;
+            pointer-events: none;
+        }
+
+        .scene.active {
+            opacity: 1;
+            visibility: visible;
+            transform: none;
+            pointer-events: auto;
+        }
+
+        .scene-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.16fr) minmax(320px, 0.84fr);
+            align-items: center;
+            gap: clamp(2rem, 6vw, 8rem);
+            width: min(1600px, 100%);
+            margin: auto;
+        }
+
+        .scene-copy {
+            position: relative;
+            z-index: 3;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.65rem;
+            margin-bottom: clamp(1rem, 2vw, 2rem);
+            color: var(--blue);
+            font-family: "IBM Plex Mono", monospace;
+            font-size: clamp(0.7rem, 1vw, 1rem);
+            font-weight: 500;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+
+        .eyebrow::before {
+            content: "";
+            width: clamp(28px, 4vw, 64px);
+            height: 1px;
+            background: linear-gradient(90deg, transparent, currentColor);
+        }
+
+        h1,
+        h2 {
+            max-width: 980px;
+            font-size: clamp(3.4rem, 7.4vw, 8.6rem);
+            font-weight: 600;
+            line-height: 0.92;
+            letter-spacing: -0.055em;
+            text-wrap: balance;
+        }
+
+        h1 .gradient,
+        h2 .gradient {
+            color: transparent;
+            background: linear-gradient(105deg, var(--purple-soft), #7f6dff 40%, var(--blue));
+            background-clip: text;
+            -webkit-background-clip: text;
+        }
+
+        .lead {
+            max-width: 850px;
+            margin-top: clamp(1.25rem, 2.5vw, 2.5rem);
+            color: rgba(255, 255, 255, 0.72);
+            font-size: clamp(1.1rem, 1.65vw, 1.75rem);
+            font-weight: 300;
+            line-height: 1.55;
+            text-wrap: balance;
+        }
+
+        .visual {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            place-items: center;
+            min-height: min(66vh, 720px);
+        }
+
+        .visual::before,
+        .visual::after {
+            content: "";
+            position: absolute;
+            border: 1px solid rgba(190, 149, 255, 0.22);
+            border-radius: 50%;
+            animation: orbit 16s linear infinite;
+        }
+
+        .visual::before {
+            width: min(35vw, 620px);
+            aspect-ratio: 1;
+        }
+
+        .visual::after {
+            width: min(27vw, 470px);
+            aspect-ratio: 1;
+            border-color: rgba(51, 177, 255, 0.18);
+            animation-direction: reverse;
+            animation-duration: 12s;
+        }
+
+        @keyframes orbit {
+            to { transform: rotate(360deg); }
+        }
+
+        .event-logo {
+            position: relative;
+            z-index: 2;
+            width: min(34vw, 590px);
+            max-height: 64vh;
+            object-fit: contain;
+            filter: drop-shadow(0 35px 70px rgba(4, 2, 20, 0.52));
+        }
+
+        .cat {
+            position: absolute;
+            z-index: 1;
+            width: min(25vw, 430px);
+            max-height: 55vh;
+            object-fit: contain;
+            filter: drop-shadow(0 28px 45px rgba(2, 1, 16, 0.58));
+            opacity: 0;
+            transform: translateY(12%) scale(0.9);
+        }
+
+        .active .cat {
+            animation: catEntrance 1.3s 0.25s cubic-bezier(0.2, 0.85, 0.25, 1) forwards,
+                       catFloat 5s 1.6s ease-in-out infinite alternate;
+        }
+
+        @keyframes catEntrance {
+            to { opacity: 1; transform: none; }
+        }
+
+        @keyframes catFloat {
+            to { transform: translate3d(0, -2.2%, 0) rotate(1.5deg); }
+        }
+
+        .welcome-cat {
+            right: -5%;
+            bottom: -10%;
+            width: min(20vw, 350px);
+        }
+
+        .next-cat {
+            width: min(31vw, 540px);
+        }
+
+        .break-cat-a {
+            left: -3%;
+            bottom: -18%;
+            width: min(27vw, 470px);
+        }
+
+        .break-cat-b {
+            right: -4%;
+            top: -15%;
+            width: min(18vw, 300px);
+        }
+
+        .logo-row {
+            display: flex;
+            align-items: center;
+            gap: clamp(1.4rem, 3vw, 3.5rem);
+            margin-top: clamp(2rem, 4vw, 4rem);
+        }
+
+        .logo-card {
+            display: grid;
+            place-items: center;
+            min-width: clamp(190px, 18vw, 310px);
+            min-height: clamp(74px, 7vw, 112px);
+            padding: 1.2rem 1.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.11);
+            border-radius: 22px;
+            background: rgba(13, 10, 33, 0.46);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 24px 45px rgba(0, 0, 0, 0.16);
+            backdrop-filter: blur(16px);
+        }
+
+        .logo-card img {
+            display: block;
+            width: 100%;
+            height: clamp(34px, 3.8vw, 58px);
+            object-fit: contain;
+        }
+
+        .logo-card.skills img {
+            height: clamp(38px, 4.3vw, 66px);
+        }
+
+        .session-card {
+            position: relative;
+            z-index: 3;
+            width: min(100%, 680px);
+            margin-top: clamp(2rem, 4vw, 4rem);
+            padding: clamp(1.25rem, 2vw, 2rem);
+            border: 1px solid rgba(51, 177, 255, 0.26);
+            border-radius: 28px;
+            background: linear-gradient(135deg, rgba(17, 11, 46, 0.76), rgba(5, 28, 53, 0.6));
+            box-shadow: 0 28px 70px rgba(0, 0, 0, 0.28);
+            backdrop-filter: blur(20px);
+        }
+
+        .session-card span {
+            display: block;
+            color: var(--blue);
+            font-family: "IBM Plex Mono", monospace;
+            font-size: clamp(0.65rem, 0.9vw, 0.9rem);
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        .session-card strong {
+            display: block;
+            margin-top: 0.7rem;
+            font-size: clamp(1.35rem, 2.3vw, 2.5rem);
+            line-height: 1.15;
+        }
+
+        .center-scene {
+            text-align: center;
+        }
+
+        .center-scene .scene-copy {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .center-scene .eyebrow {
+            justify-content: center;
+        }
+
+        .center-scene .lead,
+        .center-scene h2 {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .break-logos {
+            justify-content: center;
+        }
+
+        .qr-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(320px, 0.68fr);
+            align-items: center;
+            gap: clamp(3rem, 8vw, 10rem);
+            width: min(1480px, 100%);
+            margin: auto;
+        }
+
+        .qr-card {
+            position: relative;
+            z-index: 4;
+            justify-self: center;
+            width: min(33vw, 510px);
+            min-width: 300px;
+            padding: clamp(15px, 1.7vw, 25px);
+            border-radius: 34px;
+            background: #fff;
+            box-shadow:
+                0 0 0 1px rgba(255, 255, 255, 0.55),
+                0 35px 100px rgba(3, 1, 20, 0.55),
+                0 0 80px rgba(51, 177, 255, 0.17);
+            opacity: 0;
+            transform: translateY(28px) scale(0.94);
+        }
+
+        .active .qr-card {
+            animation: qrEntrance 0.9s 0.32s cubic-bezier(0.2, 0.85, 0.25, 1) forwards;
+        }
+
+        @keyframes qrEntrance {
+            to { opacity: 1; transform: none; }
+        }
+
+        .qr-card img {
+            display: block;
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 18px;
+        }
+
+        .qr-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 2rem;
+            padding: 0.8rem 1.15rem;
+            border: 1px solid rgba(255, 255, 255, 0.13);
+            border-radius: 999px;
+            color: rgba(255, 255, 255, 0.72);
+            font-family: "IBM Plex Mono", monospace;
+            font-size: clamp(0.72rem, 0.95vw, 0.95rem);
+            text-decoration: none;
+        }
+
+        .qr-link img {
+            width: 22px;
+            height: 22px;
+        }
+
+        .qr-cat {
+            right: -8%;
+            bottom: -18%;
+            width: min(20vw, 340px);
+            opacity: 0.16;
+        }
+
+        .scene.active .qr-cat {
+            animation: catEntrance 1.3s 0.5s cubic-bezier(0.2, 0.85, 0.25, 1) forwards,
+                       catFloat 5s 1.8s ease-in-out infinite alternate;
+        }
+
+        .progress-wrap {
+            position: fixed;
+            z-index: 30;
+            right: clamp(24px, 4vw, 72px);
+            bottom: clamp(20px, 3vw, 48px);
+            left: clamp(24px, 4vw, 72px);
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+
+        .progress-track {
+            flex: 1;
+            height: 2px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--purple), var(--blue));
+            transform: scaleX(0);
+            transform-origin: left;
+        }
+
+        body:not(.paused) .progress-bar.running {
+            animation: sceneProgress var(--scene-duration) linear forwards;
+        }
+
+        @keyframes sceneProgress {
+            to { transform: scaleX(1); }
+        }
+
+        .scene-count {
+            color: rgba(255, 255, 255, 0.52);
+            font-family: "IBM Plex Mono", monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.14em;
+            white-space: nowrap;
+        }
+
+        .controls {
+            position: fixed;
+            z-index: 40;
+            left: 50%;
+            bottom: clamp(36px, 5vw, 74px);
+            display: flex;
+            gap: 0.45rem;
+            padding: 0.45rem;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 999px;
+            background: rgba(7, 5, 19, 0.7);
+            box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(16px);
+            opacity: 0;
+            transform: translate(-50%, 12px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        body.controls-visible .controls,
+        .controls:focus-within {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+
+        .controls button {
+            display: grid;
+            place-items: center;
+            width: 34px;
+            height: 34px;
+            border: 0;
+            border-radius: 50%;
+            background: transparent;
+            color: rgba(255, 255, 255, 0.65);
+            font: 500 0.72rem "IBM Plex Mono", monospace;
+            cursor: pointer;
+        }
+
+        .controls button:hover,
+        .controls button.active {
+            background: rgba(255, 255, 255, 0.11);
+            color: #fff;
+        }
+
+        @media (max-aspect-ratio: 5 / 4) {
+            .scene-grid,
+            .qr-layout {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                text-align: center;
+            }
+            .scene-grid .lead,
+            .scene-grid h1,
+            .scene-grid h2 {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .visual { min-height: 34vh; }
+            .event-logo { width: min(55vw, 480px); max-height: 34vh; }
+            .visual::before { width: min(52vw, 500px); }
+            .visual::after { width: min(40vw, 380px); }
+            .next-cat { width: min(48vw, 450px); max-height: 36vh; }
+            .qr-card { width: min(50vw, 420px); min-width: 250px; }
+            .logo-row { justify-content: center; }
+        }
+
+        @media (max-width: 700px) {
+            .topbar { left: 18px; right: 18px; top: 18px; }
+            .brand-copy span { display: none; }
+            .live-pill { padding: 0.55rem 0.7rem; }
+            .scene { padding: 92px 24px 62px; }
+            h1, h2 { font-size: clamp(2.7rem, 14vw, 5rem); }
+            .lead { font-size: 1rem; }
+            .logo-row { flex-wrap: wrap; gap: 0.8rem; }
+            .logo-card { min-width: min(44vw, 180px); min-height: 68px; padding: 0.9rem 1.1rem; }
+            .qr-layout { gap: 1.5rem; }
+            .qr-card { width: min(64vw, 330px); min-width: 220px; border-radius: 24px; }
+            .progress-wrap { left: 18px; right: 18px; bottom: 18px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                scroll-behavior: auto !important;
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body class="controls-visible">
+    <canvas id="quantum-field" aria-hidden="true"></canvas>
+    <div class="noise" aria-hidden="true"></div>
+
+    <header class="topbar">
+        <div class="brand">
+            <span class="brand-mark"><img src="../assets/qiskit_white.svg" alt=""></span>
+            <span class="brand-copy">
+                <strong>Qiskit Fall Fest GDL 2026</strong>
+                <span>October 28–29 · Guadalajara</span>
+            </span>
+        </div>
+        <span class="live-pill">Community event</span>
+    </header>
+
+    <main class="scene-stage" aria-live="polite">
+        <section class="scene active" data-scene="welcome" aria-label="Bienvenida">
+            <div class="scene-grid">
+                <div class="scene-copy">
+                    <p class="eyebrow">Welcome · Bienvenidos</p>
+                    <h1><span class="gradient">Qiskit Fall Fest</span><br>GDL 2026</h1>
+                    <p class="lead">Dos días para aprender, conectar y construir el futuro de la computación cuántica.</p>
+                    <div class="logo-row">
+                        <span class="logo-card"><img src="../assets/IBM_Quantum_logotype_rev_RGB.png" alt="IBM Quantum"></span>
+                        <span class="logo-card skills"><img src="../assets/ibm-skillsbuild-logo.png" alt="IBM SkillsBuild"></span>
+                    </div>
+                </div>
+                <div class="visual">
+                    <img class="event-logo" src="../assets/qff-gdl-logo.png" alt="Qiskit Fall Fest GDL 2026">
+                    <img class="cat welcome-cat" src="../assets/qcat-peek.png" alt="" aria-hidden="true">
+                </div>
+            </div>
+        </section>
+
+        <section class="scene" data-scene="next" aria-label="Siguiente sesión">
+            <div class="scene-grid">
+                <div class="scene-copy">
+                    <p class="eyebrow">Program continues</p>
+                    <h2><span class="gradient">Siguiente</span><br>sesión</h2>
+                    <p class="lead">Estamos preparando el escenario. Comenzamos en unos momentos.</p>
+                    <div class="session-card">
+                        <span>Up next</span>
+                        <strong id="next-title">Nueva sesión en breve</strong>
+                        <p class="lead" id="next-speaker">Gracias por acompañarnos</p>
+                    </div>
+                </div>
+                <div class="visual">
+                    <img class="cat next-cat" src="../assets/qcat-witch.png" alt="" aria-hidden="true">
+                </div>
+            </div>
+        </section>
+
+        <section class="scene center-scene" data-scene="break" aria-label="Receso">
+            <div class="scene-copy">
+                <p class="eyebrow">Break time</p>
+                <h2><span class="gradient">Regresamos</span><br>en breve</h2>
+                <p class="lead">Tómate un momento, conoce a la comunidad y prepárate para la siguiente sesión.</p>
+                <div class="logo-row break-logos">
+                    <span class="logo-card"><img src="../assets/IBM_Quantum_logotype_rev_RGB.png" alt="IBM Quantum"></span>
+                    <span class="logo-card skills"><img src="../assets/ibm-skillsbuild-logo.png" alt="IBM SkillsBuild"></span>
+                </div>
+            </div>
+            <img class="cat break-cat-a" src="../assets/qcat-vampire.png" alt="" aria-hidden="true">
+            <img class="cat break-cat-b" src="../assets/qcat-bat.png" alt="" aria-hidden="true">
+        </section>
+
+        <section class="scene" data-scene="discord" aria-label="Discord">
+            <div class="qr-layout">
+                <div class="scene-copy">
+                    <p class="eyebrow">Join the community</p>
+                    <h2>Únete a nuestro<br><span class="gradient">Discord</span></h2>
+                    <p class="lead">Conecta con participantes, speakers y organizadores. Escanea el código para entrar a la comunidad.</p>
+                    <a class="qr-link" href="https://discord.gg/Na6NvVKeG">
+                        <img src="../assets/discord-icon.svg" alt="">
+                        discord.gg/Na6NvVKeG
+                    </a>
+                </div>
+                <div class="qr-card">
+                    <img src="../assets/discord-qr.svg" alt="Código QR para Discord">
+                </div>
+            </div>
+            <img class="cat qr-cat" src="../assets/qcat-catrin.png" alt="" aria-hidden="true">
+        </section>
+
+        <section class="scene" data-scene="checkin" aria-label="Check-in">
+            <div class="qr-layout">
+                <div class="scene-copy">
+                    <p class="eyebrow">Attendance · Check-in</p>
+                    <h2>Registra tu<br><span class="gradient">asistencia</span></h2>
+                    <p class="lead">Escanea el código y completa tu check-in para Qiskit Fall Fest Guadalajara 2026.</p>
+                    <a class="qr-link" href="https://ibm.biz/IBMQFF26">ibm.biz/IBMQFF26</a>
+                </div>
+                <div class="qr-card">
+                    <img src="../assets/checkin-qr.svg" alt="Código QR para check-in">
+                </div>
+            </div>
+            <img class="cat qr-cat" src="../assets/qcat-hero.png" alt="" aria-hidden="true">
+        </section>
+    </main>
+
+    <div class="controls" aria-label="Controles de escenas">
+        <button type="button" data-go="0" title="Bienvenida">1</button>
+        <button type="button" data-go="1" title="Siguiente sesión">2</button>
+        <button type="button" data-go="2" title="Break">3</button>
+        <button type="button" data-go="3" title="Discord">4</button>
+        <button type="button" data-go="4" title="Check-in">5</button>
+        <button type="button" id="pause" title="Pausar o continuar">Ⅱ</button>
+    </div>
+
+    <div class="progress-wrap" aria-hidden="true">
+        <div class="progress-track"><div class="progress-bar" id="progress"></div></div>
+        <span class="scene-count" id="scene-count">01 / 05</span>
+    </div>
+
+    <script>
+        (() => {
+            const SCENE_DURATION = 30000;
+            const scenes = [...document.querySelectorAll('.scene')];
+            const sceneNames = scenes.map((scene) => scene.dataset.scene);
+            const progress = document.getElementById('progress');
+            const count = document.getElementById('scene-count');
+            const pauseButton = document.getElementById('pause');
+            const buttons = [...document.querySelectorAll('[data-go]')];
+            const params = new URLSearchParams(window.location.search);
+            const requestedScene = sceneNames.indexOf(params.get('scene'));
+            let current = requestedScene >= 0 ? requestedScene : 0;
+            let timer = 0;
+            let paused = false;
+            let controlsTimer = 0;
+
+            const restartProgress = () => {
+                progress.classList.remove('running');
+                void progress.offsetWidth;
+                if (!paused) progress.classList.add('running');
+            };
+
+            const scheduleNext = () => {
+                window.clearTimeout(timer);
+                if (!paused) timer = window.setTimeout(() => show(current + 1), SCENE_DURATION);
+            };
+
+            const show = (index) => {
+                current = (index + scenes.length) % scenes.length;
+                scenes.forEach((scene, sceneIndex) => scene.classList.toggle('active', sceneIndex === current));
+                buttons.forEach((button, buttonIndex) => button.classList.toggle('active', buttonIndex === current));
+                count.textContent = `${String(current + 1).padStart(2, '0')} / ${String(scenes.length).padStart(2, '0')}`;
+                restartProgress();
+                scheduleNext();
+            };
+
+            const setPaused = (value) => {
+                paused = value;
+                document.body.classList.toggle('paused', paused);
+                pauseButton.textContent = paused ? '▶' : 'Ⅱ';
+                restartProgress();
+                scheduleNext();
+            };
+
+            const revealControls = () => {
+                document.body.classList.add('controls-visible');
+                window.clearTimeout(controlsTimer);
+                controlsTimer = window.setTimeout(() => document.body.classList.remove('controls-visible'), 3500);
+            };
+
+            buttons.forEach((button) => button.addEventListener('click', () => show(Number(button.dataset.go))));
+            pauseButton.addEventListener('click', () => setPaused(!paused));
+            window.addEventListener('pointermove', revealControls, { passive: true });
+            window.addEventListener('keydown', (event) => {
+                if (event.key === 'ArrowRight') show(current + 1);
+                if (event.key === 'ArrowLeft') show(current - 1);
+                if (event.key === ' ') {
+                    event.preventDefault();
+                    setPaused(!paused);
+                }
+                if (/^[1-5]$/.test(event.key)) show(Number(event.key) - 1);
+                if (event.key.toLowerCase() === 'f') document.documentElement.requestFullscreen?.();
+                revealControls();
+            });
+
+            const customTitle = params.get('title');
+            const customSpeaker = params.get('speaker');
+            if (customTitle) document.getElementById('next-title').textContent = customTitle;
+            if (customSpeaker) document.getElementById('next-speaker').textContent = customSpeaker;
+
+            show(current);
+            revealControls();
+        })();
+
+        (() => {
+            const canvas = document.getElementById('quantum-field');
+            const context = canvas.getContext('2d');
+            const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+            let width = 0;
+            let height = 0;
+            let ratio = 1;
+            let animationFrame = 0;
+            let lastFrame = 0;
+
+            const resize = () => {
+                ratio = Math.min(window.devicePixelRatio || 1, 1.5);
+                width = window.innerWidth;
+                height = window.innerHeight;
+                canvas.width = Math.round(width * ratio);
+                canvas.height = Math.round(height * ratio);
+                context.setTransform(ratio, 0, 0, ratio, 0, 0);
+            };
+
+            const drawGate = (x, y, label, color) => {
+                context.strokeStyle = color;
+                context.fillStyle = 'rgba(10, 7, 30, 0.72)';
+                context.lineWidth = 1;
+                context.beginPath();
+                context.roundRect(x - 17, y - 17, 34, 34, 7);
+                context.fill();
+                context.stroke();
+                context.fillStyle = 'rgba(231, 235, 255, 0.65)';
+                context.font = '500 11px "IBM Plex Mono", monospace';
+                context.textAlign = 'center';
+                context.textBaseline = 'middle';
+                context.fillText(label, x, y + 0.5);
+            };
+
+            const draw = (time = 0) => {
+                if (!reducedMotion.matches) animationFrame = requestAnimationFrame(draw);
+                if (!reducedMotion.matches && time - lastFrame < 32) return;
+                lastFrame = time;
+                context.clearRect(0, 0, width, height);
+
+                const rails = [0.18, 0.34, 0.5, 0.66, 0.82];
+                rails.forEach((position, index) => {
+                    const y = height * position;
+                    const rgb = index % 2 ? '51,177,255' : '138,63,252';
+                    context.strokeStyle = `rgba(${rgb}, 0.2)`;
+                    context.lineWidth = 0.8;
+                    context.setLineDash([4, 14]);
+                    context.lineDashOffset = reducedMotion.matches ? 0 : -time * 0.004 - index * 11;
+                    context.beginPath();
+                    context.moveTo(0, y);
+                    context.lineTo(width, y);
+                    context.stroke();
+                    context.setLineDash([]);
+
+                    const progress = reducedMotion.matches ? 0.45 : (time * (0.000022 + index * 0.000002) + index * 0.19) % 1;
+                    const x = progress * (width + 100) - 50;
+                    const glow = context.createRadialGradient(x, y, 0, x, y, 34);
+                    glow.addColorStop(0, `rgba(${rgb}, 0.88)`);
+                    glow.addColorStop(1, `rgba(${rgb}, 0)`);
+                    context.fillStyle = glow;
+                    context.beginPath();
+                    context.arc(x, y, 34, 0, Math.PI * 2);
+                    context.fill();
+
+                    drawGate(width * (index % 2 ? 0.08 : 0.92), y, ['H', 'X', 'Z', 'RY', 'CX'][index], `rgba(${rgb}, 0.55)`);
+                });
+            };
+
+            window.addEventListener('resize', resize, { passive: true });
+            document.addEventListener('visibilitychange', () => {
+                cancelAnimationFrame(animationFrame);
+                if (!document.hidden) draw(performance.now());
+            });
+            reducedMotion.addEventListener?.('change', () => {
+                cancelAnimationFrame(animationFrame);
+                draw(performance.now());
+            });
+            resize();
+            draw(performance.now());
+        })();
+    </script>
+</body>
+</html>
