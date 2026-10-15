@@ -316,12 +316,15 @@
         .animation-only {
             display: grid;
             place-items: center;
+            padding: clamp(40px, 5vw, 80px);
         }
 
         .animation-visual {
             position: relative;
             display: grid;
-            place-items: center;
+            grid-template-columns: minmax(360px, 0.9fr) minmax(460px, 1.1fr);
+            align-items: center;
+            gap: clamp(3rem, 7vw, 9rem);
             width: min(92vw, 1500px);
             height: min(76vh, 820px);
             margin: auto;
@@ -336,7 +339,8 @@
         }
 
         .animation-visual::before {
-            width: min(47vw, 760px);
+            left: -5%;
+            width: min(45vw, 720px);
             aspect-ratio: 1;
             border: 1px solid rgba(190, 149, 255, 0.2);
             box-shadow: 0 0 90px rgba(105, 41, 196, 0.14);
@@ -344,33 +348,77 @@
         }
 
         .animation-visual::after {
-            width: min(39vw, 630px);
+            left: 1%;
+            width: min(37vw, 590px);
             aspect-ratio: 1;
             border: 1px dashed rgba(51, 177, 255, 0.16);
             animation: orbit 14s linear infinite reverse;
         }
 
-        .animation-visual .event-logo {
-            width: min(43vw, 700px);
-            max-height: 69vh;
-            animation: logoFloat 6s ease-in-out infinite alternate;
+        .hero-cat {
+            position: relative;
+            z-index: 2;
+            justify-self: center;
+            width: min(45vw, 740px);
+            max-height: 68vh;
+            object-fit: contain;
+            filter: drop-shadow(0 35px 65px rgba(2, 1, 18, 0.5));
+            animation: logoFloat 5.5s ease-in-out infinite alternate;
         }
 
         @keyframes logoFloat {
             to { transform: translateY(-1.5%) scale(1.012); }
         }
 
-        .animation-cat-a {
-            right: 8%;
-            bottom: -2%;
-            width: min(20vw, 340px);
+        .brand-lockups {
+            position: relative;
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: clamp(2.2rem, 4vw, 4.5rem);
         }
 
-        .animation-cat-b {
-            left: 9%;
-            top: 8%;
-            width: min(13vw, 210px);
-            opacity: 0.72;
+        .brand-lockup {
+            opacity: 0;
+            transform: translateX(34px);
+        }
+
+        .active .brand-lockup {
+            animation: lockupEntrance 1s 0.28s cubic-bezier(0.2, 0.85, 0.25, 1) forwards;
+        }
+
+        .active .brand-lockup:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+
+        @keyframes lockupEntrance {
+            to { opacity: 1; transform: none; }
+        }
+
+        .qiskit-lockup {
+            display: flex;
+            align-items: center;
+            gap: clamp(1rem, 2vw, 2rem);
+        }
+
+        .qiskit-lockup img {
+            width: clamp(78px, 8vw, 138px);
+            height: clamp(78px, 8vw, 138px);
+        }
+
+        .qiskit-lockup span {
+            font-size: clamp(4.3rem, 7vw, 8.2rem);
+            font-weight: 600;
+            line-height: 0.9;
+            letter-spacing: -0.055em;
+        }
+
+        .ibm-lockup img {
+            display: block;
+            width: min(43vw, 690px);
+            height: auto;
+            filter: drop-shadow(0 22px 45px rgba(2, 1, 18, 0.28));
         }
 
         .cat {
@@ -681,23 +729,34 @@
             .logo-row { justify-content: center; }
             .animation-visual {
                 width: 100%;
-                height: min(72vh, 720px);
+                height: min(74vh, 720px);
+                grid-template-columns: 1fr;
+                grid-template-rows: auto minmax(0, 1fr);
+                gap: 1.5rem;
             }
-            .animation-visual .event-logo {
-                width: min(76vw, 590px);
-                max-height: 62vh;
+            .animation-visual::before,
+            .animation-visual::after {
+                left: 14%;
             }
-            .animation-visual::before { width: min(80vw, 620px); }
-            .animation-visual::after { width: min(66vw, 510px); }
-            .animation-cat-a {
-                right: -2%;
-                bottom: 1%;
-                width: min(35vw, 270px);
+            .animation-visual::before { width: min(72vw, 520px); }
+            .animation-visual::after { left: 20%; width: min(60vw, 430px); }
+            .brand-lockups {
+                grid-row: 1;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                gap: clamp(1.5rem, 5vw, 3rem);
             }
-            .animation-cat-b {
-                left: 0;
-                top: 5%;
-                width: min(24vw, 185px);
+            .qiskit-lockup img {
+                width: clamp(48px, 8vw, 78px);
+                height: clamp(48px, 8vw, 78px);
+            }
+            .qiskit-lockup span { font-size: clamp(2.3rem, 7vw, 4rem); }
+            .ibm-lockup img { width: min(42vw, 320px); }
+            .hero-cat {
+                grid-row: 2;
+                width: min(74vw, 520px);
+                max-height: 52vh;
             }
             .qr-layout h2 { font-size: clamp(2.5rem, 8vw, 4.5rem); }
             .qr-layout .lead { margin-top: 1rem; font-size: 1rem; }
@@ -731,23 +790,19 @@
     <canvas id="quantum-field" aria-hidden="true"></canvas>
     <div class="noise" aria-hidden="true"></div>
 
-    <header class="topbar">
-        <div class="brand">
-            <span class="brand-mark"><img src="../assets/qiskit_white.svg" alt=""></span>
-            <span class="brand-copy">
-                <strong>Qiskit Fall Fest GDL 2026</strong>
-                <span>October 28–29 · Guadalajara</span>
-            </span>
-        </div>
-        <span class="live-pill">Community event</span>
-    </header>
-
     <main class="scene-stage" aria-live="polite">
         <section class="scene active animation-only" data-scene="welcome" aria-label="Animación del evento">
             <div class="animation-visual">
-                <img class="event-logo" src="../assets/qff-gdl-neon-logo.png" alt="Qiskit Fall Fest Guadalajara 2026">
-                <img class="cat animation-cat-a" src="../assets/qcat-peek.png" alt="" aria-hidden="true">
-                <img class="cat animation-cat-b" src="../assets/qcat-bat.png" alt="" aria-hidden="true">
+                <img class="hero-cat" src="../assets/qcat-hero.png" alt="Gato astronauta de Qiskit">
+                <div class="brand-lockups">
+                    <div class="brand-lockup qiskit-lockup">
+                        <img src="../assets/qiskit_white.svg" alt="">
+                        <span>Qiskit</span>
+                    </div>
+                    <div class="brand-lockup ibm-lockup">
+                        <img src="../assets/IBM_Quantum_logotype_rev_RGB.png" alt="IBM Quantum">
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -766,7 +821,6 @@
                     <img src="../assets/discord-qr.svg" alt="Código QR para Discord">
                 </div>
             </div>
-            <img class="cat qr-cat" src="../assets/qcat-catrin.png" alt="" aria-hidden="true">
         </section>
 
         <section class="scene" data-scene="checkin" aria-label="Check-in">
@@ -781,7 +835,6 @@
                     <img src="../assets/checkin-qr.svg" alt="Código QR para check-in">
                 </div>
             </div>
-            <img class="cat qr-cat" src="../assets/qcat-hero.png" alt="" aria-hidden="true">
         </section>
     </main>
 
