@@ -516,6 +516,27 @@
             filter: drop-shadow(0 30px 65px rgba(2, 1, 18, 0.35));
         }
 
+        .video-scene {
+            padding: 0;
+            background: #000;
+        }
+
+        .video-frame {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+            background: #000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.8s ease;
+        }
+
+        .video-scene.active .video-frame {
+            opacity: 1;
+        }
+
         .cat {
             position: absolute;
             z-index: 1;
@@ -922,6 +943,17 @@
             </div>
         </section>
 
+        <section class="scene video-scene" data-scene="video" data-duration="40000" aria-label="Video de Qiskit Fall Fest">
+            <iframe
+                class="video-frame"
+                id="event-video"
+                src="https://www.youtube-nocookie.com/embed/wwMI6IhvwE0?enablejsapi=1&amp;autoplay=0&amp;mute=1&amp;controls=0&amp;rel=0&amp;playsinline=1&amp;modestbranding=1&amp;iv_load_policy=3&amp;origin=https%3A%2F%2Fquantum-guild-gdl.github.io"
+                title="Video de Qiskit Fall Fest"
+                allow="autoplay; encrypted-media; picture-in-picture"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen></iframe>
+        </section>
+
         <section class="scene" data-scene="discord" aria-label="Discord">
             <div class="qr-layout">
                 <div class="scene-copy">
@@ -958,24 +990,26 @@
         <button type="button" data-go="0" title="Gato">1</button>
         <button type="button" data-go="1" title="Qiskit">2</button>
         <button type="button" data-go="2" title="IBM Quantum">3</button>
-        <button type="button" data-go="3" title="Discord">4</button>
-        <button type="button" data-go="4" title="Check-in">5</button>
+        <button type="button" data-go="3" title="Video">4</button>
+        <button type="button" data-go="4" title="Discord">5</button>
+        <button type="button" data-go="5" title="Check-in">6</button>
         <button type="button" id="pause" title="Pausar o continuar">Ⅱ</button>
     </div>
 
     <div class="progress-wrap" aria-hidden="true">
         <div class="progress-track"><div class="progress-bar" id="progress"></div></div>
-        <span class="scene-count" id="scene-count">01 / 05</span>
+        <span class="scene-count" id="scene-count">01 / 06</span>
     </div>
 
     <script>
         (() => {
-            const SCENE_DURATION = 30000;
+            const DEFAULT_SCENE_DURATION = 30000;
             const scenes = [...document.querySelectorAll('.scene')];
             const sceneNames = scenes.map((scene) => scene.dataset.scene);
             const progress = document.getElementById('progress');
             const count = document.getElementById('scene-count');
             const pauseButton = document.getElementById('pause');
+            const videoFrame = document.getElementById('event-video');
             const buttons = [...document.querySelectorAll('[data-go]')];
             const params = new URLSearchParams(window.location.search);
             const requestedScene = sceneNames.indexOf(params.get('scene'));
@@ -984,7 +1018,24 @@
             let paused = false;
             let controlsTimer = 0;
 
+            const sceneDuration = () => Number(scenes[current].dataset.duration) || DEFAULT_SCENE_DURATION;
+
+            const sendVideoCommand = (func, args = []) => {
+                videoFrame.contentWindow?.postMessage(JSON.stringify({
+                    event: 'command',
+                    func,
+                    args
+                }), '*');
+            };
+
+            const startVideo = (restart = false) => {
+                sendVideoCommand('mute');
+                if (restart) sendVideoCommand('seekTo', [0, true]);
+                sendVideoCommand('playVideo');
+            };
+
             const restartProgress = () => {
+                document.documentElement.style.setProperty('--scene-duration', `${sceneDuration()}ms`);
                 progress.classList.remove('running');
                 void progress.offsetWidth;
                 if (!paused) progress.classList.add('running');
@@ -992,12 +1043,17 @@
 
             const scheduleNext = () => {
                 window.clearTimeout(timer);
-                if (!paused) timer = window.setTimeout(() => show(current + 1), SCENE_DURATION);
+                if (!paused) timer = window.setTimeout(() => show(current + 1), sceneDuration());
             };
 
             const show = (index) => {
                 current = (index + scenes.length) % scenes.length;
                 scenes.forEach((scene, sceneIndex) => scene.classList.toggle('active', sceneIndex === current));
+                if (scenes[current].dataset.scene === 'video' && !paused) {
+                    startVideo(true);
+                } else {
+                    sendVideoCommand('stopVideo');
+                }
                 buttons.forEach((button, buttonIndex) => button.classList.toggle('active', buttonIndex === current));
                 count.textContent = `${String(current + 1).padStart(2, '0')} / ${String(scenes.length).padStart(2, '0')}`;
                 restartProgress();
@@ -1008,6 +1064,10 @@
                 paused = value;
                 document.body.classList.toggle('paused', paused);
                 pauseButton.textContent = paused ? '▶' : 'Ⅱ';
+                if (scenes[current].dataset.scene === 'video') {
+                    if (paused) sendVideoCommand('pauseVideo');
+                    else startVideo(false);
+                }
                 restartProgress();
                 scheduleNext();
             };
@@ -1028,9 +1088,13 @@
                     event.preventDefault();
                     setPaused(!paused);
                 }
-                if (/^[1-5]$/.test(event.key)) show(Number(event.key) - 1);
+                if (/^[1-6]$/.test(event.key)) show(Number(event.key) - 1);
                 if (event.key.toLowerCase() === 'f') document.documentElement.requestFullscreen?.();
                 revealControls();
+            });
+
+            videoFrame.addEventListener('load', () => {
+                if (scenes[current].dataset.scene === 'video' && !paused) startVideo(true);
             });
 
             show(current);
