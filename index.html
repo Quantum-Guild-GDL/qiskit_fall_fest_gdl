@@ -1422,6 +1422,60 @@
             margin-top: 0.3rem;
         }
 
+        .organizer--headliner {
+            grid-column: 1 / -1;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            text-align: left;
+            padding: 2rem 2.5rem;
+            border-color: rgba(17, 146, 232, 0.45);
+            background: linear-gradient(135deg, rgba(17, 146, 232, 0.07), rgba(120, 40, 200, 0.07));
+            position: relative;
+        }
+
+        .organizer--headliner::before {
+            content: "★ Headliner";
+            position: absolute;
+            top: -0.65rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(90deg, var(--purple), var(--blue));
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 0.2rem 0.9rem;
+            border-radius: 999px;
+            white-space: nowrap;
+        }
+
+        .organizer--headliner .avatar {
+            width: 120px;
+            height: 120px;
+            flex-shrink: 0;
+            font-size: 1.8rem;
+        }
+
+        .organizer--headliner .org-name {
+            font-size: 1.35rem;
+        }
+
+        .organizer--headliner .speaker-role {
+            font-size: 0.95rem;
+            margin-top: 0.5rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        @media (max-width: 540px) {
+            .organizer--headliner {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
         /* ---------- Resources (IBM SkillsBuild credentials) ---------- */
         .resources-grid {
             display: flex;
@@ -2180,6 +2234,13 @@
                 <p class="section-label">Speakers</p>
                 <h2>Featured Voices</h2>
                 <div class="organizers-grid">
+                    <a class="organizer organizer--headliner" href="https://www.linkedin.com/in/ismaelfaro" target="_blank" rel="noopener noreferrer">
+                        <div class="avatar">IF<img src="assets/organizers/ismael-faro.jpg" alt="Ismael Faro" onerror="this.remove()"></div>
+                        <div>
+                            <div class="org-name">Ismael Faro</div>
+                            <div class="speaker-role">IBM Distinguished Engineer &amp; VP of AI and Quantum Computing at IBM Research · Co-founder of ANFAIA Foundation · Creator of Qiskit</div>
+                        </div>
+                    </a>
                     <a class="organizer" href="#" target="_blank" rel="noopener noreferrer">
                         <div class="avatar">AR<img src="assets/organizers/adolfo-reynoso.jpeg" alt="Adolfo Reynoso" onerror="this.remove()"></div>
                         <div class="org-name">Adolfo Reynoso</div>
