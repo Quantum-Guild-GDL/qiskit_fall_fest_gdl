@@ -178,6 +178,10 @@
             animation: pulse 2s ease-in-out infinite;
         }
 
+        .topbar-minimal {
+            justify-content: flex-end;
+        }
+
         @keyframes pulse {
             50% { opacity: 0.4; transform: scale(0.72); }
         }
@@ -419,6 +423,97 @@
             width: min(43vw, 690px);
             height: auto;
             filter: drop-shadow(0 22px 45px rgba(2, 1, 18, 0.28));
+        }
+
+        .solo-brand-scene {
+            place-items: center;
+            padding: clamp(70px, 7vw, 120px);
+        }
+
+        .solo-stage {
+            position: relative;
+            display: grid;
+            place-items: center;
+            width: min(92vw, 1500px);
+            height: min(76vh, 820px);
+        }
+
+        .solo-stage::before,
+        .solo-stage::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: orbit 18s linear infinite;
+        }
+
+        .solo-stage::before {
+            width: min(54vw, 840px);
+            aspect-ratio: 1;
+            border: 1px solid rgba(190, 149, 255, 0.2);
+            box-shadow: 0 0 100px rgba(105, 41, 196, 0.16);
+        }
+
+        .solo-stage::after {
+            width: min(44vw, 680px);
+            aspect-ratio: 1;
+            border: 1px dashed rgba(51, 177, 255, 0.16);
+            animation-duration: 14s;
+            animation-direction: reverse;
+        }
+
+        .solo-cat,
+        .solo-lockup {
+            position: relative;
+            z-index: 2;
+            opacity: 0;
+            transform: translateY(32px) scale(0.94);
+        }
+
+        .solo-cat {
+            width: min(64vw, 980px);
+            max-height: 72vh;
+            object-fit: contain;
+            filter: drop-shadow(0 38px 70px rgba(2, 1, 18, 0.52));
+        }
+
+        .active .solo-cat,
+        .active .solo-lockup {
+            animation: soloEntrance 1.2s 0.2s cubic-bezier(0.2, 0.85, 0.25, 1) forwards,
+                       soloFloat 5.5s 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes soloEntrance {
+            to { opacity: 1; transform: none; }
+        }
+
+        @keyframes soloFloat {
+            to { transform: translateY(-1.6%) scale(1.012); }
+        }
+
+        .qiskit-solo {
+            display: flex;
+            align-items: center;
+            gap: clamp(1.5rem, 3vw, 3.5rem);
+        }
+
+        .qiskit-solo img {
+            width: clamp(130px, 14vw, 240px);
+            height: clamp(130px, 14vw, 240px);
+        }
+
+        .qiskit-solo span {
+            font-size: clamp(7rem, 14vw, 16rem);
+            font-weight: 600;
+            line-height: 0.86;
+            letter-spacing: -0.065em;
+        }
+
+        .ibm-solo img {
+            display: block;
+            width: min(76vw, 1220px);
+            height: auto;
+            filter: drop-shadow(0 30px 65px rgba(2, 1, 18, 0.35));
         }
 
         .cat {
@@ -773,6 +868,15 @@
             .logo-card { min-width: min(44vw, 180px); min-height: 68px; padding: 0.9rem 1.1rem; }
             .qr-layout { gap: 1.5rem; }
             .qr-card { width: min(64vw, 330px); min-width: 220px; border-radius: 24px; }
+            .solo-brand-scene { padding: 82px 24px 58px; }
+            .solo-stage { width: 100%; height: min(72vh, 650px); }
+            .solo-stage::before { width: min(82vw, 560px); }
+            .solo-stage::after { width: min(68vw, 460px); }
+            .solo-cat { width: min(92vw, 620px); max-height: 62vh; }
+            .qiskit-solo { gap: 1rem; }
+            .qiskit-solo img { width: clamp(68px, 18vw, 110px); height: clamp(68px, 18vw, 110px); }
+            .qiskit-solo span { font-size: clamp(4rem, 20vw, 7rem); }
+            .ibm-solo img { width: min(88vw, 650px); }
             .progress-wrap { left: 18px; right: 18px; bottom: 18px; }
         }
 
@@ -790,18 +894,30 @@
     <canvas id="quantum-field" aria-hidden="true"></canvas>
     <div class="noise" aria-hidden="true"></div>
 
+    <header class="topbar topbar-minimal">
+        <span class="live-pill">Community event</span>
+    </header>
+
     <main class="scene-stage" aria-live="polite">
-        <section class="scene active animation-only" data-scene="welcome" aria-label="Animación del evento">
-            <div class="animation-visual">
-                <img class="hero-cat" src="../assets/qcat-hero.png" alt="Gato astronauta de Qiskit">
-                <div class="brand-lockups">
-                    <div class="brand-lockup qiskit-lockup">
-                        <img src="../assets/qiskit_white.svg" alt="">
-                        <span>Qiskit</span>
-                    </div>
-                    <div class="brand-lockup ibm-lockup">
-                        <img src="../assets/IBM_Quantum_logotype_rev_RGB.png" alt="IBM Quantum">
-                    </div>
+        <section class="scene active solo-brand-scene" data-scene="cat" aria-label="Gato de Qiskit">
+            <div class="solo-stage">
+                <img class="solo-cat" src="../assets/qcat-hero.png" alt="Gato astronauta de Qiskit">
+            </div>
+        </section>
+
+        <section class="scene solo-brand-scene" data-scene="qiskit" aria-label="Qiskit">
+            <div class="solo-stage">
+                <div class="solo-lockup qiskit-solo">
+                    <img src="../assets/qiskit_white.svg" alt="">
+                    <span>Qiskit</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="scene solo-brand-scene" data-scene="ibm-quantum" aria-label="IBM Quantum">
+            <div class="solo-stage">
+                <div class="solo-lockup ibm-solo">
+                    <img src="../assets/IBM_Quantum_logotype_rev_RGB.png" alt="IBM Quantum">
                 </div>
             </div>
         </section>
@@ -839,15 +955,17 @@
     </main>
 
     <div class="controls" aria-label="Controles de escenas">
-        <button type="button" data-go="0" title="Animación">1</button>
-        <button type="button" data-go="1" title="Discord">2</button>
-        <button type="button" data-go="2" title="Check-in">3</button>
+        <button type="button" data-go="0" title="Gato">1</button>
+        <button type="button" data-go="1" title="Qiskit">2</button>
+        <button type="button" data-go="2" title="IBM Quantum">3</button>
+        <button type="button" data-go="3" title="Discord">4</button>
+        <button type="button" data-go="4" title="Check-in">5</button>
         <button type="button" id="pause" title="Pausar o continuar">Ⅱ</button>
     </div>
 
     <div class="progress-wrap" aria-hidden="true">
         <div class="progress-track"><div class="progress-bar" id="progress"></div></div>
-        <span class="scene-count" id="scene-count">01 / 03</span>
+        <span class="scene-count" id="scene-count">01 / 05</span>
     </div>
 
     <script>
@@ -910,7 +1028,7 @@
                     event.preventDefault();
                     setPaused(!paused);
                 }
-                if (/^[1-3]$/.test(event.key)) show(Number(event.key) - 1);
+                if (/^[1-5]$/.test(event.key)) show(Number(event.key) - 1);
                 if (event.key.toLowerCase() === 'f') document.documentElement.requestFullscreen?.();
                 revealControls();
             });
