@@ -984,6 +984,23 @@
                 </div>
             </div>
         </section>
+
+        <section class="scene" data-scene="skillsbuild" aria-label="IBM SkillsBuild">
+            <div class="qr-layout">
+                <div class="scene-copy">
+                    <p class="eyebrow">IBM SkillsBuild · Gratis</p>
+                    <h2>Aprende<br><span class="gradient">Quantum Computing</span></h2>
+                    <p class="lead">Únete al <strong>Quantum Computing Learning Plan</strong> de IBM SkillsBuild. Completa el camino y obtén 2 credenciales digitales oficiales — completamente gratis.</p>
+                    <a class="qr-link" href="https://skills.yourlearning.ibm.com/activity/PLAN-3793AAC77C46" target="_blank" rel="noopener noreferrer">
+                        <img src="../assets/ibm-skillsbuild-logo.png" alt="">
+                        IBM SkillsBuild
+                    </a>
+                </div>
+                <div class="qr-card">
+                    <img src="../assets/skillsbuild-qr.svg" alt="Código QR para IBM SkillsBuild Quantum Computing Learning Plan">
+                </div>
+            </div>
+        </section>
     </main>
 
     <div class="controls" aria-label="Controles de escenas">
@@ -993,6 +1010,7 @@
         <button type="button" data-go="3" title="Video">4</button>
         <button type="button" data-go="4" title="Discord">5</button>
         <button type="button" data-go="5" title="Check-in">6</button>
+        <button type="button" data-go="6" title="IBM SkillsBuild">7</button>
         <button type="button" id="pause" title="Pausar o continuar">Ⅱ</button>
     </div>
 
@@ -1088,7 +1106,7 @@
                     event.preventDefault();
                     setPaused(!paused);
                 }
-                if (/^[1-6]$/.test(event.key)) show(Number(event.key) - 1);
+                if (/^[1-7]$/.test(event.key)) show(Number(event.key) - 1);
                 if (event.key.toLowerCase() === 'f') document.documentElement.requestFullscreen?.();
                 revealControls();
             });
