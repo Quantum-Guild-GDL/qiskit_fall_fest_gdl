@@ -1109,6 +1109,25 @@
             .reg-cards { grid-template-columns: 1fr; }
         }
 
+        .reg-deadline {
+            margin-top: 0.7rem;
+            font-size: 0.78rem;
+            color: var(--text-muted, #888);
+            text-align: center;
+        }
+
+        .reg-closed-notice {
+            margin-top: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 0.75rem;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            font-size: 0.88rem;
+            font-weight: 600;
+            text-align: center;
+            color: #999;
+        }
+
         /* ---------- Schedule timeline ---------- */
         #schedule .reveal { width: 100%; }
 
@@ -2200,6 +2219,7 @@
                           data-luma-event-id="evt-AJuVWFO3OupmXLV"
                           style="display:block;text-align:center;text-decoration:none;"
                         >Get your ticket</a>
+                        <p class="reg-deadline" id="tier1-deadline">Registro cierra el <strong>Mar 27 Oct · 12:00 AM</strong></p>
                     </div>
 
                     <!-- Online Only -->
@@ -2220,6 +2240,7 @@
                           data-luma-event-id="evt-S8R5neso2zYaS7p"
                           style="display:block;text-align:center;text-decoration:none;"
                         >Get your ticket</a>
+                        <p class="reg-deadline" id="tier2-deadline">Registro cierra el <strong>Mié 28 Oct · 8:00 AM</strong></p>
                     </div>
 
                 </div>
@@ -3101,6 +3122,42 @@
         };
 
         initRegCountdown();
+    </script>
+    <script>
+        // Auto-close registration at deadline — Tier 1: Oct 27 12:00 AM CST, Tier 2: Oct 28 8:00 AM CST
+        (function () {
+            var tier1Deadline = new Date('2026-10-27T00:00:00-06:00');
+            var tier2Deadline = new Date('2026-10-28T08:00:00-06:00');
+
+            function makeClosedNotice(text) {
+                var p = document.createElement('p');
+                p.className = 'reg-closed-notice';
+                p.textContent = text;
+                return p;
+            }
+
+            function enforceDeadlines() {
+                var now = new Date();
+
+                var t1Btn = document.querySelector('[data-luma-event-id="evt-AJuVWFO3OupmXLV"]');
+                var t2Btn = document.querySelector('[data-luma-event-id="evt-S8R5neso2zYaS7p"]');
+                var t1Dl = document.getElementById('tier1-deadline');
+                var t2Dl = document.getElementById('tier2-deadline');
+
+                if (now >= tier1Deadline && t1Btn) {
+                    t1Btn.replaceWith(makeClosedNotice('El registro Tier 1 está cerrado.'));
+                    if (t1Dl) t1Dl.remove();
+                }
+
+                if (now >= tier2Deadline && t2Btn) {
+                    t2Btn.replaceWith(makeClosedNotice('El registro Tier 2 está cerrado.'));
+                    if (t2Dl) t2Dl.remove();
+                }
+            }
+
+            enforceDeadlines();
+            setInterval(enforceDeadlines, 60000);
+        })();
     </script>
 <script id="luma-checkout" src="https://embed.lu.ma/checkout-button.js"></script>
 </body>
