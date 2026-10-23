@@ -749,7 +749,7 @@
             border-radius: 999px;
             padding: 0.5rem 1.1rem;
             transition: background 0.3s ease, border-color 0.3s ease;
-            align-self: flex-start;
+            white-space: nowrap;
         }
 
         .venue-directions:hover {
@@ -764,6 +764,7 @@
             font-size: 0.9rem;
             font-weight: 600;
             color: #fff;
+            font-family: inherit;
             text-decoration: none;
             cursor: pointer;
             background: linear-gradient(135deg, rgba(105, 41, 196, 0.35), rgba(17, 146, 232, 0.35));
@@ -773,6 +774,7 @@
             transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
             box-shadow: 0 0 14px 2px rgba(17, 146, 232, 0.28);
             animation: videoBtnPulse 3s ease-in-out infinite;
+            white-space: nowrap;
         }
 
         .venue-video-btn:hover {
@@ -2271,16 +2273,18 @@
                             Blvd. Puerta de Hierro 4965<br>
                             Zapopan, Jalisco, México
                         </div>
-                        <a class="venue-directions"
-                           href="https://www.google.com/maps/search/Blvd.+Puerta+de+Hierro+4965,+Zapopan,+Jalisco,+Mexico"
-                           target="_blank" rel="noopener noreferrer">
-                            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-                            Get directions
-                        </a>
-                        <button class="venue-video-btn" onclick="openAccessVideo()" aria-label="Ver cómo llegar a AstraZeneca">
-                            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                            Cómo llegar
-                        </button>
+                        <div style="display:flex;flex-wrap:wrap;gap:0.6rem;align-items:center;">
+                            <a class="venue-directions"
+                               href="https://www.google.com/maps/search/Blvd.+Puerta+de+Hierro+4965,+Zapopan,+Jalisco,+Mexico"
+                               target="_blank" rel="noopener noreferrer">
+                                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                                Get directions
+                            </a>
+                            <button class="venue-video-btn" onclick="openAccessVideo()" aria-label="How to get to the auditorium">
+                                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                                How to get to the auditorium
+                            </button>
+                        </div>
                         <div class="venue-disclaimer">
                             <strong>📅 Oct 28 — In person</strong> at AstraZeneca GITC Guadalajara.<br>
                             <strong>💻 Oct 29 — Online only.</strong> All sessions will be streamed virtually; no physical venue required.
