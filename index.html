@@ -757,6 +757,106 @@
             border-color: rgba(17, 146, 232, 0.5);
         }
 
+        .venue-video-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #fff;
+            text-decoration: none;
+            cursor: pointer;
+            background: linear-gradient(135deg, rgba(105, 41, 196, 0.35), rgba(17, 146, 232, 0.35));
+            border: 1px solid rgba(17, 146, 232, 0.55);
+            border-radius: 999px;
+            padding: 0.5rem 1.1rem;
+            transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 0 14px 2px rgba(17, 146, 232, 0.28);
+            animation: videoBtnPulse 3s ease-in-out infinite;
+        }
+
+        .venue-video-btn:hover {
+            background: linear-gradient(135deg, rgba(105, 41, 196, 0.55), rgba(17, 146, 232, 0.55));
+            border-color: rgba(17, 146, 232, 0.85);
+            box-shadow: 0 0 22px 5px rgba(17, 146, 232, 0.5);
+        }
+
+        @keyframes videoBtnPulse {
+            0%, 100% { box-shadow: 0 0 14px 2px rgba(17, 146, 232, 0.28); }
+            50% { box-shadow: 0 0 26px 6px rgba(105, 41, 196, 0.5); }
+        }
+
+        /* Video modal overlay */
+        .video-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 999;
+            background: rgba(0, 0, 0, 0.82);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        .video-modal.open {
+            display: flex;
+        }
+
+        .video-modal-inner {
+            position: relative;
+            width: 100%;
+            max-width: 860px;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(17, 146, 232, 0.4);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7), 0 0 60px rgba(17, 146, 232, 0.2);
+        }
+
+        .video-modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.9rem 1.25rem;
+            background: rgba(10, 10, 30, 0.9);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .video-modal-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+        }
+
+        .video-modal-close {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+            display: grid;
+            place-items: center;
+            font-size: 1.1rem;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .video-modal-close:hover {
+            background: rgba(255, 255, 255, 0.18);
+            color: #fff;
+        }
+
+        .video-modal video {
+            width: 100%;
+            display: block;
+            background: #000;
+        }
+
         @media (max-width: 768px) {
             .venue-card { grid-template-columns: 1fr; }
             .venue-map { min-height: 220px; }
@@ -2177,6 +2277,10 @@
                             <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
                             Get directions
                         </a>
+                        <button class="venue-video-btn" onclick="openAccessVideo()" aria-label="Ver cómo llegar a AstraZeneca">
+                            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                            Cómo llegar
+                        </button>
                         <div class="venue-disclaimer">
                             <strong>📅 Oct 28 — In person</strong> at AstraZeneca GITC Guadalajara.<br>
                             <strong>💻 Oct 29 — Online only.</strong> All sessions will be streamed virtually; no physical venue required.
@@ -3160,5 +3264,41 @@
         })();
     </script>
 <script id="luma-checkout" src="https://embed.lu.ma/checkout-button.js"></script>
+
+<!-- Cómo llegar video modal -->
+<div class="video-modal" id="accessVideoModal" role="dialog" aria-modal="true" aria-label="Cómo llegar a AstraZeneca">
+    <div class="video-modal-inner">
+        <div class="video-modal-header">
+            <span class="video-modal-title">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                Cómo llegar a AstraZeneca GITC
+            </span>
+            <button class="video-modal-close" onclick="closeAccessVideo()" aria-label="Cerrar video">&times;</button>
+        </div>
+        <video id="accessVideo" controls playsinline preload="metadata">
+            <source src="assets/acceso-astrazeneca.mp4" type="video/mp4">
+        </video>
+    </div>
+</div>
+<script>
+    function openAccessVideo() {
+        var modal = document.getElementById('accessVideoModal');
+        modal.classList.add('open');
+        document.getElementById('accessVideo').play();
+    }
+    function closeAccessVideo() {
+        var modal = document.getElementById('accessVideoModal');
+        modal.classList.remove('open');
+        var vid = document.getElementById('accessVideo');
+        vid.pause();
+        vid.currentTime = 0;
+    }
+    document.getElementById('accessVideoModal').addEventListener('click', function(e) {
+        if (e.target === this) closeAccessVideo();
+    });
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeAccessVideo();
+    });
+</script>
 </body>
 </html>
