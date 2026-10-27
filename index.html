@@ -2334,14 +2334,7 @@
                             <li>IBM SkillsBuild Certification</li>
                             <li>Access to all recorded sessions</li>
                         </ul>
-                        <a
-                          href="https://luma.com/event/evt-S8R5neso2zYaS7p"
-                          class="luma-checkout--button reg-btn"
-                          data-luma-action="checkout"
-                          data-luma-event-id="evt-S8R5neso2zYaS7p"
-                          style="display:block;text-align:center;text-decoration:none;"
-                        >Get your ticket</a>
-                        <p class="reg-deadline" id="tier2-deadline">Registro cierra el <strong>Mié 28 Oct · 8:00 AM</strong></p>
+                        <button class="reg-btn" disabled aria-disabled="true" style="cursor:not-allowed;opacity:0.5;animation:none;">Registro cerrado</button>
                     </div>
 
                 </div>
@@ -3222,15 +3215,6 @@
                     if (countdownContainer) {
                         countdownContainer.innerHTML = '<span style="color: var(--blue); font-weight: 600; font-size: 1.1rem;">Registration is now open!</span>';
                     }
-                    // Unlock registration buttons
-                    document.querySelectorAll('.luma-checkout--button.reg-btn').forEach(btn => {
-                        btn.style.removeProperty('pointer-events');
-                        btn.style.removeProperty('opacity');
-                        btn.style.removeProperty('cursor');
-                        btn.removeAttribute('tabindex');
-                        btn.removeAttribute('aria-disabled');
-                        btn.textContent = 'Get your ticket';
-                    });
                     return;
                 }
 
@@ -3251,35 +3235,6 @@
 
         initRegCountdown();
     </script>
-    <script>
-        // Auto-close registration at deadline — Tier 2: Oct 28 8:00 AM CST
-        (function () {
-            var tier2Deadline = new Date('2026-10-28T08:00:00-06:00');
-
-            function makeClosedNotice(text) {
-                var p = document.createElement('p');
-                p.className = 'reg-closed-notice';
-                p.textContent = text;
-                return p;
-            }
-
-            function enforceDeadlines() {
-                var now = new Date();
-
-                var t2Btn = document.querySelector('[data-luma-event-id="evt-S8R5neso2zYaS7p"]');
-                var t2Dl = document.getElementById('tier2-deadline');
-
-                if (now >= tier2Deadline && t2Btn) {
-                    t2Btn.replaceWith(makeClosedNotice('El registro Tier 2 está cerrado.'));
-                    if (t2Dl) t2Dl.remove();
-                }
-            }
-
-            enforceDeadlines();
-            setInterval(enforceDeadlines, 60000);
-        })();
-    </script>
-<script id="luma-checkout" src="https://embed.lu.ma/checkout-button.js"></script>
 
 <!-- Cómo llegar video modal -->
 <div class="video-modal" id="accessVideoModal" role="dialog" aria-modal="true" aria-label="Cómo llegar a AstraZeneca">
