@@ -2320,14 +2320,7 @@
                             <li>IBM SkillsBuild Certification</li>
                             <li>Access to all streamed sessions (Oct 29)</li>
                         </ul>
-                        <a
-                          href="https://luma.com/event/evt-AJuVWFO3OupmXLV"
-                          class="luma-checkout--button reg-btn"
-                          data-luma-action="checkout"
-                          data-luma-event-id="evt-AJuVWFO3OupmXLV"
-                          style="display:block;text-align:center;text-decoration:none;"
-                        >Get your ticket</a>
-                        <p class="reg-deadline" id="tier1-deadline">Registro cierra el <strong>Mar 27 Oct · 12:00 AM</strong></p>
+                        <p class="reg-closed-notice">El registro Tier 1 está cerrado.</p>
                     </div>
 
                     <!-- Online Only -->
@@ -3259,9 +3252,8 @@
         initRegCountdown();
     </script>
     <script>
-        // Auto-close registration at deadline — Tier 1: Oct 27 12:00 AM CST, Tier 2: Oct 28 8:00 AM CST
+        // Auto-close registration at deadline — Tier 2: Oct 28 8:00 AM CST
         (function () {
-            var tier1Deadline = new Date('2026-10-27T00:00:00-06:00');
             var tier2Deadline = new Date('2026-10-28T08:00:00-06:00');
 
             function makeClosedNotice(text) {
@@ -3274,15 +3266,8 @@
             function enforceDeadlines() {
                 var now = new Date();
 
-                var t1Btn = document.querySelector('[data-luma-event-id="evt-AJuVWFO3OupmXLV"]');
                 var t2Btn = document.querySelector('[data-luma-event-id="evt-S8R5neso2zYaS7p"]');
-                var t1Dl = document.getElementById('tier1-deadline');
                 var t2Dl = document.getElementById('tier2-deadline');
-
-                if (now >= tier1Deadline && t1Btn) {
-                    t1Btn.replaceWith(makeClosedNotice('El registro Tier 1 está cerrado.'));
-                    if (t1Dl) t1Dl.remove();
-                }
 
                 if (now >= tier2Deadline && t2Btn) {
                     t2Btn.replaceWith(makeClosedNotice('El registro Tier 2 está cerrado.'));
