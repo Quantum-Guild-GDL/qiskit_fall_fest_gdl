@@ -2197,6 +2197,7 @@
             </span>
             <ul class="nav-links" id="navLinks">
                 <li><a href="#home">Home</a></li>
+                <li><a href="#gallery">Gallery</a></li>
                 <li><a href="#speakers">Speakers</a></li>
                 <li><a href="#resources">Resources</a></li>
                 <li><a href="#schedule">Schedule</a></li>
@@ -2289,50 +2290,11 @@
             </div>
         </section>
 
-        <section class="section" id="register">
-            <img class="section-mascot mascot--register" src="assets/qcat-vampire.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
+        <section class="section" id="gallery">
             <div class="reveal">
-                <p class="section-label">Register</p>
-                <h2>Join the Fest</h2>
-                <p class="reg-subtitle">Both tracks are completely free. Choose the experience that fits you best.</p>
-
-
-                <div class="reg-cards">
-
-                    <!-- In-Person + Online -->
-                    <div class="reg-card reg-card--featured">
-                        <span class="reg-badge">Limited · 150 spots</span>
-                        <p class="reg-type">Tier 1</p>
-                        <h3>In-Person + Online</h3>
-                        <p class="reg-tagline">The full experience — be there on Oct 28 and join virtually on Oct 29.</p>
-                        <p class="reg-warning" role="alert">⚠️ Only a few tickets left!</p>
-                        <ul class="reg-perks">
-                            <li>Live talks &amp; workshops on-site (Oct 28)</li>
-                            <li>Exclusive swag pack</li>
-                            <li>Networking sessions with speakers &amp; peers</li>
-                            <li>Fun dynamics to win an exclusive swag pack</li>
-                            <li>Quantum Labs (Oct 28 &amp; 29)</li>
-                            <li>IBM SkillsBuild Certification</li>
-                            <li>Access to all streamed sessions (Oct 29)</li>
-                        </ul>
-                        <button class="reg-btn" disabled aria-disabled="true" style="cursor:not-allowed;opacity:0.5;animation:none;">Registro cerrado</button>
-                    </div>
-
-                    <!-- Online Only -->
-                    <div class="reg-card">
-                        <p class="reg-type">Tier 2</p>
-                        <h3>Online Only</h3>
-                        <p class="reg-tagline">Attend from anywhere — all sessions streamed live and available on demand.</p>
-                        <ul class="reg-perks">
-                            <li>Live-streamed talks &amp; workshops (Oct 28 &amp; 29)</li>
-                            <li>Quantum Labs (Oct 28 &amp; 29)</li>
-                            <li>IBM SkillsBuild Certification</li>
-                            <li>Access to all recorded sessions</li>
-                        </ul>
-                        <button class="reg-btn" disabled aria-disabled="true" style="cursor:not-allowed;opacity:0.5;animation:none;">Registro cerrado</button>
-                    </div>
-
-                </div>
+                <p class="section-label">Gallery</p>
+                <h2>Gallery</h2>
+                <p class="reg-subtitle" style="margin-top:1rem;">In Progress</p>
             </div>
         </section>
 
@@ -3055,12 +3017,12 @@
         };
 
         // Sections without their own nav link borrow another link's highlight
-        const navAlias = { register: 'home' };
+        const navAlias = {};
         const sections = Array.from(document.querySelectorAll('.section'));
         const currentLabel = document.getElementById('navCurrentText');
         const sectionNames = {
             home: 'Home',
-            register: 'Get your ticket',
+            gallery: 'Gallery',
             speakers: 'Speakers',
             resources: 'Resources',
             schedule: 'Schedule',
