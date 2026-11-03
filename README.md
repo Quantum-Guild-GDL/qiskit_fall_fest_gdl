@@ -55,7 +55,7 @@ To view the page locally, simply open `index.html` in your web browser.
 
 ## Event gallery
 
-The gallery contains 40 curated event photos in three continuous rows. Hovering
+The gallery contains 60 curated event photos in three continuous rows. Hovering
 over a photo pauses every row and highlights that image. Clicking a photo opens
 the full-size viewer, with previous/next buttons, arrow keys, Escape to close,
 and swipe navigation on touch screens. Motion can also be paused explicitly;
