@@ -1273,6 +1273,129 @@
         .day-panel { display: none; }
         .day-panel.active { display: block; }
 
+        .schedule-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(280px, 340px);
+            gap: clamp(2rem, 3vw, 3rem);
+            align-items: start;
+            max-width: 1360px;
+            margin: 3rem auto 0;
+        }
+
+        .schedule-layout .timeline { min-width: 0; margin-top: 0; }
+
+        .schedule-recordings {
+            position: sticky;
+            top: calc(var(--nav-h) + 2rem);
+            padding: 1.25rem;
+            text-align: left;
+            border: 1px solid rgba(159, 216, 255, 0.16);
+            border-radius: 20px;
+            background: linear-gradient(145deg, rgba(17, 146, 232, 0.07), rgba(105, 41, 196, 0.09));
+        }
+
+        .recordings-label {
+            color: #9fd8ff;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+        .recordings-title { font-size: 1.4rem; font-weight: 600; }
+        .recordings-description {
+            margin: 0.5rem 0 1.25rem;
+            color: rgba(255, 255, 255, 0.65);
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+        .recordings-list { display: grid; gap: 1.25rem; }
+        .recording-card { min-width: 0; }
+        .recording-player {
+            position: relative;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            background: #12121f;
+        }
+        .recording-preview {
+            position: relative;
+            display: block;
+            width: 100%;
+            height: 100%;
+            color: #fff;
+            text-decoration: none;
+        }
+        .recording-preview::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(10, 10, 20, 0.1), rgba(10, 10, 20, 0.2) 35%, rgba(10, 10, 20, 0.95));
+        }
+        .recording-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .recording-play {
+            position: absolute;
+            z-index: 1;
+            top: 30%;
+            left: 50%;
+            transform: translateX(-50%);
+            display: grid;
+            place-items: center;
+            width: 44px;
+            height: 44px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            background: rgba(15, 15, 25, 0.75);
+            transition: background 0.2s ease, border-color 0.2s ease;
+        }
+        .recording-play svg { width: 18px; height: 18px; margin-left: 2px; }
+        .recording-preview:hover .recording-play,
+        .recording-preview:focus-visible .recording-play {
+            background: var(--purple);
+            border-color: #fff;
+        }
+        .recording-preview:focus-visible { outline: 3px solid #9fd8ff; outline-offset: -4px; }
+        .recording-title {
+            position: absolute;
+            z-index: 1;
+            left: 1rem;
+            right: 1rem;
+            bottom: 0.85rem;
+            font-size: clamp(1.1rem, 1.5vw, 1.35rem);
+            font-weight: 600;
+            line-height: 1.3;
+        }
+        .recording-player iframe { width: 100%; height: 100%; border: 0; display: block; }
+        .recording-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.5rem;
+            padding-top: 0.6rem;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.75rem;
+        }
+        .recording-meta a { color: #9fd8ff; text-underline-offset: 3px; }
+        .recording-meta a:hover { color: #fff; }
+        .recording-meta a:focus-visible { outline: 2px solid #9fd8ff; outline-offset: 3px; }
+
+        @media (max-width: 980px) {
+            .schedule-layout { grid-template-columns: minmax(0, 1fr); max-width: 920px; }
+            .schedule-recordings { position: static; }
+            .recordings-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+
+        @media (max-width: 640px) {
+            .schedule-layout { gap: 1.5rem; }
+            .recordings-list { grid-template-columns: minmax(0, 1fr); }
+            .recording-title { font-size: 1.25rem; }
+        }
+
         .timeline {
             position: relative;
             width: 100%;
@@ -3070,65 +3193,26 @@
 
                 <!-- DAY 1 -->
                 <div class="day-panel active" id="day1">
-                    <div class="timeline" id="timeline-day1">
-                        <span class="timeline-now" id="timelineNow" aria-hidden="true"></span>
+                    <div class="schedule-layout">
+                        <div class="timeline" id="timeline-day1">
+                            <span class="timeline-now" id="timelineNow" aria-hidden="true"></span>
 
-                        <div class="timeline-item" data-start="08:45" data-end="09:00">
-                            <span class="tl-node"></span>
-                            <div class="tl-card">
-                                <div class="tl-time">08:45 – 09:00</div>
-                                <div class="tl-title"><span>Access &amp; Check-in</span></div>
-                                <div class="tl-tags">
-                                    <span class="tl-tag tl-inperson">In person</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="timeline-item" data-start="09:00" data-end="09:15">
-                            <span class="tl-node"></span>
-                            <div class="tl-card">
-                                <div class="tl-time">09:00 – 09:15</div>
-                                <div class="tl-title"><span>Kick off</span></div>
-                                <div class="tl-tags">
-                                    <span class="tl-tag tl-inperson">In person</span>
-                                    <span class="tl-tag tl-online">Online</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="timeline-item" data-start="09:20" data-end="10:20">
-                            <span class="tl-node"></span>
-                            <div class="tl-card">
-                                <div class="tl-time">09:20 – 10:20</div>
-                                <div class="tl-title"><span>Cuántica + IA: la próxima plataforma de cómputo</span></div>
-                                <div class="tl-speaker">Speaker: <span>Ismael Faro</span></div>
-                                <div class="tl-tags">
-                                    <span class="tl-tag tl-inperson">In person</span>
-                                    <span class="tl-tag tl-online">Online</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="timeline-row--parallel">
-                            <div class="timeline-item tl-parallel-left" data-start="10:30" data-end="12:00">
+                            <div class="timeline-item" data-start="08:45" data-end="09:00">
                                 <span class="tl-node"></span>
                                 <div class="tl-card">
-                                    <div class="tl-time">10:30 – 12:00</div>
-                                    <div class="tl-title"><span>Round Table</span></div>
-                                    <div class="tl-speaker">Speaker: <span>Salvador E. Venegas-Andraca</span></div>
+                                    <div class="tl-time">08:45 – 09:00</div>
+                                    <div class="tl-title"><span>Access &amp; Check-in</span></div>
                                     <div class="tl-tags">
                                         <span class="tl-tag tl-inperson">In person</span>
-                                        <span class="tl-tag tl-dm">Only Decision Makers</span>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="timeline-item tl-parallel-right" data-start="10:30" data-end="11:20">
+                            <div class="timeline-item" data-start="09:00" data-end="09:15">
                                 <span class="tl-node"></span>
                                 <div class="tl-card">
-                                    <div class="tl-time">10:30 – 11:20</div>
-                                    <div class="tl-title"><span>IBM Quantum Platform</span></div>
-                                    <div class="tl-speaker">Speakers: <span>Yra Cano, Cuauhtemoc Salvador Gonzalez Mejia</span></div>
+                                    <div class="tl-time">09:00 – 09:15</div>
+                                    <div class="tl-title"><span>Kick off</span></div>
                                     <div class="tl-tags">
                                         <span class="tl-tag tl-inperson">In person</span>
                                         <span class="tl-tag tl-online">Online</span>
@@ -3136,33 +3220,102 @@
                                 </div>
                             </div>
 
-                            <div class="timeline-item tl-parallel-left" data-start="11:25" data-end="11:50">
+                            <div class="timeline-item" data-start="09:20" data-end="10:20">
                                 <span class="tl-node"></span>
                                 <div class="tl-card">
-                                    <div class="tl-time">11:25 – 11:50</div>
-                                    <div class="tl-title"><span>Qiskit / Workshop</span></div>
-                                    <div class="tl-speaker">Speaker: <span>Jose Ramon Diaz Lara</span></div>
+                                    <div class="tl-time">09:20 – 10:20</div>
+                                    <div class="tl-title"><span>Cuántica + IA: la próxima plataforma de cómputo</span></div>
+                                    <div class="tl-speaker">Speaker: <span>Ismael Faro</span></div>
                                     <div class="tl-tags">
                                         <span class="tl-tag tl-inperson">In person</span>
                                         <span class="tl-tag tl-online">Online</span>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="timeline-item" data-start="11:55" data-end="12:55">
-                            <span class="tl-node"></span>
-                            <div class="tl-card">
-                                <div class="tl-time">11:55 – 12:55</div>
-                                <div class="tl-title"><span>Algorithms &amp; Workshop</span></div>
-                                <div class="tl-speaker">Speakers: <span>Eva Nayeli Hernandez Pulido, Adolfo Reynoso, Jorge Saul Salas Villalobos</span></div>
-                                <div class="tl-tags">
-                                    <span class="tl-tag tl-inperson">In person</span>
-                                    <span class="tl-tag tl-online">Online</span>
+                            <div class="timeline-row--parallel">
+                                <div class="timeline-item tl-parallel-left" data-start="10:30" data-end="12:00">
+                                    <span class="tl-node"></span>
+                                    <div class="tl-card">
+                                        <div class="tl-time">10:30 – 12:00</div>
+                                        <div class="tl-title"><span>Round Table</span></div>
+                                        <div class="tl-speaker">Speaker: <span>Salvador E. Venegas-Andraca</span></div>
+                                        <div class="tl-tags">
+                                            <span class="tl-tag tl-inperson">In person</span>
+                                            <span class="tl-tag tl-dm">Only Decision Makers</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="timeline-item tl-parallel-right" data-start="10:30" data-end="11:20">
+                                    <span class="tl-node"></span>
+                                    <div class="tl-card">
+                                        <div class="tl-time">10:30 – 11:20</div>
+                                        <div class="tl-title"><span>IBM Quantum Platform</span></div>
+                                        <div class="tl-speaker">Speakers: <span>Yra Cano, Cuauhtemoc Salvador Gonzalez Mejia</span></div>
+                                        <div class="tl-tags">
+                                            <span class="tl-tag tl-inperson">In person</span>
+                                            <span class="tl-tag tl-online">Online</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="timeline-item tl-parallel-left" data-start="11:25" data-end="11:50">
+                                    <span class="tl-node"></span>
+                                    <div class="tl-card">
+                                        <div class="tl-time">11:25 – 11:50</div>
+                                        <div class="tl-title"><span>Qiskit / Workshop</span></div>
+                                        <div class="tl-speaker">Speaker: <span>Jose Ramon Diaz Lara</span></div>
+                                        <div class="tl-tags">
+                                            <span class="tl-tag tl-inperson">In person</span>
+                                            <span class="tl-tag tl-online">Online</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+
+                            <div class="timeline-item" data-start="11:55" data-end="12:55">
+                                <span class="tl-node"></span>
+                                <div class="tl-card">
+                                    <div class="tl-time">11:55 – 12:55</div>
+                                    <div class="tl-title"><span>Algorithms &amp; Workshop</span></div>
+                                    <div class="tl-speaker">Speakers: <span>Eva Nayeli Hernandez Pulido, Adolfo Reynoso, Jorge Saul Salas Villalobos</span></div>
+                                    <div class="tl-tags">
+                                        <span class="tl-tag tl-inperson">In person</span>
+                                        <span class="tl-tag tl-online">Online</span>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
 
+                        <aside class="schedule-recordings" aria-labelledby="recordings-title">
+                            <p class="recordings-label">Event recordings</p>
+                            <h3 class="recordings-title" id="recordings-title">Watch Day 1</h3>
+                            <p class="recordings-description">Revisit October 28 in two parts. Press play to watch right here.</p>
+                            <div class="recordings-list">
+                                <article class="recording-card">
+                                    <div class="recording-player">
+                                        <a class="recording-preview" href="https://www.youtube.com/watch?v=Uxb_Z3Pn_Es" data-video-id="Uxb_Z3Pn_Es" lang="es" aria-label="Reproducir Día 1 · Parte 1">
+                                            <img src="https://i.ytimg.com/vi/Uxb_Z3Pn_Es/hqdefault.jpg" width="480" height="360" alt="" loading="lazy" decoding="async">
+                                            <span class="recording-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+                                            <h4 class="recording-title">Día 1 · Parte 1</h4>
+                                        </a>
+                                    </div>
+                                    <p class="recording-meta"><span>Oct 28, 2026</span><a href="https://www.youtube.com/watch?v=Uxb_Z3Pn_Es" target="_blank" rel="noopener noreferrer" aria-label="Watch Day 1, Part 1 on YouTube (opens in a new tab)">YouTube <span aria-hidden="true">↗</span></a></p>
+                                </article>
+                                <article class="recording-card">
+                                    <div class="recording-player">
+                                        <a class="recording-preview" href="https://www.youtube.com/watch?v=FH7t1c3Hum8" data-video-id="FH7t1c3Hum8" lang="es" aria-label="Reproducir Día 1 · Parte 2">
+                                            <img src="https://i.ytimg.com/vi/FH7t1c3Hum8/hqdefault.jpg" width="480" height="360" alt="" loading="lazy" decoding="async">
+                                            <span class="recording-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+                                            <h4 class="recording-title">Día 1 · Parte 2</h4>
+                                        </a>
+                                    </div>
+                                    <p class="recording-meta"><span>Oct 28, 2026</span><a href="https://www.youtube.com/watch?v=FH7t1c3Hum8" target="_blank" rel="noopener noreferrer" aria-label="Watch Day 1, Part 2 on YouTube (opens in a new tab)">YouTube <span aria-hidden="true">↗</span></a></p>
+                                </article>
+                            </div>
+                        </aside>
                     </div>
                 </div>
 
@@ -3838,9 +3991,36 @@
         if (document.fonts && document.fonts.ready) document.fonts.ready.then(placeIndicator);
         placeIndicator();
 
+        // Load a recording only on request; keep just one player active.
+        const recordingPlayers = [...document.querySelectorAll('.recording-preview')].map(preview => ({ preview, frame: null }));
+        const resetRecordings = () => {
+            recordingPlayers.forEach(recording => {
+                if (!recording.frame) return;
+                recording.frame.replaceWith(recording.preview);
+                recording.frame = null;
+            });
+        };
+        recordingPlayers.forEach(recording => {
+            recording.preview.addEventListener('click', event => {
+                if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+                event.preventDefault();
+                resetRecordings();
+                const frame = document.createElement('iframe');
+                frame.src = `https://www.youtube-nocookie.com/embed/${recording.preview.dataset.videoId}?autoplay=1&rel=0`;
+                frame.title = recording.preview.querySelector('.recording-title').textContent;
+                frame.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+                frame.allowFullscreen = true;
+                frame.referrerPolicy = 'strict-origin-when-cross-origin';
+                recording.preview.replaceWith(frame);
+                recording.frame = frame;
+                frame.focus({ preventScroll: true });
+            });
+        });
+
         // ---------- Day tabs ----------
         document.querySelectorAll('.day-tab').forEach(btn => {
             btn.addEventListener('click', () => {
+                resetRecordings();
                 document.querySelectorAll('.day-tab').forEach(b => b.classList.remove('active'));
                 document.querySelectorAll('.day-panel').forEach(p => p.classList.remove('active'));
                 btn.classList.add('active');
