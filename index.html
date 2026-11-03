@@ -60,6 +60,7 @@
 
         html {
             scroll-behavior: smooth;
+            overflow-x: clip;
         }
 
         body {
@@ -1969,8 +1970,337 @@
         }
 
 
+        /* ---------- Event gallery ---------- */
+        #gallery {
+            --gallery-row-height: clamp(140px, 19vh, 210px);
+            --gallery-gap: 14px;
+            min-height: calc(100svh - var(--nav-h));
+            padding: 2rem 0;
+            overflow: hidden;
+        }
+
+        .gallery-heading {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 2rem;
+            width: min(100%, 1240px);
+            padding-inline: 2rem;
+            margin-bottom: 1.75rem;
+            text-align: left;
+        }
+
+        #gallery h2 {
+            max-width: 700px;
+            margin-bottom: 0;
+            font-size: clamp(2.2rem, 4.3vw, 4rem);
+            line-height: 1.08;
+            letter-spacing: -0.04em;
+        }
+
+        .gallery-intro {
+            max-width: 310px;
+            color: rgba(255, 255, 255, 0.62);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .gallery-wall {
+            width: 100%;
+            position: relative;
+        }
+
+        .gallery-wall::before,
+        .gallery-wall::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: clamp(18px, 4vw, 70px);
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        .gallery-wall::before {
+            left: 0;
+            background: linear-gradient(90deg, rgba(12, 8, 24, 0.7), transparent);
+        }
+
+        .gallery-wall::after {
+            right: 0;
+            background: linear-gradient(-90deg, rgba(12, 8, 24, 0.7), transparent);
+        }
+
+        .gallery-lane {
+            overflow: hidden;
+            padding-block: 8px;
+        }
+
+        .gallery-track {
+            display: flex;
+            width: max-content;
+            animation: galleryDrift var(--gallery-duration, 160s) linear infinite;
+            animation-play-state: paused;
+        }
+
+        .gallery-lane:nth-child(2) .gallery-track {
+            animation-direction: reverse;
+        }
+
+        .gallery-group {
+            display: flex;
+            flex-shrink: 0;
+            gap: var(--gallery-gap);
+            padding-right: var(--gallery-gap);
+        }
+
+        #gallery.is-in-view[data-paused="false"] .gallery-track {
+            animation-play-state: running;
+        }
+
+        #gallery .gallery-wall:has(.gallery-photo:focus-visible) .gallery-track {
+            animation-play-state: paused;
+        }
+
+        .gallery-photo {
+            position: relative;
+            flex: 0 0 auto;
+            width: calc(var(--gallery-row-height) * 1.5);
+            height: var(--gallery-row-height);
+            overflow: hidden;
+            padding: 0;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 12px;
+            background: #181224;
+            color: #fff;
+            cursor: zoom-in;
+            isolation: isolate;
+            transition: transform 0.45s cubic-bezier(0.2, 0.65, 0.3, 1),
+                        opacity 0.45s ease, border-color 0.45s ease,
+                        box-shadow 0.45s ease;
+        }
+
+        .gallery-photo--portrait {
+            width: calc(var(--gallery-row-height) * 0.78);
+        }
+
+        .gallery-photo img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 42%;
+            transition: transform 0.7s cubic-bezier(0.2, 0.65, 0.3, 1);
+        }
+
+        .gallery-photo::after {
+            content: '';
+            position: absolute;
+            inset: 30% 0 0;
+            background: linear-gradient(transparent, rgba(5, 3, 15, 0.88));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .gallery-photo-caption {
+            position: absolute;
+            z-index: 1;
+            bottom: 1rem;
+            left: 1rem;
+            right: 1rem;
+            text-align: left;
+            font: 500 0.82rem/1.4 'IBM Plex Sans', sans-serif;
+            opacity: 0;
+            transform: translateY(6px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .gallery-photo:is(:hover, :focus-visible, .is-selected) {
+            z-index: 2;
+            opacity: 1;
+            transform: translateY(-3px) scale(1.025);
+            border-color: rgba(181, 145, 255, 0.95);
+            box-shadow: 0 0 0 2px rgba(105, 41, 196, 0.35), 0 8px 26px rgba(0, 0, 0, 0.4);
+        }
+
+        .gallery-photo:is(:hover, :focus-visible, .is-selected) img { transform: scale(1.045); }
+        .gallery-photo:is(:hover, :focus-visible, .is-selected)::after { opacity: 1; }
+        .gallery-photo:is(:hover, :focus-visible, .is-selected) .gallery-photo-caption {
+            opacity: 1;
+            transform: none;
+        }
+
+        .gallery-photo:focus-visible,
+        .gallery-control:focus-visible {
+            outline: 2px solid #bda2ff;
+            outline-offset: 3px;
+        }
+
+        @media (hover: hover) {
+            #gallery .gallery-wall:has(.gallery-photo:hover) .gallery-track {
+                animation-play-state: paused;
+            }
+            .gallery-wall:has(.gallery-photo:hover) .gallery-photo:not(:hover) {
+                opacity: 0.4;
+            }
+        }
+
+        .gallery-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            width: min(100%, 1240px);
+            padding: 1.5rem 2rem 0;
+        }
+
+        .gallery-hint {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.78rem;
+            text-align: left;
+        }
+
+        .gallery-hint--touch { display: none; }
+        .gallery-actions { display: flex; align-items: center; gap: 0.65rem; }
+
+        .gallery-control {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            min-height: 44px;
+            padding: 0.65rem 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 999px;
+            background: rgba(16, 10, 30, 0.75);
+            color: #fff;
+            font: 500 0.8rem/1.2 'IBM Plex Sans', sans-serif;
+            cursor: pointer;
+            transition: background 0.25s ease, border-color 0.25s ease;
+        }
+
+        .gallery-control:hover { background: #302044; border-color: #bda2ff; }
+        .gallery-control svg { width: 17px; height: 17px; flex-shrink: 0; }
+        .gallery-control--primary { background: #fff; color: #201331; border-color: #fff; }
+        .gallery-control--primary:hover { background: #e5d8ff; }
+
+        .gallery-lightbox {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            max-width: none;
+            height: 100dvh;
+            max-height: none;
+            padding: 0;
+            border: 0;
+            background: rgba(9, 6, 17, 0.97);
+            color: #fff;
+        }
+
+        .gallery-lightbox::backdrop { background: rgba(5, 3, 10, 0.9); }
+        .gallery-lightbox[open] { display: flex; flex-direction: column; animation: galleryOpen 0.3s ease both; }
+
+        .gallery-lightbox-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.25rem 2rem;
+            flex-shrink: 0;
+        }
+
+        .gallery-lightbox-brand {
+            color: rgba(255, 255, 255, 0.65);
+            font-size: 0.82rem;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+        }
+
+        .gallery-lightbox-stage {
+            display: grid;
+            touch-action: pan-y pinch-zoom;
+            grid-template-columns: 48px minmax(0, 1fr) 48px;
+            align-items: center;
+            gap: 1.5rem;
+            flex: 1;
+            min-height: 0;
+            padding: 0 2rem;
+        }
+
+        .gallery-lightbox-figure {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            min-height: 0;
+            overflow: hidden;
+        }
+
+        .gallery-lightbox-image {
+            display: block;
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            border-radius: 8px;
+            opacity: 1;
+            transition: opacity 0.25s ease;
+        }
+
+        .gallery-lightbox-image.is-loading { opacity: 0.2; }
+        .gallery-control--icon { width: 48px; height: 48px; padding: 0; }
+        .gallery-lightbox-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.25rem 2rem 1.75rem;
+            flex-shrink: 0;
+        }
+
+        .gallery-lightbox-caption { font-size: 1rem; line-height: 1.4; }
+        .gallery-lightbox-category {
+            margin-bottom: 0.4rem;
+            color: #bda2ff;
+            font-size: 0.7rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+        .gallery-lightbox-count { color: rgba(255, 255, 255, 0.5); font-size: 0.85rem; white-space: nowrap; }
+        html:has(.gallery-lightbox[open]) { overflow: hidden; scrollbar-gutter: stable; }
+
+        @keyframes galleryDrift { to { transform: translateX(-50%); } }
+        @keyframes galleryOpen { from { opacity: 0; } to { opacity: 1; } }
+
+        @media (prefers-reduced-motion: reduce) {
+            #gallery .gallery-track { animation: none; }
+            .gallery-group[aria-hidden="true"] { display: none; }
+            .gallery-lane { overflow-x: auto; scrollbar-width: thin; scrollbar-color: #6929c4 transparent; }
+            .gallery-photo, .gallery-photo img, .gallery-photo::after, .gallery-photo-caption,
+            .gallery-lightbox[open], .gallery-lightbox-image { animation: none; transition: none; }
+            #galleryPause { display: none; }
+            .gallery-hint--mouse { display: none; }
+            .gallery-hint--touch { display: inline; }
+        }
+
         /* ---------- Responsive ---------- */
         @media (max-width: 768px) {
+            #gallery { --gallery-row-height: 170px; --gallery-gap: 10px; }
+            .gallery-heading { align-items: flex-start; flex-direction: column; gap: 0.85rem; padding-inline: 1.25rem; }
+            #gallery h2 { font-size: 2.5rem; }
+            .gallery-intro { max-width: 400px; font-size: 0.85rem; }
+            .gallery-footer { padding-inline: 1.25rem; flex-wrap: wrap; }
+            .gallery-lightbox-header { padding: 1rem; }
+            .gallery-lightbox-stage { position: relative; display: flex; justify-content: center; padding: 0 0.5rem; }
+            .gallery-lightbox-figure { width: 100%; }
+            #galleryPrevious, #galleryNext { position: absolute; z-index: 1; }
+            #galleryPrevious { left: 0.75rem; }
+            #galleryNext { right: 0.75rem; }
+            .gallery-control--icon { width: 40px; height: 44px; }
+            .gallery-lightbox-footer { padding: 1rem 1.25rem max(1.5rem, env(safe-area-inset-bottom)); }
+            .gallery-lightbox-caption { font-size: 0.85rem; }
+
             /* Show the hamburger; keep Register pinned to the right */
             .nav-toggle { display: flex; }
             .nav-discord { margin-left: auto; }
@@ -2137,6 +2467,14 @@
         }
 
         @media (max-width: 560px) {
+            #gallery { --gallery-row-height: 150px; }
+            #gallery h2 { font-size: 2.15rem; }
+            .gallery-hint--mouse { display: none; }
+            .gallery-hint--touch { display: inline; }
+            .gallery-actions { width: 100%; }
+            .gallery-actions .gallery-control--primary { flex: 1; }
+            .gallery-lightbox-brand { max-width: 190px; font-size: 0.72rem; line-height: 1.5; }
+
             .floating-nav {
                 left: 0.5rem;
                 right: 0.5rem;
@@ -2290,12 +2628,211 @@
             </div>
         </section>
 
-        <section class="section" id="gallery">
-            <div class="reveal">
-                <p class="section-label">Gallery</p>
-                <h2>Gallery</h2>
-                <p class="reg-subtitle" style="margin-top:1rem;">In Progress</p>
+        <section class="section" id="gallery" aria-labelledby="galleryTitle" data-paused="false">
+            <div class="gallery-heading reveal">
+                <div>
+                    <p class="section-label">Gallery · 2026</p>
+                    <h2 id="galleryTitle">A quantum of memories.</h2>
+                </div>
+                <p class="gallery-intro">The talks, the discoveries, and the people who made Guadalajara a little more quantum.</p>
             </div>
+            <div class="gallery-wall" id="galleryWall" role="group" aria-label="Photos from Qiskit Fall Fest Guadalajara" aria-describedby="galleryHint">
+                <div class="gallery-lane">
+                    <div class="gallery-track" style="--gallery-duration: 155s;">
+                        <div class="gallery-group">
+                            <button class="gallery-photo" type="button" tabindex="-1" data-photo="38" data-full="assets/gallery/qff-gdl-2026-39.webp" data-category="Community" aria-label="Open photo 39 of 40: The people who made it happen">
+                                <img src="assets/gallery/qff-gdl-2026-39-thumb.webp" alt="The Qiskit Fall Fest community gathered for a group photo in the auditorium." width="6240" height="4160" loading="lazy" decoding="async">
+                                <span class="gallery-photo-caption">The people who made it happen</span>
+                            </button>
+                            <button class="gallery-photo" type="button" tabindex="-1" data-photo="17" data-full="assets/gallery/qff-gdl-2026-18.webp" data-category="Community" aria-label="Open photo 18 of 40: Welcome to the quantum community">
+                                <img src="assets/gallery/qff-gdl-2026-18-thumb.webp" alt="The event host welcoming attendees in front of the Qiskit screen." width="6240" height="4160" loading="lazy" decoding="async">
+                                <span class="gallery-photo-caption">Welcome to the quantum community</span>
+                            </button>
+                            <button class="gallery-photo" type="button" tabindex="-1" data-photo="20" data-full="assets/gallery/qff-gdl-2026-21.webp" data-category="Connections" aria-label="Open photo 21 of 40: Beyond the auditorium">
+                                <img src="assets/gallery/qff-gdl-2026-21-thumb.webp" alt="Two attendees smiling for a photo in the event lobby." width="6240" height="4160" loading="lazy" decoding="async">
+                                <span class="gallery-photo-caption">Beyond the auditorium</span>
+                            </button>
+                            <button class="gallery-photo" type="button" tabindex="-1" data-photo="6" data-full="assets/gallery/qff-gdl-2026-07.webp" data-category="Talks" aria-label="Open photo 7 of 40: Inside IBM Quantum">
+                                <img src="assets/gallery/qff-gdl-2026-07-thumb.webp" alt="A presenter on stage in front of the purple IBM Quantum screen." width="6000" height="4000" loading="lazy" decoding="async">
+                                <span class="gallery-photo-caption">Inside IBM Quantum</span>
+                            </button>
+                            <button class="gallery-photo" type="button" tabindex="-1" data-photo="36" data-full="assets/gallery/qff-gdl-2026-37.webp" data-category="Conversations" aria-label="Open photo 37 of 40: Every question opens a door">
+                                <img src="assets/gallery/qff-gdl-2026-37-thumb.webp" alt="An audience member asking a question with a microphone." width="6240" height="4160" loading="lazy" decoding="async">
+                                <span class="gallery-photo-caption">Every question opens a door</span>
+                            </button>
+                            <button class="gallery-photo" type="button" tabindex="-1" data-photo="27" data-full="assets/gallery/qff-gdl-2026-28.webp" data-category="Talks" aria-label="Open photo 28 of 40: The future, in conversation">
+                                <img src="assets/gallery/qff-gdl-2026-28-thumb.webp" alt="A speaker in front of the illuminated Qiskit Fall Fest Guadalajara logo." width="6240" height="4160" loading="lazy" decoding="async">
+                                <span class="gallery-photo-caption">The future, in conversation</span>
+                            </button>
+                            <button class="gallery-photo" type="button" tabindex="-1" data-photo="0" data-full="assets/gallery/qff-gdl-2026-01.webp" data-category="Community" aria-label="Open photo 1 of 40: The team behind the fest">
+                                <img src="assets/gallery/qff-gdl-2026-01-thumb.webp" alt="Organizers standing together beside the illuminated Qiskit Fall Fest displays." width="6000" height="4000" loading="lazy" decoding="async">
+                                <span class="gallery-photo-caption">The team behind the fest</span>
+                            </button>
+                            <button class="gallery-photo" type="button" tabindex="-1" data-photo="9" data-full="assets/gallery/qff-gdl-2026-10.webp" data-category="Conversations" aria-label="Open photo 10 of 40: Different perspectives, shared curiosity">
+                                <img src="assets/gallery/qff-gdl-2026-10-thumb.webp" alt="Three panelists exchanging ideas in a seated discussion." width="6000" height="4000" loading="lazy" decoding="async">
+                                <span class="gallery-photo-caption">Different perspectives, shared curiosity</span>
+                            </button>
+                            <button class="gallery-photo" type="button" tabindex="-1" data-photo="28" data-full="assets/gallery/qff-gdl-2026-29.webp" data-category="Discoveries" aria-label="Open photo 29 of 40: Quantum on display">
+                                <img src="assets/gallery/qff-gdl-2026-29-thumb.webp" alt="Illuminated quantum-themed installations in the event entrance." width="6240" height="4160" loading="lazy" decoding="async">
+                                <span class="gallery-photo-caption">Quantum on display</span>
+                            </button>
+                            <button class="gallery-photo" type="button" tabindex="-1" data-photo="23" data-full="assets/gallery/qff-gdl-2026-24.webp" data-category="Connections" aria-label="Open photo 24 of 40: A break, a conversation, a connection">
+                                <img src="assets/gallery/qff-gdl-2026-24-thumb.webp" alt="Three participants chatting around a table between sessions." width="6240" height="4160" loading="lazy" decoding="async">
+                                <span class="gallery-photo-caption">A break, a conversation, a connection</span>
+                            </button>
+                            <button class="gallery-photo gallery-photo--portrait" type="button" tabindex="-1" data-photo="7" data-full="assets/gallery/qff-gdl-2026-08.webp" data-category="Talks" aria-label="Open photo 8 of 40: A look at what comes next">
+                                <img src="assets/gallery/qff-gdl-2026-08-thumb.webp" alt="A speaker discussing the present and future of quantum computing." width="4000" height="6000" loading="lazy" decoding="async">
+                                <span class="gallery-photo-caption">A look at what comes next</span>
+                            </button>
+                            <button class="gallery-photo gallery-photo--portrait" type="button" tabindex="-1" data-photo="34" data-full="assets/gallery/qff-gdl-2026-35.webp" data-category="Community" aria-label="Open photo 35 of 40: Voices from the community">
+                                <img src="assets/gallery/qff-gdl-2026-35-thumb.webp" alt="A woman smiling as she speaks into a microphone during a session." width="4160" height="6240" loading="lazy" decoding="async">
+                                <span class="gallery-photo-caption">Voices from the community</span>
+                            </button>
+                            <button class="gallery-photo" type="button" tabindex="-1" data-photo="39" data-full="assets/gallery/qff-gdl-2026-40.webp" data-category="Community" aria-label="Open photo 40 of 40: See you at the next discovery">
+                                <img src="assets/gallery/qff-gdl-2026-40-thumb.webp" alt="Organizers and speakers posing for a group photo in the lobby." width="6240" height="4160" loading="lazy" decoding="async">
+                                <span class="gallery-photo-caption">See you at the next discovery</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-lane">
+                    <div class="gallery-track" style="--gallery-duration: 170s;">
+                        <div class="gallery-group">
+                            <button class="gallery-photo" type="button" tabindex="-1" data-photo="29" data-full="assets/gallery/qff-gdl-2026-30.webp" data-category="Workshops" aria-label="Open photo 30 of 40: Time to build with Qiskit">
+                                <img src="assets/gallery/qff-gdl-2026-30-thumb.webp" alt="Two workshop hosts introducing a session in front of the event logo." width="6240" height="4160" loading="lazy" decoding="async">
+                                <span class="gallery-photo-caption">Time to build with Qiskit</span>
+                            </button>
+                            <button class="gallery-photo" type="button" tabindex="-1" data-photo="2" data-full="assets/gallery/qff-gdl-2026-03.webp" data-category="Speakers" aria-label="Open photo 3 of 40: Bringing quantum minds together">
+                                <img src="assets/gallery/qff-gdl-2026-03-thumb.webp" alt="Five speakers posing beside the Qiskit mascot before the event." width="6000" height="4000" loading="lazy" decoding="async">
+                                <span class="gallery-photo-caption">Bringing quantum minds together</span>
+                            </button>
+                            <button class="gallery-photo" type="button" tabindex="-1" data-photo="30" data-full="assets/gallery/qff-gdl-2026-31.webp" data-category="Workshops" aria-label="Open photo 31 of 40: From qubits to circuits">
+                                <img src="assets/gallery/qff-gdl-2026-31-thumb.webp" alt="A workshop presenter explaining a quantum circuit projected behind him." width="6240" height="4160" loading="lazy" decoding="async">
+                                <span class="gallery-photo-caption">From qubits to circuits</span>
+                            </button>
+                            <button class="gallery-photo" type="button" tabindex="-1" data-photo="21" data-full="assets/gallery/qff-gdl-2026-22.webp" data-category="Connections" aria-label="Open photo 22 of 40: Good company, great conversations">
+                                <img src="assets/gallery/qff-gdl-2026-22-thumb.webp" alt="Two participants posing together during a break between sessions." width="6240" height="4160" loading="lazy" decoding="async">
+                                <span class="gallery-photo-caption">Good company, great conversations</span>
+                            </button>
+                            <button class="gallery-photo" type="button" tabindex="-1" data-photo="10" data-full="assets/gallery/qff-gdl-2026-11.webp" data-category="Conversations" aria-label="Open photo 11 of 40: A place for every perspective">
+                                <img src="assets/gallery/qff-gdl-2026-11-thumb.webp" alt="Participants listening as a woman speaks during a roundtable discussion." width="6000" height="4000" loading="lazy" decoding="async">
+                                <span class="gallery-photo-caption">A place for every perspective</span>
+                            </button>
+                            <button class="gallery-photo" type="button" tabindex="-1" data-photo="15" data-full="assets/gallery/qff-gdl-2026-16.webp" data-category="Community" aria-label="Open photo 16 of 40: A room full of curiosity">
+                                <img src="assets/gallery/qff-gdl-2026-16-thumb.webp" alt="A view of the auditorium with speakers and attendees seated together." width="6240" height="4160" loading="lazy" decoding="async">
+                                <span class="gallery-photo-caption">A room full of curiosity</span>
+                            </button>
+                            <button class="gallery-photo gallery-photo--portrait" type="button" tabindex="-1" data-photo="4" data-full="assets/gallery/qff-gdl-2026-05.webp" data-category="Talks" aria-label="Open photo 5 of 40: Ideas worth sharing">
+                                <img src="assets/gallery/qff-gdl-2026-05-thumb.webp" alt="A speaker addressing the audience with a microphone." width="4000" height="6000" loading="lazy" decoding="async">
+                                <span class="gallery-photo-caption">Ideas worth sharing</span>
+                            </button>
+                            <button class="gallery-photo" type="button" tabindex="-1" data-photo="1" data-full="assets/gallery/qff-gdl-2026-02.webp" data-category="Community" aria-label="Open photo 2 of 40: A very quantum welcome">
+                                <img src="assets/gallery/qff-gdl-2026-02-thumb.webp" alt="Three attendees posing with the purple Qiskit cat mascot." width="6000" height="4000" loading="lazy" decoding="async">
+                                <span class="gallery-photo-caption">A very quantum welcome</span>
+                            </button>
+                            <button class="gallery-photo" type="button" tabindex="-1" data-photo="33" data-full="assets/gallery/qff-gdl-2026-34.webp" data-category="Conversations" aria-label="Open photo 34 of 40: Questions that spark ideas">
+                                <img src="assets/gallery/qff-gdl-2026-34-thumb.webp" alt="A participant talking with an attendee seated in the auditorium." width="6240" height="4160" loading="lazy" decoding="async">
+                                <span class="gallery-photo-caption">Questions that spark ideas</span>
+                            </button>
+                            <button class="gallery-photo gallery-photo--portrait" type="button" tabindex="-1" data-photo="26" data-full="assets/gallery/qff-gdl-2026-27.webp" data-category="Talks" aria-label="Open photo 27 of 40: Making quantum approachable">
+                                <img src="assets/gallery/qff-gdl-2026-27-thumb.webp" alt="A presenter explaining a topic with a microphone on stage." width="4160" height="6240" loading="lazy" decoding="async">
+                                <span class="gallery-photo-caption">Making quantum approachable</span>
+                            </button>
+                            <button class="gallery-photo" type="button" tabindex="-1" data-photo="14" data-full="assets/gallery/qff-gdl-2026-15.webp" data-category="Community" aria-label="Open photo 15 of 40: New connections">
+                                <img src="assets/gallery/qff-gdl-2026-15-thumb.webp" alt="Three community members smiling together after a session." width="6000" height="4000" loading="lazy" decoding="async">
+                                <span class="gallery-photo-caption">New connections</span>
+                            </button>
+                            <button class="gallery-photo" type="button" tabindex="-1" data-photo="35" data-full="assets/gallery/qff-gdl-2026-36.webp" data-category="Talks" aria-label="Open photo 36 of 40: Quantum meets the real world">
+                                <img src="assets/gallery/qff-gdl-2026-36-thumb.webp" alt="A presenter discussing real-world quantum applications and industry impact." width="6240" height="4160" loading="lazy" decoding="async">
+                                <span class="gallery-photo-caption">Quantum meets the real world</span>
+                            </button>
+                            <button class="gallery-photo" type="button" tabindex="-1" data-photo="19" data-full="assets/gallery/qff-gdl-2026-20.webp" data-category="Talks" aria-label="Open photo 20 of 40: Exploring quantum hardware">
+                                <img src="assets/gallery/qff-gdl-2026-20-thumb.webp" alt="Attendees watching a presentation about quantum computing hardware." width="6240" height="4160" loading="lazy" decoding="async">
+                                <span class="gallery-photo-caption">Exploring quantum hardware</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-lane">
+                    <div class="gallery-track" style="--gallery-duration: 165s;">
+                        <div class="gallery-group">
+                            <button class="gallery-photo" type="button" tabindex="-1" data-photo="3" data-full="assets/gallery/qff-gdl-2026-04.webp" data-category="Talks" aria-label="Open photo 4 of 40: Connected across the world">
+                                <img src="assets/gallery/qff-gdl-2026-04-thumb.webp" alt="Attendees watching a remote speaker on the auditorium screen." width="6000" height="4000" loading="lazy" decoding="async">
+                                <span class="gallery-photo-caption">Connected across the world</span>
+                            </button>
+                            <button class="gallery-photo" type="button" tabindex="-1" data-photo="22" data-full="assets/gallery/qff-gdl-2026-23.webp" data-category="Connections" aria-label="Open photo 23 of 40: Where ideas meet">
+                                <img src="assets/gallery/qff-gdl-2026-23-thumb.webp" alt="A group of attendees exchanging ideas in the event lobby." width="6240" height="4160" loading="lazy" decoding="async">
+                                <span class="gallery-photo-caption">Where ideas meet</span>
+                            </button>
+                            <button class="gallery-photo" type="button" tabindex="-1" data-photo="13" data-full="assets/gallery/qff-gdl-2026-14.webp" data-category="Community" aria-label="Open photo 14 of 40: One community, many perspectives">
+                                <img src="assets/gallery/qff-gdl-2026-14-thumb.webp" alt="Speakers and organizers gathered for a group photo after the discussions." width="6000" height="4000" loading="lazy" decoding="async">
+                                <span class="gallery-photo-caption">One community, many perspectives</span>
+                            </button>
+                            <button class="gallery-photo" type="button" tabindex="-1" data-photo="5" data-full="assets/gallery/qff-gdl-2026-06.webp" data-category="Community" aria-label="Open photo 6 of 40: Setting the day in motion">
+                                <img src="assets/gallery/qff-gdl-2026-06-thumb.webp" alt="An event host speaking to the audience from the front of the auditorium." width="6000" height="4000" loading="lazy" decoding="async">
+                                <span class="gallery-photo-caption">Setting the day in motion</span>
+                            </button>
+                            <button class="gallery-photo" type="button" tabindex="-1" data-photo="37" data-full="assets/gallery/qff-gdl-2026-38.webp" data-category="Conversations" aria-label="Open photo 38 of 40: Passing the conversation on">
+                                <img src="assets/gallery/qff-gdl-2026-38-thumb.webp" alt="An attendee speaking into a microphone while others listen nearby." width="6240" height="4160" loading="lazy" decoding="async">
+                                <span class="gallery-photo-caption">Passing the conversation on</span>
+                            </button>
+                            <button class="gallery-photo" type="button" tabindex="-1" data-photo="24" data-full="assets/gallery/qff-gdl-2026-25.webp" data-category="Talks" aria-label="Open photo 25 of 40: Ready for the next discovery">
+                                <img src="assets/gallery/qff-gdl-2026-25-thumb.webp" alt="A presenter standing beside the astronaut cat on the auditorium screen." width="6240" height="4160" loading="lazy" decoding="async">
+                                <span class="gallery-photo-caption">Ready for the next discovery</span>
+                            </button>
+                            <button class="gallery-photo" type="button" tabindex="-1" data-photo="11" data-full="assets/gallery/qff-gdl-2026-12.webp" data-category="Conversations" aria-label="Open photo 12 of 40: The conversation continues">
+                                <img src="assets/gallery/qff-gdl-2026-12-thumb.webp" alt="Two panelists discussing quantum computing with the audience." width="6000" height="4000" loading="lazy" decoding="async">
+                                <span class="gallery-photo-caption">The conversation continues</span>
+                            </button>
+                            <button class="gallery-photo" type="button" tabindex="-1" data-photo="16" data-full="assets/gallery/qff-gdl-2026-17.webp" data-category="Talks" aria-label="Open photo 17 of 40: A stage for discovery">
+                                <img src="assets/gallery/qff-gdl-2026-17-thumb.webp" alt="An auditorium view of the event host on stage beneath the Qiskit cat." width="6240" height="4160" loading="lazy" decoding="async">
+                                <span class="gallery-photo-caption">A stage for discovery</span>
+                            </button>
+                            <button class="gallery-photo" type="button" tabindex="-1" data-photo="31" data-full="assets/gallery/qff-gdl-2026-32.webp" data-category="Workshops" aria-label="Open photo 32 of 40: Learning around the table">
+                                <img src="assets/gallery/qff-gdl-2026-32-thumb.webp" alt="Participants gathered in a workshop and discussion room." width="6240" height="4160" loading="lazy" decoding="async">
+                                <span class="gallery-photo-caption">Learning around the table</span>
+                            </button>
+                            <button class="gallery-photo gallery-photo--portrait" type="button" tabindex="-1" data-photo="8" data-full="assets/gallery/qff-gdl-2026-09.webp" data-category="Talks" aria-label="Open photo 9 of 40: Connecting the dots">
+                                <img src="assets/gallery/qff-gdl-2026-09-thumb.webp" alt="A presenter explaining a projected slide with an outstretched hand." width="4000" height="6000" loading="lazy" decoding="async">
+                                <span class="gallery-photo-caption">Connecting the dots</span>
+                            </button>
+                            <button class="gallery-photo" type="button" tabindex="-1" data-photo="25" data-full="assets/gallery/qff-gdl-2026-26.webp" data-category="Community" aria-label="Open photo 26 of 40: Learning, together">
+                                <img src="assets/gallery/qff-gdl-2026-26-thumb.webp" alt="Rows of attendees listening closely to a talk in the auditorium." width="6240" height="4160" loading="lazy" decoding="async">
+                                <span class="gallery-photo-caption">Learning, together</span>
+                            </button>
+                            <button class="gallery-photo" type="button" tabindex="-1" data-photo="12" data-full="assets/gallery/qff-gdl-2026-13.webp" data-category="Conversations" aria-label="Open photo 13 of 40: Around the same table">
+                                <img src="assets/gallery/qff-gdl-2026-13-thumb.webp" alt="A woman sharing her perspective with fellow roundtable participants." width="6000" height="4000" loading="lazy" decoding="async">
+                                <span class="gallery-photo-caption">Around the same table</span>
+                            </button>
+                            <button class="gallery-photo" type="button" tabindex="-1" data-photo="32" data-full="assets/gallery/qff-gdl-2026-33.webp" data-category="Community" aria-label="Open photo 33 of 40: Curiosity in every row">
+                                <img src="assets/gallery/qff-gdl-2026-33-thumb.webp" alt="Attendees participating in an interactive auditorium session." width="6240" height="4160" loading="lazy" decoding="async">
+                                <span class="gallery-photo-caption">Curiosity in every row</span>
+                            </button>
+                            <button class="gallery-photo" type="button" tabindex="-1" data-photo="18" data-full="assets/gallery/qff-gdl-2026-19.webp" data-category="Talks" aria-label="Open photo 19 of 40: Sharing the stage">
+                                <img src="assets/gallery/qff-gdl-2026-19-thumb.webp" alt="Two speakers addressing the audience together during a presentation." width="6240" height="4160" loading="lazy" decoding="async">
+                                <span class="gallery-photo-caption">Sharing the stage</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="gallery-footer">
+                <p class="gallery-hint" id="galleryHint">
+                    <span class="gallery-hint--mouse">40 moments together · Hover to pause. Click to explore.</span>
+                    <span class="gallery-hint--touch">40 moments together · Tap a photo to explore.</span>
+                </p>
+                <div class="gallery-actions">
+                    <button class="gallery-control" id="galleryPause" type="button" aria-pressed="false" aria-controls="galleryWall">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path id="galleryPauseIcon" d="M8 5v14M16 5v14"/></svg>
+                        <span id="galleryPauseText">Pause motion</span>
+                    </button>
+                    <button class="gallery-control gallery-control--primary" id="galleryExplore" type="button" aria-haspopup="dialog" aria-controls="galleryLightbox">
+                        Explore all 40
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+                    </button>
+                </div>
+            </div>
+            <noscript><style>#gallery .gallery-lane { overflow-x: auto; }</style></noscript>
         </section>
 
         <section class="section" id="speakers">
@@ -2634,6 +3171,34 @@
         </section>
     </main>
 
+    <dialog class="gallery-lightbox" id="galleryLightbox" aria-label="Event photo viewer" aria-describedby="galleryCaption">
+        <div class="gallery-lightbox-header">
+            <span class="gallery-lightbox-brand">QISKIT FALL FEST · GUADALAJARA 2026</span>
+            <button class="gallery-control" id="galleryClose" type="button" autofocus>
+                Close
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg>
+            </button>
+        </div>
+        <div class="gallery-lightbox-stage" id="galleryStage">
+            <button class="gallery-control gallery-control--icon" id="galleryPrevious" type="button" aria-label="Previous photo">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg>
+            </button>
+            <figure class="gallery-lightbox-figure">
+                <img class="gallery-lightbox-image" id="galleryImage" alt="" decoding="async">
+            </figure>
+            <button class="gallery-control gallery-control--icon" id="galleryNext" type="button" aria-label="Next photo">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m10 6 6 6-6 6"/></svg>
+            </button>
+        </div>
+        <div class="gallery-lightbox-footer" aria-live="polite" aria-atomic="true">
+            <div>
+                <p class="gallery-lightbox-category" id="galleryCategory"></p>
+                <p class="gallery-lightbox-caption" id="galleryCaption"></p>
+            </div>
+            <span class="gallery-lightbox-count" id="galleryCount"></span>
+        </div>
+    </dialog>
+
     <footer class="site-footer" id="siteFooter">
         <div class="footer-card">
             <div class="logos">
@@ -2652,6 +3217,141 @@
     <img class="footer-cat" id="footerCat" src="assets/qcat-peek.png" alt="" aria-hidden="true" decoding="async">
 
     <script>
+        // ---------- Event gallery ----------
+        (() => {
+            const gallery = document.getElementById('gallery');
+            const wall = document.getElementById('galleryWall');
+            const dialog = document.getElementById('galleryLightbox');
+            const image = document.getElementById('galleryImage');
+            const pauseButton = document.getElementById('galleryPause');
+            const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+            const photoButtons = Array.from(wall.querySelectorAll('.gallery-photo'));
+            const photos = photoButtons.map(button => ({
+                index: Number(button.dataset.photo),
+                full: button.dataset.full,
+                thumbnail: button.querySelector('img').getAttribute('src'),
+                alt: button.querySelector('img').alt,
+                caption: button.querySelector('.gallery-photo-caption').textContent,
+                category: button.dataset.category
+            })).sort((a, b) => a.index - b.index);
+            let paused = false;
+            let current = 0;
+            let selected = null;
+            let imageRequest = 0;
+            let touchStart = null;
+            let ignoreClickUntil = 0;
+
+            // Two equal groups make each row loop without jumping. Only the
+            // original photos are exposed to assistive technology.
+            wall.querySelectorAll('.gallery-group').forEach(group => {
+                const copy = group.cloneNode(true);
+                copy.setAttribute('aria-hidden', 'true');
+                copy.querySelectorAll('button').forEach(button => button.tabIndex = -1);
+                group.parentElement.append(copy);
+            });
+
+            const syncMotion = () => {
+                gallery.dataset.paused = String(paused || dialog.open || document.hidden || reduceMotion.matches);
+                pauseButton.setAttribute('aria-pressed', String(paused));
+                document.getElementById('galleryPauseText').textContent = paused ? 'Resume motion' : 'Pause motion';
+                document.getElementById('galleryPauseIcon').setAttribute('d', paused ? 'm8 5 11 7-11 7Z' : 'M8 5v14M16 5v14');
+            };
+
+            const observer = new IntersectionObserver(entries => {
+                gallery.classList.toggle('is-in-view', entries[0].isIntersecting);
+            }, { threshold: 0 });
+            observer.observe(gallery);
+            document.addEventListener('visibilitychange', syncMotion);
+            reduceMotion.addEventListener('change', syncMotion);
+            pauseButton.addEventListener('click', () => {
+                paused = !paused;
+                syncMotion();
+            });
+
+            const showPhoto = index => {
+                current = (index + photos.length) % photos.length;
+                const photo = photos[current];
+                const request = ++imageRequest;
+                image.classList.add('is-loading');
+                image.alt = photo.alt;
+                image.src = photo.thumbnail;
+                document.getElementById('galleryCaption').textContent = photo.caption;
+                document.getElementById('galleryCategory').textContent = photo.category;
+                document.getElementById('galleryCount').textContent = `${current + 1} / ${photos.length}`;
+
+                // Keep a preview visible while the larger image loads, and ignore
+                // stale loads when someone navigates quickly through the viewer.
+                const fullImage = new Image();
+                fullImage.onload = () => {
+                    if (request !== imageRequest) return;
+                    image.src = photo.full;
+                    image.classList.remove('is-loading');
+                };
+                fullImage.onerror = () => {
+                    if (request === imageRequest) image.classList.remove('is-loading');
+                };
+                fullImage.src = photo.full;
+
+                if (selected) selected.classList.remove('is-selected');
+                selected = wall.querySelector(`[data-photo="${current}"]`);
+                if (selected) selected.classList.add('is-selected');
+            };
+
+            const openPhoto = (index, button) => {
+                showPhoto(index);
+                if (button) {
+                    if (selected) selected.classList.remove('is-selected');
+                    selected = button;
+                    selected.classList.add('is-selected');
+                }
+                if (!dialog.open) dialog.showModal();
+                syncMotion();
+            };
+
+            wall.addEventListener('click', event => {
+                const button = event.target.closest('.gallery-photo');
+                if (button) openPhoto(Number(button.dataset.photo), button);
+            });
+            document.getElementById('galleryExplore').addEventListener('click', () => openPhoto(0));
+            document.getElementById('galleryClose').addEventListener('click', () => dialog.close());
+            document.getElementById('galleryPrevious').addEventListener('click', () => showPhoto(current - 1));
+            document.getElementById('galleryNext').addEventListener('click', () => showPhoto(current + 1));
+            dialog.addEventListener('keydown', event => {
+                if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+                    event.preventDefault();
+                    showPhoto(current + (event.key === 'ArrowRight' ? 1 : -1));
+                }
+            });
+            dialog.addEventListener('close', () => {
+                imageRequest++;
+                if (selected) selected.classList.remove('is-selected');
+                selected = null;
+                syncMotion();
+            });
+            dialog.addEventListener('click', event => {
+                if (performance.now() < ignoreClickUntil) return;
+                if (event.target === dialog || event.target.classList.contains('gallery-lightbox-figure')) dialog.close();
+            });
+
+            // Touch navigation leaves vertical gestures available to the browser.
+            const stage = document.getElementById('galleryStage');
+            stage.addEventListener('pointerdown', event => {
+                if (event.pointerType === 'touch') touchStart = { x: event.clientX, y: event.clientY };
+            });
+            stage.addEventListener('pointerup', event => {
+                if (!touchStart) return;
+                const dx = event.clientX - touchStart.x;
+                const dy = event.clientY - touchStart.y;
+                touchStart = null;
+                if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.4) {
+                    ignoreClickUntil = performance.now() + 350;
+                    showPhoto(current + (dx < 0 ? 1 : -1));
+                }
+            });
+            stage.addEventListener('pointercancel', () => { touchStart = null; });
+            syncMotion();
+        })();
+
         // ---------- Immersive quantum-circuit background ----------
         // A lightweight, dependency-free canvas scene inspired by Qiskit circuits:
         // qubit rails, familiar gates, entanglement links and travelling state pulses.

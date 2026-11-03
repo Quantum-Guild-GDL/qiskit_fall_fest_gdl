@@ -52,3 +52,16 @@ To view the page locally, simply open `index.html` in your web browser.
 
 - HTML5
 - CSS3 (with gradient backgrounds and responsive design)
+
+## Event gallery
+
+The gallery contains 40 curated event photos in three continuous rows. Hovering
+over a photo pauses every row and highlights that image. Clicking a photo opens
+the full-size viewer, with previous/next buttons, arrow keys, Escape to close,
+and swipe navigation on touch screens. Motion can also be paused explicitly;
+reduced-motion preferences display scrollable, stationary rows.
+
+`assets/gallery/manifest.json` maps each photo to its original filename, caption,
+and alternative text. Each photo has an optimized WebP thumbnail and a larger
+WebP version loaded when the viewer opens. The original source photos are not
+modified.
