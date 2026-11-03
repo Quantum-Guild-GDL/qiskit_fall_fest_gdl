@@ -3296,13 +3296,13 @@
                             <div class="recordings-list">
                                 <article class="recording-card">
                                     <div class="recording-player">
-                                        <a class="recording-preview" href="https://www.youtube.com/watch?v=Uxb_Z3Pn_Es" data-video-id="Uxb_Z3Pn_Es" lang="es" aria-label="Reproducir Día 1 · Parte 1">
+                                        <a class="recording-preview" href="https://www.youtube.com/watch?v=Uxb_Z3Pn_Es&amp;t=3600s" data-video-id="Uxb_Z3Pn_Es" data-video-start="3600" lang="es" aria-label="Reproducir Día 1 · Parte 1">
                                             <img src="https://i.ytimg.com/vi/Uxb_Z3Pn_Es/hqdefault.jpg" width="480" height="360" alt="" loading="lazy" decoding="async">
                                             <span class="recording-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
                                             <h4 class="recording-title">Día 1 · Parte 1</h4>
                                         </a>
                                     </div>
-                                    <p class="recording-meta"><span>Oct 28, 2026</span><a href="https://www.youtube.com/watch?v=Uxb_Z3Pn_Es" target="_blank" rel="noopener noreferrer" aria-label="Watch Day 1, Part 1 on YouTube (opens in a new tab)">YouTube <span aria-hidden="true">↗</span></a></p>
+                                    <p class="recording-meta"><span>Oct 28, 2026</span><a href="https://www.youtube.com/watch?v=Uxb_Z3Pn_Es&amp;t=3600s" target="_blank" rel="noopener noreferrer" aria-label="Watch Day 1, Part 1 on YouTube (opens in a new tab)">YouTube <span aria-hidden="true">↗</span></a></p>
                                 </article>
                                 <article class="recording-card">
                                     <div class="recording-player">
@@ -4006,7 +4006,7 @@
                 event.preventDefault();
                 resetRecordings();
                 const frame = document.createElement('iframe');
-                frame.src = `https://www.youtube-nocookie.com/embed/${recording.preview.dataset.videoId}?autoplay=1&rel=0`;
+                frame.src = `https://www.youtube-nocookie.com/embed/${recording.preview.dataset.videoId}?autoplay=1&rel=0&start=${recording.preview.dataset.videoStart || 0}`;
                 frame.title = recording.preview.querySelector('.recording-title').textContent;
                 frame.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
                 frame.allowFullscreen = true;
