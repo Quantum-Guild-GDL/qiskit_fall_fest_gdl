@@ -1310,6 +1310,7 @@
             line-height: 1.6;
         }
         .recordings-list { display: grid; gap: 1.25rem; }
+        .recordings-title + .recordings-list { margin-top: 1.25rem; }
         .recording-card { min-width: 0; }
         .recording-player {
             position: relative;
@@ -1388,7 +1389,6 @@
             .schedule-layout { grid-template-columns: minmax(0, 1fr); max-width: 920px; }
             .schedule-recordings { position: static; }
             .recordings-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-            .recording-card:only-child { grid-column: 1 / -1; }
         }
 
         @media (max-width: 640px) {
@@ -3355,17 +3355,26 @@
                         <aside class="schedule-recordings" aria-labelledby="recordings-day2-title">
                             <p class="recordings-label">Event recordings</p>
                             <h3 class="recordings-title" id="recordings-day2-title">Watch Day 2</h3>
-                            <p class="recordings-description">Transpilation, Error Mitigation &amp; Circuit Optimization with Jesús Rolón.</p>
                             <div class="recordings-list">
                                 <article class="recording-card">
                                     <div class="recording-player">
-                                        <a class="recording-preview" href="https://www.youtube.com/watch?v=J4iclLaL6Lg" data-video-id="J4iclLaL6Lg" lang="es" aria-label="Reproducir Día 2">
+                                        <a class="recording-preview" href="https://www.youtube.com/watch?v=J4iclLaL6Lg" data-video-id="J4iclLaL6Lg" lang="es" aria-label="Reproducir Día 2 · Parte 1">
                                             <img src="https://i.ytimg.com/vi/J4iclLaL6Lg/hqdefault.jpg" width="480" height="360" alt="" loading="lazy" decoding="async">
                                             <span class="recording-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
-                                            <h4 class="recording-title">Día 2</h4>
+                                            <h4 class="recording-title">Día 2 · Parte 1</h4>
                                         </a>
                                     </div>
-                                    <p class="recording-meta"><span>Oct 29, 2026</span><a href="https://www.youtube.com/watch?v=J4iclLaL6Lg" target="_blank" rel="noopener noreferrer" aria-label="Watch Day 2 on YouTube (opens in a new tab)">YouTube <span aria-hidden="true">↗</span></a></p>
+                                    <p class="recording-meta"><span>Jesús Rolón</span><a href="https://www.youtube.com/watch?v=J4iclLaL6Lg" target="_blank" rel="noopener noreferrer" aria-label="Watch Day 2, Part 1 on YouTube (opens in a new tab)">YouTube <span aria-hidden="true">↗</span></a></p>
+                                </article>
+                                <article class="recording-card">
+                                    <div class="recording-player">
+                                        <a class="recording-preview" href="https://www.youtube.com/watch?v=E-eoDO96Y0M" data-video-id="E-eoDO96Y0M" lang="es" aria-label="Reproducir Día 2 · Parte 2">
+                                            <img src="https://i.ytimg.com/vi/E-eoDO96Y0M/hqdefault.jpg" width="480" height="360" alt="" loading="lazy" decoding="async">
+                                            <span class="recording-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+                                            <h4 class="recording-title">Día 2 · Parte 2</h4>
+                                        </a>
+                                    </div>
+                                    <p class="recording-meta"><span>Claudia Zendejas Morales</span><a href="https://www.youtube.com/watch?v=E-eoDO96Y0M" target="_blank" rel="noopener noreferrer" aria-label="Watch Day 2, Part 2 on YouTube (opens in a new tab)">YouTube <span aria-hidden="true">↗</span></a></p>
                                 </article>
                             </div>
                         </aside>
