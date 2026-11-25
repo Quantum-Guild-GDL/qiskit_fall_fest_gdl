@@ -1388,6 +1388,7 @@
             .schedule-layout { grid-template-columns: minmax(0, 1fr); max-width: 920px; }
             .schedule-recordings { position: static; }
             .recordings-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .recording-card:only-child { grid-column: 1 / -1; }
         }
 
         @media (max-width: 640px) {
@@ -3321,33 +3322,53 @@
 
                 <!-- DAY 2 -->
                 <div class="day-panel" id="day2">
-                    <div class="timeline" id="timeline-day2">
-                        <span class="timeline-now" id="timelineNow2" aria-hidden="true"></span>
+                    <div class="schedule-layout">
+                        <div class="timeline" id="timeline-day2">
+                            <span class="timeline-now" id="timelineNow2" aria-hidden="true"></span>
 
-                        <div class="timeline-item" data-start="09:00" data-end="10:00">
-                            <span class="tl-node"></span>
-                            <div class="tl-card">
-                                <div class="tl-time">09:00 – 10:00</div>
-                                <div class="tl-title">Transpilation, Error Mitigation &amp; Circuit Optimization</div>
-                                <div class="tl-speaker">Speaker: <span>Jesús Rolón</span></div>
-                                <div class="tl-tags">
-                                    <span class="tl-tag tl-online">Online</span>
+                            <div class="timeline-item" data-start="09:00" data-end="10:00">
+                                <span class="tl-node"></span>
+                                <div class="tl-card">
+                                    <div class="tl-time">09:00 – 10:00</div>
+                                    <div class="tl-title">Transpilation, Error Mitigation &amp; Circuit Optimization</div>
+                                    <div class="tl-speaker">Speaker: <span>Jesús Rolón</span></div>
+                                    <div class="tl-tags">
+                                        <span class="tl-tag tl-online">Online</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="timeline-item" data-start="12:00" data-end="13:00">
-                            <span class="tl-node"></span>
-                            <div class="tl-card">
-                                <div class="tl-time">12:00 – 13:00</div>
-                                <div class="tl-title">Beyond Entanglement: Non-local Games and the Limits of Classical Correlations</div>
-                                <div class="tl-speaker">Speaker: <span>Claudia Zendejas Morales</span></div>
-                                <div class="tl-tags">
-                                    <span class="tl-tag tl-online">Online</span>
+                            <div class="timeline-item" data-start="12:00" data-end="13:00">
+                                <span class="tl-node"></span>
+                                <div class="tl-card">
+                                    <div class="tl-time">12:00 – 13:00</div>
+                                    <div class="tl-title">Beyond Entanglement: Non-local Games and the Limits of Classical Correlations</div>
+                                    <div class="tl-speaker">Speaker: <span>Claudia Zendejas Morales</span></div>
+                                    <div class="tl-tags">
+                                        <span class="tl-tag tl-online">Online</span>
+                                    </div>
                                 </div>
                             </div>
+
                         </div>
 
+                        <aside class="schedule-recordings" aria-labelledby="recordings-day2-title">
+                            <p class="recordings-label">Event recordings</p>
+                            <h3 class="recordings-title" id="recordings-day2-title">Watch Day 2</h3>
+                            <p class="recordings-description">Transpilation, Error Mitigation &amp; Circuit Optimization with Jesús Rolón.</p>
+                            <div class="recordings-list">
+                                <article class="recording-card">
+                                    <div class="recording-player">
+                                        <a class="recording-preview" href="https://www.youtube.com/watch?v=J4iclLaL6Lg" data-video-id="J4iclLaL6Lg" lang="es" aria-label="Reproducir Día 2">
+                                            <img src="https://i.ytimg.com/vi/J4iclLaL6Lg/hqdefault.jpg" width="480" height="360" alt="" loading="lazy" decoding="async">
+                                            <span class="recording-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+                                            <h4 class="recording-title">Día 2</h4>
+                                        </a>
+                                    </div>
+                                    <p class="recording-meta"><span>Oct 29, 2026</span><a href="https://www.youtube.com/watch?v=J4iclLaL6Lg" target="_blank" rel="noopener noreferrer" aria-label="Watch Day 2 on YouTube (opens in a new tab)">YouTube <span aria-hidden="true">↗</span></a></p>
+                                </article>
+                            </div>
+                        </aside>
                     </div>
                 </div>
 
